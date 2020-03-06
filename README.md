@@ -1,5 +1,6 @@
 # Data_Science_Inference_and_Modeling
-HarvardX: PH125.4x | Data Science: Inference and Modeling
+# HarvardX: PH125.4x | Data Science: Inference and Modeling
+
 ## Abstract
 
 This is the fourth in a series of courses in a Professional Certificate in Data Science program, a series of courses that prepare you to do data analysis in R, from simple computations to machine learning. Statistical inference and modeling are indispensable for analyzing data affected by chance, and thus essential for data scientists. In this course, you will learn these key concepts through a motivating case study on election forecasting.
@@ -13,34 +14,34 @@ Finally, to understand statements about the probability of a candidate winning, 
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
 ## Learning Objectives
+- The concepts necessary to define estimates and margins of errors of populations, parameters, estimates, and standard errors in order to make predictions about data
+- How to use models to aggregate data from different sources
+- The very basics of Bayesian statistics and predictive modeling
 
-    The concepts necessary to define estimates and margins of errors of populations, parameters, estimates, and standard errors in order to make predictions about data
-    How to use models to aggregate data from different sources
-    The very basics of Bayesian statistics and predictive modeling
+## Course Overview
 
-Course Overview
-
-Section 1: Parameters and Estimates
+## Section 1: Parameters and Estimates
 You will learn how to estimate population parameters.
 
-Section 2: The Central Limit Theorem in Practice
+## Section 2: The Central Limit Theorem in Practice
 You will apply the central limit theorem to assess how close a sample estimate is to the population parameter of interest.
 
-Section 3: Confidence Intervals and p-Values
+## Section 3: Confidence Intervals and p-Values
 You will learn how to calculate confidence intervals and learn about the relationship between confidence intervals and p-values.
 
-Section 4: Statistical Models
+## Section 4: Statistical Models
 You will learn about statistical models in the context of election forecasting.
 
-Section 5: Bayesian Statistics
+## Section 5: Bayesian Statistics
 You will learn about Bayesian statistics through looking at examples from rare disease diagnosis and baseball.
 
-Section 6: Election Forecasting
+## Section 6: Election Forecasting
 You will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
 
-Section 7: Association Tests
+## Section 7: Association Tests
 You will learn how to use association and chi-squared tests to perform inference for binary, categorical, and ordinal data through an example looking at research funding rates.
-Section 1 Overview
+
+## Section 1 Overview
 
 Section 1 introduces you to parameters and estimates.
 
