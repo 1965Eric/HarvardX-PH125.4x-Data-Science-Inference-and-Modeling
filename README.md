@@ -1,6 +1,6 @@
 # Data_Science_Inference_and_Modeling
 HarvardX: PH125.4x | Data Science: Inference and Modeling
-Abstract
+## Abstract
 
 This is the fourth in a series of courses in a Professional Certificate in Data Science program, a series of courses that prepare you to do data analysis in R, from simple computations to machine learning. Statistical inference and modeling are indispensable for analyzing data affected by chance, and thus essential for data scientists. In this course, you will learn these key concepts through a motivating case study on election forecasting.
 
@@ -10,8 +10,9 @@ Once you learn this you will be able to understand two concepts that are ubiquit
 
 Finally, to understand statements about the probability of a candidate winning, you will learn about Bayesian modeling. At the end of the course, we will put it all together to recreate a simplified version of an election forecast model and apply it to the 2016 US presidential election.
 
-The textbook for the Data Science course series is freely available online.
-Learning Objectives
+The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
+
+## Learning Objectives
 
     The concepts necessary to define estimates and margins of errors of populations, parameters, estimates, and standard errors in order to make predictions about data
     How to use models to aggregate data from different sources
