@@ -156,8 +156,9 @@ for(N in sample_sizes){
 
 ![index](https://user-images.githubusercontent.com/17474099/76228450-0a089980-6221-11ea-80e4-13ac6233f1a1.png)
 
+![index](https://user-images.githubusercontent.com/17474099/76228545-2a385880-6221-11ea-8bb5-2cba961954c3.png)
 
-    Expected value of d
+7. Expected value of d
     Our estimate for the difference in proportions of Democrats and Republicans is  d=X¯−(1−X¯)
 
     .
