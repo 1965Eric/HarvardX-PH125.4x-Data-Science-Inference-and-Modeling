@@ -183,9 +183,7 @@ Possible Answers
 
 9. Standard error of the spread
 
-Say the actual proportion of Democratic voters is p=0.45. 
-
-In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread  2X̄−1 in this case?
+Say the actual proportion of Democratic voters is p=0.45. In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread  2X̄−1 in this case?
 
 Use the sqrt function to calculate the standard error of the spread 2X̄−1.
 ```
