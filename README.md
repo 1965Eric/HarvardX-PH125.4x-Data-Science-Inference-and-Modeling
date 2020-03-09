@@ -91,35 +91,29 @@ Possible Answers
 - [ ] C.  E(X̄)=N(1−p)
 - [ ] D.  E(X̄)=1−p
 
-    Polling - standard error of X-bar
-    What is the standard error of the sample average,  X¯
+4. Polling - standard error of X-bar
 
-    ?
+What is the standard error of the sample average, **X̄**?
 
-The variable  N
-represents the sample size and  p
-
-is the proportion of Democrats in the population.
+The variable **N** represents the sample size and **p** is the proportion of Democrats in the population.
 
 Possible Answers
+- [ ] A.  SE(X̄)=√(Np(1−p))
+- [X] B.  SE(X̄)=√(p(1−p)/N)
+- [ ] C.  SE(X̄)=√(p(1−p))
+- [ ] D.  SE(X̄)=√N
 
-A.  SE(X¯)=Np(1−p)−−−−−−−−√
+5. se versus p
 
-B.  SE(X¯)=p(1−p)/N−−−−−−−−−√
-C.  SE(X¯)=p(1−p)−−−−−−−√
-D.  SE(X¯)=N−−√
-
-    se versus p
-    Write a line of code that calculates the standard error se of a sample average when you poll 25 people in the population. Generate a sequence of 100 proportions of Democrats p that vary from 0 (no Democrats) to 1 (all Democrats).
+Write a line of code that calculates the standard error se of a sample average when you poll 25 people in the population. Generate a sequence of 100 proportions of Democrats p that vary from 0 (no Democrats) to 1 (all Democrats).
 
 Plot se versus p for the 100 different proportions.
 
 Instructions
-
-    Use the seq function to generate a vector of 100 values of p that range from 0 to 1.
-    Use the sqrt function to generate a vector of standard errors for all values of p.
-    Use the plot function to generate a plot with p on the x-axis and se on the y-axis.
-
+- Use the seq function to generate a vector of 100 values of p that range from 0 to 1.
+- Use the sqrt function to generate a vector of standard errors for all values of p.
+- Use the plot function to generate a plot with p on the x-axis and se on the y-axis.
+```
 # `N` represents the number of people polled
 N <- 25
 
@@ -131,9 +125,12 @@ se <- sqrt(p * (1 - p)/N)
 
 # Plot `p` on the x-axis and `se` on the y-axis
 plot(p,se)
+```
 
-    Multiple plots of se versus p
-    Using the same code as in the previous exercise, create a for-loop that generates three plots of p versus se when the sample sizes equal N=25, N=100, and N=1000.
+
+6. Multiple plots of se versus p
+
+Using the same code as in the previous exercise, create a for-loop that generates three plots of p versus se when the sample sizes equal N=25, N=100, and N=1000.
 
 Instructions
 
