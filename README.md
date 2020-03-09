@@ -46,65 +46,50 @@ You will learn how to use association and chi-squared tests to perform inference
 Section 1 introduces you to parameters and estimates.
 
 After completing Section 1, you will be able to:
+- Understand how to use a sampling model to perform a poll.
+- Explain the terms population, parameter, and sample as they relate to statistical inference.
+- Use a sample to estimate the population proportion from the sample average.
+- Calculate the expected value and standard error of the sample average.
 
-    Understand how to use a sampling model to perform a poll.
-    Explain the terms population, parameter, and sample as they relate to statistical inference.
-    Use a sample to estimate the population proportion from the sample average.
-    Calculate the expected value and standard error of the sample average.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html)
 
-The textbook for this section is available here
-Assessment 1.1: Parameters and Estimates
+## Assessment 1.1: Parameters and Estimates
 
-    Polling - expected value of S
-    Suppose you poll a population in which a proportion  p
+1. Polling - expected value of S
 
-of voters are Democrats and  1−p are Republicans. Your sample size is  N=25. Consider the random variable  S
+Suppose you poll a population in which a proportion **p** of voters are Democrats and **1−p** are Republicans. Your sample size is **N=25**. Consider the random variable **S**, which is the total number of Democrats in your sample.
 
-    , which is the total number of Democrats in your sample.
-
-What is the expected value of this random variable  S
-
-?
+What is the expected value of this random variable **S**?
 
 Possible Answers
+- [ ] A.  E(S)=25(1−p)
+- [X] B.  E(S)=25p
+- [ ] C.  E(S)=√(25p(1−p))
+- [ ] D.  E(S)=p
 
-A.  E(S)=25(1−p)
+2. Polling - standard error of S
 
-B.  E(S)=25p
-C.  E(S)=25p(1−p)−−−−−−−−√
-D.  E(S)=p
-
-    Polling - standard error of S
-    Again, consider the random variable S, which is the total number of Democrats in your sample of 25 voters. The variable p describes the proportion of Democrats in the sample, whereas 1−p describes the proportion of Republicans.
+Again, consider the random variable S, which is the total number of Democrats in your sample of 25 voters. The variable p describes the proportion of Democrats in the sample, whereas 1−p describes the proportion of Republicans.
 
 What is the standard error of S?
 
 Possible Answers
+- [ ] A.  SE(S)=25p(1−p)
+- [ ] B.  SE(S)=√25p
+- [ ] C.  SE(S)=25(1−p)
+- [X] D.  SE(S)=√(25p(1−p))
 
-A.  SE(S)=25p(1−p)
+3. Polling - expected value of X-bar
 
-B.  SE(S)=25p−−−√
-C.  SE(S)=25(1−p)
-D.  SE(S)=25p(1−p)−−−−−−−−√
+Consider the random variable **S/N**, which is equivalent to the sample average that we have been denoting as **X̄**. The variable **N** represents the sample size and **p** is the proportion of Democrats in the population.
 
-    Polling - expected value of X-bar
-    Consider the random variable  S/N
-
-, which is equivalent to the sample average that we have been denoting as  X¯. The variable  N represents the sample size and  p
-
-    is the proportion of Democrats in the population.
-
-What is the expected value of  X¯
-
-?
+What is the expected value of **X̄**?
 
 Possible Answers
-
-A.  E(X¯)=p
-
-B.  E(X¯)=Np
-C.  E(X¯)=N(1−p)
-D.  E(X¯)=1−p
+- [X] A.  E(X̄)=p
+- [ ] B.  E(X̄)=Np
+- [ ] C.  E(X̄)=N(1−p)
+- [ ] D.  E(X̄)=1−p
 
     Polling - standard error of X-bar
     What is the standard error of the sample average,  X¯
