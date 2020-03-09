@@ -126,19 +126,18 @@ se <- sqrt(p * (1 - p)/N)
 # Plot `p` on the x-axis and `se` on the y-axis
 plot(p,se)
 ```
-
+![index](https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png)
 
 6. Multiple plots of se versus p
 
 Using the same code as in the previous exercise, create a for-loop that generates three plots of p versus se when the sample sizes equal N=25, N=100, and N=1000.
 
 Instructions
-
-    Your for-loop should contain two lines of code to be repeated for three different values of N.
-    The first line within the for-loop should use the sqrt function to generate a vector of standard errors se for all values of p.
-    The second line within the for-loop should use the plot function to generate a plot with p on the x-axis and se on the y-axis.
-    Use the ylim argument to keep the y-axis limits constant across all three plots. The lower limit should be equal to 0 and the upper limit should equal the highest calculated standard error across all values of p and N.
-
+- Your for-loop should contain two lines of code to be repeated for three different values of N.
+- The first line within the for-loop should use the sqrt function to generate a vector of standard errors se for all values of p.
+- The second line within the for-loop should use the plot function to generate a plot with p on the x-axis and se on the y-axis.
+- Use the ylim argument to keep the y-axis limits constant across all three plots. The lower limit should be equal to 0 and the upper limit should equal the highest calculated standard error across all values of p and N.
+```
 # The vector `p` contains 100 proportions of Democrats ranging from 0 to 1 using the `seq` function
 p <- seq(0, 1, length = 100)
 
@@ -150,6 +149,10 @@ for(N in sample_sizes){
   se <- sqrt(p*(1-p)/N)
   plot(p, se, ylim = c(0,0.5/sqrt(25)))
 }
+```
+
+![index](https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png)
+
 
     Expected value of d
     Our estimate for the difference in proportions of Democrats and Republicans is  d=X¯−(1−X¯)
