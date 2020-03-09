@@ -153,7 +153,6 @@ for(N in sample_sizes){
 
 ![index](https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png)
 
-
 ![index](https://user-images.githubusercontent.com/17474099/76228450-0a089980-6221-11ea-80e4-13ac6233f1a1.png)
 
 ![index](https://user-images.githubusercontent.com/17474099/76228545-2a385880-6221-11ea-8bb5-2cba961954c3.png)
@@ -170,34 +169,26 @@ Possible Answers
 - [ ] C.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2√(p(1−p))−1=p−(1−p)
 - [X] D.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2p−1=p−(1−p)
 
-    Standard error of d
-    Our estimate for the difference in proportions of Democrats and Republicans is  d=X¯−(1−X¯)
+8. Standard error of d
 
-    .
+Our estimate for the difference in proportions of Democrats and Republicans is **d=X̄−(1−X̄)**.
 
-Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the standard error of  d
-
-?
+Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the standard error of **d**?
 
 Possible Answers
+- [ ] A.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=2√(p/N)
+- [ ] B.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄−1]=2√(p(1−p)/N−1)
+- [X] C.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=2√(p(1−p)/N)
+- [ ] D.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=√(p(1−p)/N)
 
-A.  SE[X¯−(1−X¯)]=SE[2X¯−1]=2SE[X¯]=2p/N−−−−√
+9. Standard error of the spread
 
-B.  SE[X¯−(1−X¯)]=SE[2X¯−1]=2SE[X¯−1]=2p(1−p)/N−−−−−−−−−√−1
-C.  SE[X¯−(1−X¯)]=SE[2X¯−1]=2SE[X¯]=2p(1−p)/N−−−−−−−−−√
-D.  SE[X¯−(1−X¯)]=SE[X¯−1]=SE[X¯]=p(1−p)/N−−−−−−−−−√
+Say the actual proportion of Democratic voters is p=0.45. 
 
-    Standard error of the spread
-    Say the actual proportion of Democratic voters is  p=0.45
+In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread  2X̄−1 in this case?
 
-. In this case, the Republican party is winning by a relatively large margin of  d=−0.1, or a 10% margin of victory. What is the standard error of the spread  2X¯−1
-
-    in this case?
-
-Use the sqrt function to calculate the standard error of the spread  2X¯−1
-
-.
-
+Use the sqrt function to calculate the standard error of the spread 2X̄−1.
+```
 # `N` represents the number of people polled
 N <- 25
 
@@ -206,11 +197,13 @@ p <- 0.45
 
 # Calculate the standard error of the spread. Print this value to the console.
 2*sqrt(p*(1-p)/N)
-
+```
+```
 ## [1] 0.1989975
+```
+10. Sample size
 
-    Sample size
-    So far we have said that the difference between the proportion of Democratic voters and Republican voters is about 10% and that the standard error of this spread is about 0.2 when N=25. Select the statement that explains why this sample size is sufficient or not.
+So far we have said that the difference between the proportion of Democratic voters and Republican voters is about 10% and that the standard error of this spread is about 0.2 when N=25. Select the statement that explains why this sample size is sufficient or not.
 
 A. This sample size is sufficient because the expected value of our estimate  2X¯−1
 
