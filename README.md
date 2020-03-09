@@ -159,19 +159,16 @@ for(N in sample_sizes){
 ![index](https://user-images.githubusercontent.com/17474099/76228545-2a385880-6221-11ea-8bb5-2cba961954c3.png)
 
 7. Expected value of d
-    Our estimate for the difference in proportions of Democrats and Republicans is  d=X¯−(1−X¯)
 
-    .
+Our estimate for the difference in proportions of Democrats and Republicans is **d=X̄−(1−X̄)**.
 
 Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the expected value of d?
 
 Possible Answers
-
-A.  E[X¯−(1−X¯)]=E[2X¯−1]=2E[X¯]−1=N(2p−1)=Np−N(1−p)
-
-B.  E[X¯−(1−X¯)]=E[X¯−1]=E[X¯]−1=p−1
-C.  E[X¯−(1−X¯)]=E[2X¯−1]=2E[X¯]−1=2p(1−p)−−−−−−−√−1=p−(1−p)
-D.  E[X¯−(1−X¯)]=E[2X¯−1]=2E[X¯]−1=2p−1=p−(1−p)
+- [ ] A.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=N(2p−1)=Np−N(1−p)
+- [ ] B.  E[X̄−(1−X̄)]=E[X̄−1]=E[X̄]−1=p−1
+- [ ] C.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2√(p(1−p))−1=p−(1−p)
+- [X] D.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2p−1=p−(1−p)
 
     Standard error of d
     Our estimate for the difference in proportions of Democrats and Republicans is  d=X¯−(1−X¯)
