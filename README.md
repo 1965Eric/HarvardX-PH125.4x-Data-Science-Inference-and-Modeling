@@ -851,50 +851,42 @@ head(polls)
 polls %>% mutate(error = d_hat - 0.021) %>% ggplot(aes(x = pollster, y = error)) + geom_point() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76311110-84442700-62d0-11ea-8001-37d052e401bd.png)
 
+9. Comparing to actual results by pollster - multiple polls
 
-    Comparing to actual results by pollster - multiple polls
-    Remake the plot you made for the previous exercise, but only for pollsters that took five or more polls.
+Remake the plot you made for the previous exercise, but only for pollsters that took five or more polls.
 
 You can use dplyr tools group_by and n to group data by a variable of interest and then count the number of observations in the groups. The function filter filters data piped into it by your specified condition.
 
 For example:
-
+```
 data %>% group_by(variable_for_grouping) 
     %>% filter(n() >= 5)
-
+```
 Instructions
-
-    Define a new variable errors that contains the difference between the estimated difference between the proportion of voters and the actual difference on election day, 0.021.
-    Group the data by pollster using the group_by function.
-    Filter the data by pollsters with 5 or more polls.
-    Use ggplot to create the plot of errors by pollster.
-    Add a layer with the function geom_point.
-
+- Define a new variable errors that contains the difference between the estimated difference between the proportion of voters and the actual difference on election day, 0.021.
+- Group the data by pollster using the group_by function.
+- Filter the data by pollsters with 5 or more polls.
+- Use ggplot to create the plot of errors by pollster.
+- Add a layer with the function geom_point.
+```
 # The `polls` object has already been loaded. Examine it using the `head` function.
 # The `polls` object has already been loaded. Examine it using the `head` function.
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-1	U.S.	2016-11-03	2016-11-06	
-2	U.S.	2016-11-01	2016-11-07	
-3	U.S.	2016-11-02	2016-11-06	
-4	U.S.	2016-11-04	2016-11-07	
-5	U.S.	2016-11-03	2016-11-06	
-6	U.S.	2016-11-03	2016-11-06	
+```
+```
+    state     startdate     enddate
+    <fctr>    <date>        <date>
+1   U.S.      2016-11-03    2016-11-06	
+2   U.S.      2016-11-01    2016-11-07	
+3   U.S.      2016-11-02    2016-11-06	
+4   U.S.      2016-11-04    2016-11-07	
+5   U.S.      2016-11-03    2016-11-06	
+6   U.S.      2016-11-03    2016-11-06	
 6 rows | 1-4 of 17 columns
-
+```
+```
 # Add variable called `error` to the object `polls` that contains the difference between d_hat and the actual difference on election day. Then make a plot of the error stratified by pollster, but only for pollsters who took 5 or more polls.
 polls %>% mutate(error = d_hat - 0.021) %>%
   group_by(pollster) %>%
@@ -902,6 +894,9 @@ polls %>% mutate(error = d_hat - 0.021) %>%
   ggplot(aes(pollster, error)) +
   geom_point() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```  
+
+
 
 Section 4 Overview
 
