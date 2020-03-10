@@ -183,7 +183,7 @@ Possible Answers
 
 9. Standard error of the spread
 
-Say the actual proportion of Democratic voters is p=0.45. In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread  2X̄−1 in this case?
+Say the actual proportion of Democratic voters is p=0.45. In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread 2X̄−1 in this case?
 
 Use the sqrt function to calculate the standard error of the spread 2X̄−1.
 ```
@@ -203,42 +203,36 @@ p <- 0.45
 
 So far we have said that the difference between the proportion of Democratic voters and Republican voters is about 10% and that the standard error of this spread is about 0.2 when N=25. Select the statement that explains why this sample size is sufficient or not.
 
-A. This sample size is sufficient because the expected value of our estimate  2X¯−1
+- [ ] A. This sample size is sufficient because the expected value of our estimate 2X̄−1 is d so our prediction will be right on.
+- [X] B. This sample size is too small because the standard error is larger than the spread.
+- [ ] C. This sample size is sufficient because the standard error of about 0.2 is much smaller than the spread of 10%.
+- [ ] D. Without knowing p, we have no way of knowing that increasing our sample size would actually improve our standard error.
 
-is d so our prediction will be right on.
-B. This sample size is too small because the standard error is larger than the spread.
-C. This sample size is sufficient because the standard error of about 0.2 is much smaller than the spread of 10%.
-D. Without knowing p, we have no way of knowing that increasing our sample size would actually improve our standard error.
-Section 2 Overview
+## Section 2 Overview
 
 In Section 2, you will look at the Central Limit Theorem in practice.
 
 After completing Section 2, you will be able to:
+- Use the Central Limit Theorem to calculate the probability that a sample estimate X̄ is close to the population proportion p.
+- Run a Monte Carlo simulation to corroborate theoretical results built using probability theory.
+- Estimate the spread based on estimates of X̄ and ŜE(X̄).
+- Understand why bias can mean that larger sample sizes aren’t necessarily better.
 
-    Use the Central Limit Theorem to calculate the probability that a sample estimate X¯
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/random-variables.html#central-limit-theorem)
 
-is close to the population proportion  p
-.
-Run a Monte Carlo simulation to corroborate theoretical results built using probability theory.
-Estimate the spread based on estimates of X¯ and  SE^(X¯)
+## Assessment 2.1: Introduction to Inference
 
-    .
-    Understand why bias can mean that larger sample sizes aren’t necessarily better.
+1. Sample average
 
-The textbook for this section is available here
-Assessment 2.1: Introduction to Inference
-
-    Sample average
-    Write function called take_sample that takes the proportion of Democrats p and the sample size N as arguments and returns the sample average of Democrats (1) and Republicans (0).
+Write a function called take_sample that takes the proportion of Democrats p and the sample size N as arguments and returns the sample average of Democrats (1) and Republicans (0).
 
 Calculate the sample average if the proportion of Democrats equals 0.45 and the sample size is 100.
 
 Instructions
-
-    Define a function called take_sample that takes p and N as arguments.
-    Use the sample function as the first statement in your function to sample N elements from a vector of options where Democrats are assigned the value ‘1’ and Republicans are assigned the value ‘0’.
-    Use the mean function as the second statement in your function to find the average value of the random sample.
-
+- Define a function called take_sample that takes p and N as arguments.
+- Use the sample function as the first statement in your function to sample N elements from a vector of options where Democrats are assigned the value ‘1’ and Republicans are assigned the value ‘0’.
+- Use the mean function as the second statement in your function to find the average value of the random sample.
+```
 # Write a function called `take_sample` that takes `p` and `N` as arguements and returns the average value of a randomly sampled population.
 take_sample <- function(p, N){
     X <- sample(c(0,1), size = N, replace = TRUE, prob = c(1 - p, p))
@@ -256,24 +250,21 @@ N <- 100
 
 # Call the `take_sample` function to determine the sample average of `N` randomly selected people from a population containing a proportion of Democrats equal to `p`. Print this value to the console.
 take_sample(p,N)
-
+```
+```
 ## [1] 0.46
+```
+2. Distribution of errors - 1
 
-    Distribution of errors - 1
-    Assume the proportion of Democrats in the population p equals 0.45 and that your sample size N is 100 polled voters. The take_sample function you defined previously generates our estimate,  X¯
+Assume the proportion of Democrats in the population p equals 0.45 and that your sample size N is 100 polled voters. The take_sample function you defined previously generates our estimate, X̄.
 
-    .
-
-Replicate the random sampling 10,000 times and calculate  p−X¯
-
-for each random sample. Save these differences as a vector called errors. Find the average of errors and plot a histogram of the distribution.
+Replicate the random sampling 10,000 times and calculate  p−X̄ for each random sample. Save these differences as a vector called errors. Find the average of errors and plot a histogram of the distribution.
 
 Instructions
-
-    The function take_sample that you defined in the previous exercise has already been run for you.
-    Use the replicate function to replicate subtracting the result of take_sample from the value of p 10,000 times.
-    Use the mean function to calculate the average of the differences between the sample average and actual value of p. 
-
+- The function take_sample that you defined in the previous exercise has already been run for you.
+- Use the replicate function to replicate subtracting the result of take_sample from the value of p 10,000 times.
+- Use the mean function to calculate the average of the differences between the sample average and actual value of p. 
+```
 # Define `p` as the proportion of Democrats in the population being polled
 p <- 0.45
 
@@ -291,44 +282,33 @@ errors <- replicate(B, p - take_sample(p, N))
 
 # Calculate the mean of the errors. Print this value to the console.
 mean(errors)
-
+```
+```
 ## [1] -4.9e-05
+```
+3. Distribution of errors - 2
 
-    Distribution of errors - 2
-    In the last exercise, you made a vector of differences between the actual value for  p
-
-and an estimate,  X¯
-
-    . We called these differences between the actual and estimated values errors.
+In the last exercise, you made a vector of differences between the actual value for p and an estimate, X̄. We called these differences between the actual and estimated values errors.
 
 The errors object has already been loaded for you. Use the hist function to plot a histogram of the values contained in the vector errors. Which statement best describes the distribution of the errors?
 
 Possible Answers
+- [ ] A. The errors are all about 0.05.
+- [ ] B. The error are all about -0.05.
+- [X] C. The errors are symmetrically distributed around 0.
+- [ ] D. The errors range from -1 to 1.
 
-A. The errors are all about 0.05.
-B. The error are all about -0.05.
-C. The errors are symmetrically distributed around 0.
-D. The errors range from -1 to 1.
+4. Average size of error
 
-    Average size of error
-    The error  p−X¯
+The error p−X̄ is a random variable. In practice, the error is not observed because we do not know the actual proportion of Democratic voters, p. However, we can describe the size of the error by constructing a simulation.
 
-is a random variable. In practice, the error is not observed because we do not know the actual proportion of Democratic voters,  p
-
-    . However, we can describe the size of the error by constructing a simulation.
-
-What is the average size of the error if we define the size by taking the absolute value  ∣∣p−X¯∣∣
-
-?
+What is the average size of the error if we define the size by taking the absolute value ∣p−X̄∣?
 
 Instructions
-
-    Use the sample code to generate errors, a vector of  ∣∣p−X¯∣∣
-
-    .
-    Calculate the absolute value of errors using the abs function.
-    Calculate the average of these values using the mean function.
-
+- Use the sample code to generate errors, a vector of ∣p−X̄∣.
+- Calculate the absolute value of errors using the abs function.
+- Calculate the average of these values using the mean function.
+```
 # Define `p` as the proportion of Democrats in the population being polled
 p <- 0.45
 
@@ -346,27 +326,24 @@ errors <- replicate(B, p - take_sample(p, N))
 
 # Calculate the mean of the absolute value of each simulated error. Print this value to the console.
 mean(abs(errors))
-
+```
+```
 ## [1] 0.039267
+```
+5. Standard deviation of the spread
 
-    Standard deviation of the spread
-    The standard error is related to the typical size of the error we make when predicting. We say size because, as we just saw, the errors are centered around 0. In that sense, the typical error is 0. For mathematical reasons related to the central limit theorem, we actually use the standard deviation of errors rather than the average of the absolute values.
+The standard error is related to the typical size of the error we make when predicting. We say size because, as we just saw, the errors are centered around 0. In that sense, the typical error is 0. For mathematical reasons related to the central limit theorem, we actually use the standard deviation of errors rather than the average of the absolute values.
 
-As we have discussed, the standard error is the square root of the average squared distance  (X¯−p)2
-
-. The standard deviation is defined as the square root of the distance squared.
+As we have discussed, the standard error is the square root of the average squared distance (X̄−p)2. The standard deviation is defined as the square root of the distance squared.
 
 Calculate the standard deviation of the spread.
 
 Instructions
-
-    Use the sample code to generate errors, a vector of  ∣∣p−X¯∣∣
-
-    .
-    Use ^2 to square the distances.
-    Calculate the average squared distance using the mean function.
-    Calculate the square root of these values using the sqrt function.
-
+- Use the sample code to generate errors, a vector of ∣p−X̄∣.
+- Use ^2 to square the distances.
+- Calculate the average squared distance using the mean function.
+- Calculate the square root of these values using the sqrt function.
+```
 # Define `p` as the proportion of Democrats in the population being polled
 p <- 0.45
 
@@ -384,20 +361,19 @@ errors <- replicate(B, p - take_sample(p, N))
 
 # Calculate the standard deviation of `errors`
 sqrt(mean(errors^2))
-
+```
+```
 ## [1] 0.04949939
+```
+6. Estimating the standard error
 
-    Estimating the standard error
-    The theory we just learned tells us what this standard deviation is going to be because it is the standard error of  X¯
-
-    .
+The theory we just learned tells us what this standard deviation is going to be because it is the standard error of X̄.
 
 Estimate the standard error given an expected value of 0.45 and a sample size of 100.
 
 Instructions
-
-Calculate the standard error using the sqrt function
-
+- Calculate the standard error using the sqrt function
+```
 # Define `p` as the expected value equal to 0.45
 p <- 0.45
 
@@ -406,27 +382,26 @@ N <- 100
 
 # Calculate the standard error
 sqrt(p*(1-p)/N)
-
+```
+```
 ## [1] 0.04974937
+```
+7. Standard error of the estimate
 
-    Standard error of the estimate
-    In practice, we don’t know  p
+In practice, we don’t know p, so we construct an estimate of the theoretical prediction based by plugging in X̄ for p.
 
-, so we construct an estimate of the theoretical prediction based by plugging in  X¯ for  p
+Calculate the standard error of the estimate:
 
-    . Calculate the standard error of the estimate:
-
- SE^(X¯)
+**ŜE(X̄)**
 
 Instructions
-
-    Simulate a poll X using the sample function.
-    When using the sample function, create a vector using c() that contains all possible polling options where ‘1’ indicates a Democratic voter and ‘0’ indicates a Republican voter.
-    When using the sample function, use replace = TRUE within the sample function to indicate that sampling from the vector should occur with replacement.
-    When using the sample function, use prob = within the sample function to indicate the probabilities of selecting either element (0 or 1) within the vector of possibilities.
-    Use the mean function to calculate the average of the simulated poll, X_bar.
-    Calculate the standard error of the X_bar using the sqrt function and print the result.
-
+- Simulate a poll X using the sample function.
+- When using the sample function, create a vector using c() that contains all possible polling options where ‘1’ indicates a Democratic voter and ‘0’ indicates a Republican voter.
+- When using the sample function, use replace = TRUE within the sample function to indicate that sampling from the vector should occur with replacement.
+- When using the sample function, use prob = within the sample function to indicate the probabilities of selecting either element (0 or 1) within the vector of possibilities.
+- Use the mean function to calculate the average of the simulated poll, X_bar.
+- Calculate the standard error of the X_bar using the sqrt function and print the result.
+```
 # Define `p` as a proportion of Democratic voters to simulate
 p <- 0.45
 
@@ -444,74 +419,57 @@ X_bar <- mean(X)
 
 # Calculate the standard error of the estimate. Print the result to the console.
 sqrt(X_bar*(1-X_bar)/N)
-
+```
+```
 ## [1] 0.04983974
+```
+8. Plotting the standard error
 
-    Plotting the standard error
-    The standard error estimates obtained from the Monte Carlo simulation, the theoretical prediction, and the estimate of the theoretical prediction are all very close, which tells us that the theory is working. This gives us a practical approach to knowing the typical error we will make if we predict  p
+The standard error estimates obtained from the Monte Carlo simulation, the theoretical prediction, and the estimate of the theoretical prediction are all very close, which tells us that the theory is working. This gives us a practical approach to knowing the typical error we will make if we predict p with X̂. The theoretical result gives us an idea of how large a sample size is required to obtain the precision we need. Earlier we learned that the largest standard errors occur for p=0.5.
 
-with  X^. The theoretical result gives us an idea of how large a sample size is required to obtain the precision we need. Earlier we learned that the largest standard errors occur for  p=0.5
-
-    .
-
-Create a plot of the largest standard error for  N
-
-ranging from 100 to 5,000. Based on this plot, how large does the sample size have to be to have a standard error of about 1%?
-
+Create a plot of the largest standard error for N ranging from 100 to 5,000. Based on this plot, how large does the sample size have to be to have a standard error of about 1%?
+```
 N <- seq(100, 5000, len = 100)
 p <- 0.5
 se <- sqrt(p*(1-p)/N)
+```
+Possible Answers
+- [ ] A. 100
+- [ ] B. 500
+- [X] C. 2,500
+- [ ] D. 4,000
+
+9. Distribution of X-hat
+
+For N=100, the central limit theorem tells us that the distribution of X̂ is…
 
 Possible Answers
+- [ ] A. practically equal to $ p $.
+- [X] B. approximately normal with expected value p and standard error √(p(1−p)/N).
+- [ ] C. approximately normal with expected value X̄ and standard error √(X̄(1−X̄)/N).
+- [ ] D. not a random variable.
 
-A. 100
-B. 500
-C. 2,500
-D. 4,000
+10. Distribution of the errors
 
-    Distribution of X-hat
-    For N=100, the central limit theorem tells us that the distribution of  X^
+We calculated a vector errors that contained, for each simulated sample, the difference between the actual value p and our estimate X̂.
 
-    is…
-
-Possible Answers
-
-A. practically equal to $ p $.
-B. approximately normal with expected value \p
-and standard error  p(1−p)/N−−−−−−−−−√.
-C. approximately normal with expected value  X¯ and standard error  X¯(1−X¯)/N−−−−−−−−−−√
-
-.
-D. not a random variable.
-
-    Distribution of the errors
-    We calculated a vector errors that contained, for each simulated sample, the difference between the actual value p and our estimate  X^
-
-    .
-
-The errors  X¯−p
-
-are:
+The errors X̄−p are:
 
 Possible Answers
+- [ ] A. practically equal to 0.
+- [X] B. approximately normal with expected value 0 and standard error √(p(1−p)/N).
+- [ ] C. approximately normal with expected value p and standard error √(p(1−p)/N).
+- [ ] D. not a random variable.
 
-A. practically equal to 0.
-B. approximately normal with expected value 0 and standard error  p(1−p)/N−−−−−−−−−√
-.
-C. approximately normal with expected value p and standard error  p(1−p)/N−−−−−−−−−√
+11. Plotting the errors
 
-.
-D. not a random variable.
-
-    Plotting the errors
-    Make a qq-plot of the errors you generated previously to see if they follow a normal distribution.
+Make a qq-plot of the errors you generated previously to see if they follow a normal distribution.
 
 Instructions
-
-    Run the supplied code
-    Use the qqnorm function to produce a qq-plot of the errors.
-    Use the qqline function to plot a line showing a normal distribution.
-
+- Run the supplied code
+- Use the qqnorm function to produce a qq-plot of the errors.
+- Use the qqline function to plot a line showing a normal distribution.
+```
 # Define `p` as the proportion of Democrats in the population being polled
 p <- 0.45
 
@@ -530,6 +488,8 @@ errors <- replicate(B, p - take_sample(p, N))
 # Generate a qq-plot of `errors` with a qq-line showing a normal distribution
 qqnorm(errors)
 qqline(errors)
+```
+
 
     Estimating the probability of a specific value of X-bar
     If  p=0.45
