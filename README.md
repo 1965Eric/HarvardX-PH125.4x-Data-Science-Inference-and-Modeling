@@ -896,35 +896,35 @@ polls %>% mutate(error = d_hat - 0.021) %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```  
 
+![index](https://user-images.githubusercontent.com/17474099/76311453-4a275500-62d1-11ea-8154-d0ebb13f25e9.png)
 
-
-Section 4 Overview
+## Section 4 Overview
 
 In Section 4, you will look at statistical models in the context of election polling and forecasting.
 
 After completing Section 4, you will be able to:
+- Understand how aggregating data from different sources, as poll aggregators do for poll data, can improve the precision of a prediction.
+- Understand how to fit a multilevel model to the data to forecast, for example, election results.
+- Explain why a simple aggregation of data is insufficient to combine results because of factors such as pollster bias.
+- Use a data-driven model to account for additional types of sampling variability such as pollster-to-pollster variability.
 
-    Understand how aggregating data from different sources, as poll aggregators do for poll data, can improve the precision of a prediction.
-    Understand how to fit a multilevel model to the data to forecast, for example, election results.
-    Explain why a simple aggregation of data is insufficient to combine results because of factors such as pollster bias.
-    Use a data-driven model to account for additional types of sampling variability such as pollster-to-pollster variability.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html)
 
-The textbook for this section is available here
-Assessment 4.1: Statistical Models
+## Assessment 4.1: Statistical Models
 
-    Heights Revisited
-    We have been using urn models to motivate the use of probability models. However, most data science applications are not related to data obtained from urns. More common are data that come from individuals. Probability plays a role because the data come from a random sample. The random sample is taken from a population and the urn serves as an analogy for the population.
+1. Heights Revisited
+
+We have been using urn models to motivate the use of probability models. However, most data science applications are not related to data obtained from urns. More common are data that come from individuals. Probability plays a role because the data come from a random sample. The random sample is taken from a population and the urn serves as an analogy for the population.
 
 Let’s revisit the heights dataset. For now, consider x to be the heights of all males in the data set. Mathematically speaking, x is our population. Using the urn analogy, we have an urn with the values of x in it.
 
 What are the population average and standard deviation of our population?
 
 Instructions
-
-    Execute the lines of code that create a vector x that contains heights for all males in the population.
-    Calculate the average of x.
-    Calculate the standard deviation of x.
-
+- Execute the lines of code that create a vector x that contains heights for all males in the population.
+- Calculate the average of x.
+- Calculate the standard deviation of x.
+```
 # Load the 'dslabs' package and data contained in 'heights'
 library(dslabs)
 library(dplyr)
@@ -936,28 +936,33 @@ x <- heights %>% filter(sex == "Male") %>%
 
 # Calculate the population average. Print this value to the console.
 mean(x)
-
+```
+```
 ## [1] 69.31475
-
+```
+```
 # Calculate the population standard deviation. Print this value to the console.
 sd(x)
-
+```
+```
 ## [1] 3.611024
+```
+2. Sample the population of heights
 
-    Sample the population of heights
-    Call the population average computed above μ and the standard deviation σ. Now take a sample of size 50, with replacement, and construct an estimate for μ and σ.
+Call the population average computed above μ and the standard deviation σ. Now take a sample of size 50, with replacement, and construct an estimate for μ and σ.
 
 Instructions
-
-    Use the sample function to sample N values from x.
-    Calculate the mean of the sampled heights.
-    Calculate the standard deviation of the sampled heights.
-
+- Use the sample function to sample N values from x.
+- Calculate the mean of the sampled heights.
+- Calculate the standard deviation of the sampled heights.
+```
 # The vector of all male heights in our population `x` has already been loaded for you. You can examine the first six elements using `head`.
 head(x)
-
+```
+```
 ## [1] 75 70 68 74 61 67
-
+```
+```
 # Use the `set.seed` function to make sure your answer matches the expected result after random sampling
 set.seed(1)
 
@@ -969,45 +974,44 @@ X <- sample(x, N, replace = TRUE)
 
 # Calculate the sample average. Print this value to the console.
 mean(X)
-
+```
+```
 ## [1] 70.47293
-
+```
+```
 # Calculate the sample standard deviation. Print this value to the console.
 sd(X)
-
+```
+```
 ## [1] 3.426742
+```
+3. Sample and Population Averages
 
-    Sample and Population Averages
-    What does the central limit theory tell us about the sample average and how it is related to μ, the population average?
+What does the central limit theory tell us about the sample average and how it is related to μ, the population average?
 
 Possible Answers
+- [ ] A. It is identical to μ.
+- [X] B. It is a random variable with expected value μ and standard error σ/√N.
+- [ ] C. It is a random variable with expected value μ and standard error σ.
+- [ ] D. It underestimates μ.
 
-A. It is identical to μ.
-B. It is a random variable with expected value μ and standard error  σ/N−−√
+4. Confidence Interval Calculation
 
-.
-C. It is a random variable with expected value μ and standard error σ.
-D. It underestimates μ.
-
-    Confidence Interval Calculation
-    We will use  X¯
-
-as our estimate of the heights in the population from our sample size N. We know from previous exercises that the standard estimate of our error  X¯−μ is  σ/N−−√
-
-    .
+We will use X̄ as our estimate of the heights in the population from our sample size N. We know from previous exercises that the standard estimate of our error X̄−μ is σ/√N.
 
 Construct a 95% confidence interval for μ.
 
 Instructions
-
-    Use the sd and sqrt functions to define the standard error se
-    Calculate the 95% confidence intervals using the qnorm function. Save the lower then the upper confidence interval to a variable called ci.
-
+- Use the sd and sqrt functions to define the standard error se
+- Calculate the 95% confidence intervals using the qnorm function. Save the lower then the upper confidence interval to a variable called ci.
+```
 # The vector of all male heights in our population `x` has already been loaded for you. You can examine the first six elements using `head`.
 head(x)
-
+```
+```
 ## [1] 75 70 68 74 61 67
-
+```
+```
 # Use the `set.seed` function to make sure your answer matches the expected result after random sampling
 set.seed(1)
 
@@ -1022,20 +1026,22 @@ X_hat <- mean(X)
 se_hat <- sd(X)
 se <- se_hat / sqrt(N)
 se
-
+```
+```
 ## [1] 0.4846145
-
+```
+```
 # Construct a 95% confidence interval for the population average based on our sample. Save the lower and then the upper confidence interval to a variable called `ci`.
 ci <- c(qnorm(0.025, mean(X), se), qnorm(0.975, mean(X), se))
+```
+5. Monte Carlo Simulation for Heights
 
-    Monte Carlo Simulation for Heights
-    Now run a Monte Carlo simulation in which you compute 10,000 confidence intervals as you have just done. What proportion of these intervals include μ?
+Now run a Monte Carlo simulation in which you compute 10,000 confidence intervals as you have just done. What proportion of these intervals include μ?
 
 Instructions
-
-    Use the replicate function to replicate the sample code for B <- 10000 simulations. Save the results of the replicated code to a variable called res. The replicated code should complete the following steps: -1. Use the sample function to sample N values from x. Save the sampled heights as a vector called X. -2. Create an object called interval that contains the 95% confidence interval for each of the samples. Use the same formula you used in the previous exercise to calculate this interval. -3. Use the between function to determine if μ is contained within the confidence interval of that simulation.
-    Finally, use the mean function to determine the proportion of results in res that contain mu.
-
+- Use the replicate function to replicate the sample code for B <- 10000 simulations. Save the results of the replicated code to a variable called res. The replicated code should complete the following steps: -1. Use the sample function to sample N values from x. Save the sampled heights as a vector called X. -2. Create an object called interval that contains the 95% confidence interval for each of the samples. Use the same formula you used in the previous exercise to calculate this interval. -3. Use the between function to determine if μ is contained within the confidence interval of that simulation.
+- Finally, use the mean function to determine the proportion of results in res that contain mu.
+```
 # Define `mu` as the population average
 mu <- mean(x)
 
@@ -1060,21 +1066,22 @@ res <- replicate(B, {
 
 # Calculate the proportion of results in `res` that include mu. Print this value to the console.
 mean(res)
-
+```
+```
 ## [1] 0.9479
+```
+6. Visualizing Polling Bias
 
-    Visualizing Polling Bias
-    In this section, we used visualization to motivate the presence of pollster bias in election polls. Here we will examine that bias more rigorously. Lets consider two pollsters that conducted daily polls and look at national polls for the month before the election.
+In this section, we used visualization to motivate the presence of pollster bias in election polls. Here we will examine that bias more rigorously. Lets consider two pollsters that conducted daily polls and look at national polls for the month before the election.
 
 Is there a poll bias? Make a plot of the spreads for each poll.
 
 Instructions
-
-    Use ggplot to plot the spread for each of the two pollsters.
-    Define the x- and y-axes usingusing aes() within the ggplot function.
-    Use geom_boxplot to make a boxplot of the data.
-    Use geom_point to add data points to the plot.
-
+- Use ggplot to plot the spread for each of the two pollsters.
+- Define the x- and y-axes usingusing aes() within the ggplot function.
+- Use geom_boxplot to make a boxplot of the data.
+- Use geom_point to add data points to the plot.
+```
 # Load the libraries and data you need for the following exercises
 library(dslabs)
 library(dplyr)
@@ -1090,6 +1097,8 @@ polls <- polls_us_election_2016 %>%
 
 # Make a boxplot with points of the spread for each pollster
 polls %>% ggplot(aes(pollster, spread)) + geom_boxplot() + geom_point()
+```
+
 
     Defining Pollster Bias
     The data do seem to suggest there is a difference between the pollsters. However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference,  d
