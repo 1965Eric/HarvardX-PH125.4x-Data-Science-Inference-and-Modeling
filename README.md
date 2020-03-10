@@ -1099,108 +1099,89 @@ polls <- polls_us_election_2016 %>%
 polls %>% ggplot(aes(pollster, spread)) + geom_boxplot() + geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76313005-6b3d7500-62d4-11ea-944a-ff2529ec2369.png)
+    
+7. Defining Pollster Bias
 
-    Defining Pollster Bias
-    The data do seem to suggest there is a difference between the pollsters. However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference,  d
-
-    .
+The data do seem to suggest there is a difference between the pollsters. However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference, d.
 
 We will model the observed data Yij in the following way:
 
- Yij=d+bi+εij
+Yij=d+bi+εij
 
-with  i=1,2
-indexing the two pollsters, bi the bias for pollster  i, and  εij poll to poll chance variability. We assume the ε are independent from each other, have expected value 0 and standard deviation  σi regardless of  j
-
-.
+with i=1,2 indexing the two pollsters, bi the bias for pollster i, and εij poll to poll chance variability. We assume the ε are independent from each other, have expected value 0 and standard deviation σi regardless of j.
 
 Which of the following statements best reflects what we need to know to determine if our data fit the urn model?
 
 Possible Answers
+- [ ] A. Is εij=0?
+- [ ] B. How close are Yij to d?
+- [X] C. Is b1≠b2?
+- [ ] D. Are b1=0 and b2=0?
 
-A. Is  εij=0
-?
-B. How close are  Yij to  d?
-C. Is  b1≠b2?
-D. Are  b1=0 and  b2=0
+8. Derive Expected Value
 
-?
+We modelled the observed data Yij as:
 
-    Derive Expected Value
-    We modelled the observed data  Yij
+Yij=d+bi+εij
 
-    as:
+On the right side of this model, only εij is a random variable. The other two values are constants.
 
- Yij=d+bi+εij
-
-On the right side of this model, only  εij
-
-is a random variable. The other two values are constants.
-
-What is the expected value of  Yij
-
-?
+What is the expected value of Yij?
 
 Possible Answers
+- [X] A.  d+b1
+- [ ] B.  b1+εij
+- [ ] C.  d
+- [ ] D.  d+b1+εij
 
-A.  d+b1
+9. Expected Value and Standard Error of Poll 1
 
-B.  b1+εij C.  d
-D.  d+b1+εij
+Suppose we define Ȳ1 as the average of poll results from the first poll and σ1 as the standard deviation of the first poll.
 
-    Expected Value and Standard Error of Poll 1
-    Suppose we define  Y¯1
-
-    as the average of poll results from the first poll and σ1 as the standard deviation of the first poll.
-
-What is the expected value and standard error of  Y¯1
-
-?
+What is the expected value and standard error of Ȳ1?
 
 Possible Answers
+- [ ] A. The expected value is d+b1 and the standard error is σ1
+- [ ] B. The expected value is d and the standard error is σ1/√N1
+- [X] C. The expected value is d+b1 and the standard error is σ1/√N1
+- [ ] D. The expected value is d and the standard error is σ1+√N1
 
-A. The expected value is  d+b1
-and the standard error is  σ1
-B. The expected value is  d and the standard error is  σ1/N1−−−√
-C. The expected value is  d+b1 and the standard error is  σ1/N1−−−√
-D. The expected value is  d and the standard error is  σ1+N1−−−√
+10. Expected Value and Standard Error of Poll 2
 
-    Expected Value and Standard Error of Poll 2
-    Now we define  Y¯2
+Now we define Ȳ2 as the average of poll results from the second poll.
 
-    as the average of poll results from the second poll.
-
-What is the expected value and standard error of  Y¯2
-
-?
+What is the expected value and standard error of Ȳ2?
 
 Possible Answers
+- [ ] A. The expected value is d+b2 and the standard error is σ2 
+- [ ] B. The expected value is d and the standard error is σ2/√N2
+- [X] C. The expected value is d+b2 and the standard error is σ2/√N2
+- [ ] D. The expected value is d and the standard error is σ2+√N2
 
-A. The expected value is  d+b2
-and the standard error is  σ2 B. The expected value is  d and the standard error is  σ2/N2−−−√ C. The expected value is  d+b2 and the standard error is  σ2/N2−−−√ D. The expected value is  d and the standard error is  σ2+N2−−−√
+11. Difference in Expected Values Between Polls
 
-    Difference in Expected Values Between Polls
-    Using what we learned by answering the previous questions, what is the expected value of  Y¯2−Y¯1
-
-    ?
-
-Possible Answers
-
-A.  (b2−b1)2
-B.  b2−b1/(√N) C.  b2+b1 D.  b2−b1
-
-    Standard Error of the Difference Between Polls
-    Using what we learned by answering the questions above, what is the standard error of  Y¯2−Y¯1
-
-    ?
+Using what we learned by answering the previous questions, what is the expected value of Ȳ2−Ȳ1?
 
 Possible Answers
+- [ ] A.  (b2−b1)^2
+- [ ] B.  b2−b1/(√N) 
+- [ ] C.  b2+b1
+- [X] D.  b2−b1
 
-A.  σ22/N2+σ21/N1−−−−−−−−−−−−−√
-B.  σ2/N2+σ1/N1−−−−−−−−−−−−√ C.  (σ22/N2+σ21/N1)2 D.  σ22/N2+σ21/N1
+12. Standard Error of the Difference Between Polls
 
-    Compute the Estimates
-    The answer to the previous question depends on  σ1
+Using what we learned by answering the questions above, what is the standard error of Ȳ2−Ȳ1?
+
+Possible Answers
+- [X] A.  √(σ2^2/N2+σ1^2/N1)
+- [ ] B.  √(σ2/N2+σ1/N1) 
+- [ ] C.  (σ2^2/N2+σ1^2/N1)^2 
+- [ ] D.  σ2^2/N2+σ1^2/N1
+
+13. Compute the Estimates
+
+The answer to the previous question depends on  σ1
 
 and  σ2
 
