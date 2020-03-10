@@ -705,15 +705,14 @@ In this case, it is more informative to estimate the spread or the difference be
 Assume that there are only two parties and that d=2p−1. Construct a 95% confidence interval for difference in proportions on election night.
 
 Instructions
-
-    Use the mutate function to define a new variable called ‘d_hat’ in polls. The new variable subtract the proportion of Trump voters from the proportion of Clinton voters.
-    Extract the sample size N from the first poll in your subset object polls.
-    Extract the difference in proportions of voters d_hat from the first poll in your subset object polls.
-    Use the formula above to calculate p from d_hat. Assign p to the variable X_hat.
-    Find the standard error of the spread given N.
-    Calculate the 95% confidence interval of this estimate of the difference in proportions, d_hat, using the qnorm function.
-    Save the lower and upper confidence intervals as an object called ci. Save the lower confidence interval first.
-
+- Use the mutate function to define a new variable called ‘d_hat’ in polls. The new variable subtract the proportion of Trump voters from the proportion of Clinton voters.
+- Extract the sample size N from the first poll in your subset object polls.
+- Extract the difference in proportions of voters d_hat from the first poll in your subset object polls.
+- Use the formula above to calculate p from d_hat. Assign p to the variable X_hat.
+- Find the standard error of the spread given N.
+- Calculate the 95% confidence interval of this estimate of the difference in proportions, d_hat, using the qnorm function.
+- Save the lower and upper confidence intervals as an object called ci. Save the lower confidence interval first.
+```
 # Add a statement to this line of code that will add a new column named `d_hat` to `polls`. The new column should contain the difference in the proportion of voters.
 polls <- polls_us_election_2016 %>% filter(enddate >= "2016-10-31" & state == "U.S.")  %>%
   mutate(d_hat = rawpoll_clinton/100 - rawpoll_trump/100)
@@ -724,157 +723,135 @@ N <- polls$samplesize[1]
 # For the difference `d_hat` of the first poll in `polls` to a variable called `d_hat`. Print this value to the console.
 d_hat <- polls$d_hat[1]
 d_hat
-
+```
+```
 ## [1] 0.04
-
+```
+```
 # Assign proportion of votes for Clinton to the variable `X_hat`.
 X_hat <- (d_hat+1)/2
 
 # Calculate the standard error of the spread and save it to a variable called `se_hat`. Print this value to the console.
 se_hat <- 2*sqrt(X_hat*(1-X_hat)/N)
 se_hat
-
+```
+```
 ## [1] 0.02120683
-
+```
+```
 # Use `qnorm` to calculate the 95% confidence interval for the difference in the proportions of voters. Save the lower and then the upper confidence interval to a variable called `ci`.
 ci <- c(d_hat - qnorm(0.975)*se_hat, d_hat + qnorm(0.975)*se_hat)
+```
+6. Pollster results for d
 
-    Pollster results for d
-    Create a new object called pollster_results that contains the pollster’s name, the end date of the poll, the difference in the proportion of voters who declared a vote either, the standard error of this estimate, and the lower and upper bounds of the confidence interval for the estimate.
+Create a new object called pollster_results that contains the pollster’s name, the end date of the poll, the difference in the proportion of voters who declared a vote either, the standard error of this estimate, and the lower and upper bounds of the confidence interval for the estimate.
 
 Instructions
-
-    Use the mutate function to define four new columns: ‘X_hat’, ‘se_hat’, ‘lower’, and ‘upper’. Temporarily add these columns to the polls object that has already been loaded for you.
-    In the X_hat column, calculate the proportion of voters for Clinton using d_hat.
-    In the se_hat column, calculate the standard error of the spread for each poll using the sqrtfunction.
-    In the lower column, calculate the lower bound of the 95% confidence interval using the qnorm function.
-    In the upper column, calculate the upper bound of the 95% confidence interval using the qnorm function.
-    Use the select function to select the columns from polls to save to the new object pollster_results.
-
+- Use the mutate function to define four new columns: ‘X_hat’, ‘se_hat’, ‘lower’, and ‘upper’. Temporarily add these columns to the polls object that has already been loaded for you.
+- In the X_hat column, calculate the proportion of voters for Clinton using d_hat.
+- In the se_hat column, calculate the standard error of the spread for each poll using the sqrt function.
+- In the lower column, calculate the lower bound of the 95% confidence interval using the qnorm function.
+- In the upper column, calculate the upper bound of the 95% confidence interval using the qnorm function.
+- Use the select function to select the columns from polls to save to the new object pollster_results.
+```
 # The subset `polls` data with 'd_hat' already calculated has been loaded. Examine it using the `head` function.
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-1	U.S.	2016-11-03	2016-11-06	
-2	U.S.	2016-11-01	2016-11-07	
-3	U.S.	2016-11-02	2016-11-06	
-4	U.S.	2016-11-04	2016-11-07	
-5	U.S.	2016-11-03	2016-11-06	
-6	U.S.	2016-11-03	2016-11-06	
+```
+```
+   state     startdate       enddate
+   <fctr>    <date>          <date>
+1  U.S.	     2016-11-03	     2016-11-06	
+2  U.S.	     2016-11-01	     2016-11-07	
+3  U.S.	     2016-11-02	     2016-11-06	
+4  U.S.	     2016-11-04	     2016-11-07	
+5  U.S.	     2016-11-03	     2016-11-06	
+6  U.S.	     2016-11-03	     2016-11-06	
 6 rows | 1-4 of 17 columns
-
+```
+```
 # Create a new object called `pollster_results` that contains columns for pollster name, end date, d_hat, lower confidence interval of d_hat, and upper confidence interval of d_hat for each poll.
 pollster_results <- polls %>% mutate(X_hat = (d_hat + 1) / 2) %>% mutate(se_hat = 2 * sqrt(X_hat * (1 - X_hat) / samplesize)) %>% mutate(lower = d_hat - qnorm(0.975) * se_hat) %>% mutate(upper = d_hat + qnorm(0.975) * se_hat) %>% select(pollster, enddate, d_hat, lower, upper)
 pollster_results
-
-pollster
-<fctr>
-	
-enddate
-<date>
-	
-d_hat
-<dbl>
-	
-ABC News/Washington Post	2016-11-06	0.0400	
-Google Consumer Surveys	2016-11-07	0.0234	
-Ipsos	2016-11-06	0.0300	
-YouGov	2016-11-07	0.0400	
-Gravis Marketing	2016-11-06	0.0400	
+```
+```
+pollster                                                        enddate         d_hat
+<fctr>                                                          <date>          <dbl>
+ABC News/Washington Post	                                2016-11-06	0.0400	
+Google Consumer Surveys	                                        2016-11-07	0.0234	
+Ipsos	                                                        2016-11-06	0.0300	
+YouGov	                                                        2016-11-07	0.0400	
+Gravis Marketing	                                        2016-11-06	0.0400	
 Fox News/Anderson Robbins Research/Shaw & Company Research	2016-11-06	0.0400	
-CBS News/New York Times	2016-11-06	0.0400	
-NBC News/Wall Street Journal	2016-11-05	0.0400	
-IBD/TIPP	2016-11-07	-0.0150	
-Selzer & Company	2016-11-06	0.0300	
+CBS News/New York Times	                                        2016-11-06	0.0400	
+NBC News/Wall Street Journal	                                2016-11-05	0.0400	
+IBD/TIPP	                                                2016-11-07	-0.0150	
+Selzer & Company	                                        2016-11-06	0.0300	
 1-10 of 70 rows | 1-3 of 5 columns
+```
+7. Comparing to actual results - d
 
-    Comparing to actual results - d
-    What proportion of confidence intervals for the difference between the proportion of voters included d, the actual difference in election day?
+What proportion of confidence intervals for the difference between the proportion of voters included d, the actual difference in election day?
 
 Instructions
-
-    Use the mutate function to define a new variable withinpollster_results called hit.
-    Use logical expressions to determine if each values in lower and upper span the actual difference in proportions of voters.
-    Use the mean function to determine the average value in hit and summarize the results using summarize.
-    Save the result as an object called avg_hit.
-
+- Use the mutate function to define a new variable withinpollster_results called hit.
+- Use logical expressions to determine if each values in lower and upper span the actual difference in proportions of voters.
+- Use the mean function to determine the average value in hit and summarize the results using summarize.
+- Save the result as an object called avg_hit.
+```
 # The `pollster_results` object has already been loaded. Examine it using the `head` function.
 head(pollster_results)
-
- 
- 
-	
-pollster
-<fctr>
-	
-enddate
-<date>
-	
-d_hat
-<dbl>
-	
-1	ABC News/Washington Post	2016-11-06	0.0400	
-2	Google Consumer Surveys	2016-11-07	0.0234	
-3	Ipsos	2016-11-06	0.0300	
-4	YouGov	2016-11-07	0.0400	
-5	Gravis Marketing	2016-11-06	0.0400	
-6	Fox News/Anderson Robbins Research/Shaw & Company Research	2016-11-06	0.0400	
+```
+```
+    pollster                                                    enddate         d_hat
+    <fctr>                                                      <date>          <dbl>
+1   ABC News/Washington Post	                                2016-11-06	0.0400	
+2   Google Consumer Surveys	                                2016-11-07	0.0234	
+3   Ipsos	                                                2016-11-06	0.0300	
+4   YouGov	                                                2016-11-07	0.0400	
+5   Gravis Marketing	                                        2016-11-06	0.0400	
+6   Fox News/Anderson Robbins Research/Shaw & Company Research	2016-11-06	0.0400	
 6 rows | 1-4 of 6 columns
-
+```
+```
 # Add a logical variable called `hit` that indicates whether the actual value (0.021) exists within the confidence interval of each poll. Summarize the average `hit` result to determine the proportion of polls with confidence intervals include the actual value. Save the result as an object called `avg_hit`.
 avg_hit <- pollster_results %>% mutate(hit=lower <= 0.021 & upper >= 0.021) %>% summarize(mean(hit))
+```
+8. Comparing to actual results by pollster
 
-    Comparing to actual results by pollster
-    Although the proportion of confidence intervals that include the actual difference between the proportion of voters increases substantially, it is still lower that 0.95. In the next chapter, we learn the reason for this.
+Although the proportion of confidence intervals that include the actual difference between the proportion of voters increases substantially, it is still lower that 0.95. In the next chapter, we learn the reason for this.
 
-To motivate our next exercises, calculate the difference between each poll’s estimate d¯ and the actual d=0.021. Stratify this difference, or error, by pollster in a plot.
+To motivate our next exercises, calculate the difference between each poll’s estimate đ and the actual d=0.021. Stratify this difference, or error, by pollster in a plot.
 
 Instructions
-
-    Define a new variable errors that contains the difference between the estimated difference between the proportion of voters and the actual difference on election day, 0.021.
-    To create the plot of errors by pollster, add a layer with the function geom_point. The aesthetic mappings require a definition of the x-axis and y-axis variables. So the code looks like the example below, but you fill in the variables for x and y.
-    The last line of the example code adjusts the x-axis labels so that they are easier to read.
-
+- Define a new variable errors that contains the difference between the estimated difference between the proportion of voters and the actual difference on election day, 0.021.
+- To create the plot of errors by pollster, add a layer with the function geom_point. The aesthetic mappings require a definition of the x-axis and y-axis variables. So the code looks like the example below, but you fill in the variables for x and y.
+- The last line of the example code adjusts the x-axis labels so that they are easier to read.
+```
 data %>% ggplot(aes(x = , y = )) +
   geom_point() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+```
+```
 # The `polls` object has already been loaded. Examine it using the `head` function.
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-1	U.S.	2016-11-03	2016-11-06	
-2	U.S.	2016-11-01	2016-11-07	
-3	U.S.	2016-11-02	2016-11-06	
-4	U.S.	2016-11-04	2016-11-07	
-5	U.S.	2016-11-03	2016-11-06	
-6	U.S.	2016-11-03	2016-11-06	
+```
+```
+    state         startdate       enddate
+    <fctr>        <date>          <date>
+1   U.S.	   2016-11-03	  2016-11-06	
+2   U.S.	   2016-11-01	  2016-11-07	
+3   U.S.	   2016-11-02	  2016-11-06	
+4   U.S.	   2016-11-04	  2016-11-07	
+5   U.S.	   2016-11-03	  2016-11-06	
+6   U.S.	   2016-11-03	  2016-11-06	
 6 rows | 1-4 of 17 columns
-
+```
+```
 # Add variable called `error` to the object `polls` that contains the difference between d_hat and the actual difference on election day. Then make a plot of the error stratified by pollster.
 polls %>% mutate(error = d_hat - 0.021) %>% ggplot(aes(x = pollster, y = error)) + geom_point() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+
 
     Comparing to actual results by pollster - multiple polls
     Remake the plot you made for the previous exercise, but only for pollsters that took five or more polls.
