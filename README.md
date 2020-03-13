@@ -1705,31 +1705,33 @@ ps <- p_calc(taus)
 plot(taus, ps)
 ```
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/76642941-6be43e80-6554-11ea-8835-89a8268a8f5f.png)
 
 ## Section 6 Overview
 
 In Section 6, you will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
 
 After completing Section 6, you will be able to:
+- Understand how pollsters use hierarchical models to forecast the results of elections.
+- Incorporate multiple sources of variability into a mathematical model to make predictions.
+- Construct confidence intervals that better model deviations such as those seen in election data using the t-distribution. 
 
-Understand how pollsters use hierarchical models to forecast the results of elections.
-Incorporate multiple sources of variability into a mathematical model to make predictions.
-Construct confidence intervals that better model deviations such as those seen in election data using the t-distribution. There are 2 assignments that use the DataCamp platform for you to practice your coding skills.
+There are 2 assignments that use the DataCamp platform for you to practice your coding skills.
 
-The textbook for this section is available here
-Assessment 6.1: Election Forecasting
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#election-forecasting)
 
-    Confidence Intervals of Polling Data
-    For each poll in the polling data set, use the CLT to create a 95% confidence interval for the spread. Create a new table called cis that contains columns for the lower and upper limits of the confidence intervals.
+## Assessment 6.1: Election Forecasting
+
+1. Confidence Intervals of Polling Data
+
+For each poll in the polling data set, use the CLT to create a 95% confidence interval for the spread. Create a new table called cis that contains columns for the lower and upper limits of the confidence intervals.
 
 Instructions
-
-    Use pipes %>% to pass the poll object on to the mutate function, which creates new variables.
-    Create a variable called X_hatthat contains the estimate of the proportion of Clinton voters for each poll.
-    Create a variable called se that contains the standard error of the spread.
-    Calculate the confidence intervals using the qnorm function and your calculated se.
-    Use the select function to keep the following columns: state, startdate, enddate, pollster, grade, spread, lower, upper.
+- Use pipes %>% to pass the poll object on to the mutate function, which creates new variables.
+- Create a variable called X_hat that contains the estimate of the proportion of Clinton voters for each poll.
+- Create a variable called se that contains the standard error of the spread.
+- Calculate the confidence intervals using the qnorm function and your calculated se.
+- Use the select function to keep the following columns: state, startdate, enddate, pollster, grade, spread, lower, upper.
 
 ## Load the libraries and data
 library(dplyr)
