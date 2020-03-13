@@ -784,7 +784,7 @@ Gravis Marketing	                                        2016-11-06	0.0400
 Fox News/Anderson Robbins Research/Shaw & Company Research	2016-11-06	0.0400	
 CBS News/New York Times	                                        2016-11-06	0.0400	
 NBC News/Wall Street Journal	                                2016-11-05	0.0400	
-IBD/TIPP	                                                2016-11-07	-0.0150	
+IBD/TIPP	                                                2016-11-07     -0.0150	
 Selzer & Company	                                        2016-11-06	0.0300	
 1-10 of 70 rows | 1-3 of 5 columns
 ```
@@ -1181,215 +1181,150 @@ Possible Answers
 
 13. Compute the Estimates
 
-The answer to the previous question depends on  σ1
+The answer to the previous question depends on σ1 and σ2, which we don’t know. We learned that we can estimate these values using the sample standard deviation.
 
-and  σ2
-
-    , which we don’t know. We learned that we can estimate these values using the sample standard deviation.
-
-Compute the estimates of  σ1
-and  σ2
-
-.
+Compute the estimates of σ1 and σ2.
 
 Instructions
-
-    Group the data by pollster.
-    Summarize the standard deviation of the spreads for each of the two pollsters.
-    Store the pollster names and standard deviations of the spreads (σ) in an object called sigma
-
+- Group the data by pollster.
+- Summarize the standard deviation of the spreads for each of the two pollsters.
+- Store the pollster names and standard deviations of the spreads (σ) in an object called sigma
+```
 # The `polls` data have already been loaded for you. Use the `head` function to examine them.
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-1	U.S.	2016-11-05	2016-11-07	The Times-Picayune/Lucid	NA	
-2	U.S.	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
-3	U.S.	2016-11-01	2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
-4	U.S.	2016-11-04	2016-11-06	The Times-Picayune/Lucid	NA	
-5	U.S.	2016-10-31	2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
-6	U.S.	2016-11-03	2016-11-05	The Times-Picayune/Lucid	NA	
+```
+```
+   state      startdate        endddate         pollster                                        grade     
+   <fctr>     <date>           <date>           <fctr>                                          <fctr>
+1  U.S.	      2016-11-05       2016-11-07	The Times-Picayune/Lucid	                NA	
+2  U.S.	      2016-11-02       2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
+3  U.S.	      2016-11-01       2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
+4  U.S.	      2016-11-04       2016-11-06	The Times-Picayune/Lucid	                NA	
+5  U.S.	      2016-10-31       2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
+6  U.S.	      2016-11-03       2016-11-05	The Times-Picayune/Lucid	                NA	
 6 rows | 1-6 of 17 columns
-
+```
+```
 # Create an object called `sigma` that contains a column for `pollster` and a column for `s`, the standard deviation of the spread
 polls %>% group_by(pollster)
-
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-samplesize
-<int>
-	
-U.S.	2016-11-05	2016-11-07	The Times-Picayune/Lucid	NA	2521	
-U.S.	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	1500	
-U.S.	2016-11-01	2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	1500	
-U.S.	2016-11-04	2016-11-06	The Times-Picayune/Lucid	NA	2584	
-U.S.	2016-10-31	2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	1500	
-U.S.	2016-11-03	2016-11-05	The Times-Picayune/Lucid	NA	2526	
-U.S.	2016-10-27	2016-10-31	Rasmussen Reports/Pulse Opinion Research	C+	1500	
-U.S.	2016-10-30	2016-11-01	Rasmussen Reports/Pulse Opinion Research	C+	1500	
-U.S.	2016-11-02	2016-11-04	The Times-Picayune/Lucid	NA	2561	
-U.S.	2016-11-01	2016-11-03	The Times-Picayune/Lucid	NA	2627	
+```
+```
+state   startdate       endddate        pollster                                        grade     samplesize   
+<fctr>  <date>          <date>          <fctr>                                          <fctr>    <int>
+U.S.	2016-11-05	2016-11-07	The Times-Picayune/Lucid	                NA	  2521	
+U.S.	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
+U.S.	2016-11-01	2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
+U.S.	2016-11-04	2016-11-06	The Times-Picayune/Lucid	                NA	  2584	
+U.S.	2016-10-31	2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
+U.S.	2016-11-03	2016-11-05	The Times-Picayune/Lucid	                NA	  2526	
+U.S.	2016-10-27	2016-10-31	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
+U.S.	2016-10-30	2016-11-01	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
+U.S.	2016-11-02	2016-11-04	The Times-Picayune/Lucid	                NA	  2561	
+U.S.	2016-11-01	2016-11-03	The Times-Picayune/Lucid	                NA	  2627	
 1-10 of 40 rows | 1-6 of 16 columns
-
+```
+```
 sigma <- polls %>% group_by(pollster) %>% summarize(s = sd(spread))
 
 # Print the contents of sigma to the console
 sigma
-
-pollster
-<fctr>
-	
-s
-<dbl>
-Rasmussen Reports/Pulse Opinion Research	0.01768945
-The Times-Picayune/Lucid	0.02678078
+```
+```
+pollster                                    s
+<fctr>                                      <dbl>
+Rasmussen Reports/Pulse Opinion Research    0.01768945
+The Times-Picayune/Lucid	            0.02678078
 2 rows
+```
+14. Probability Distribution of the Spread
 
-    Probability Distribution of the Spread
-    What does the central limit theorem tell us about the distribution of the differences between the pollster averages,  Y¯2−Y¯1
-
-    ?
+What does the central limit theorem tell us about the distribution of the differences between the pollster averages, Ȳ2−Ȳ1?
 
 Possible Answers
+- [ ] A. The central limit theorem cannot tell us anything because this difference is not the average of a sample.
+- [ ] B. Because Yij are approximately normal, the averages are normal too.
+- [X] C. If we assume N2 and N1 are large enough, Ȳ2 and Ȳ1, and their difference, are approximately normal.
+- [ ] D. These data do not contain vectors of 0 and 1, so the central limit theorem does not apply.
 
-A. The central limit theorem cannot tell us anything because this difference is not the average of a sample.
-B. Because  Yij
-are approximately normal, the averages are normal too.
-C. If we assume N2 and N1 are large enough,  Y¯2 and  Y¯1
+15. Calculate the 95% Confidence Interval of the Spreads
 
-, and their difference, are approximately normal.
-D. These data do not contain vectors of 0 and 1, so the central limit theorem does not apply.
+We have constructed a random variable that has expected value b2−b1, the pollster bias difference. If our model holds, then this random variable has an approximately normal distribution. The standard error of this random variable depends on σ1 and  σ2, but we can use the sample standard deviations we computed earlier. We have everything we need to answer our initial question: is b2−b1 different from 0?
 
-    Calculate the 95% Confidence Interval of the Spreads
-    We have constructed a random variable that has expected value  b2−b1
-
-, the pollster bias difference. If our model holds, then this random variable has an approximately normal distribution. The standard error of this random variable depends on  σ1 and  σ2, but we can use the sample standard deviations we computed earlier. We have everything we need to answer our initial question: is  b2−b1
-
-    different from 0?
-
-Construct a 95% confidence interval for the difference  b2
-and  b1
-
-. Does this interval contain zero?
+Construct a 95% confidence interval for the difference b2 and b1. Does this interval contain zero?
 
 Instructions
-
-    Use pipes %>% to pass the data polls on to functions that will group by pollster and summarize the average spread, standard deviation, and number of polls per pollster.
-    Calculate the estimate by subtracting the average spreads.
-    Calculate the standard error using the standard deviations of the spreads and the sample size.
-    Calculate the 95% confidence intervals using the qnorm function. Save the lower and then the upper confidence interval to a variable called ci.
-
+- Use pipes %>% to pass the data polls on to functions that will group by pollster and summarize the average spread, standard deviation, and number of polls per pollster.
+- Calculate the estimate by subtracting the average spreads.
+- Calculate the standard error using the standard deviations of the spreads and the sample size.
+- Calculate the 95% confidence intervals using the qnorm function. Save the lower and then the upper confidence interval to a variable called ci.
+```
 # The `polls` data have already been loaded for you. Use the `head` function to examine them.
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-1	U.S.	2016-11-05	2016-11-07	The Times-Picayune/Lucid	NA	
-2	U.S.	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
-3	U.S.	2016-11-01	2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
-4	U.S.	2016-11-04	2016-11-06	The Times-Picayune/Lucid	NA	
-5	U.S.	2016-10-31	2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
-6	U.S.	2016-11-03	2016-11-05	The Times-Picayune/Lucid	NA	
+```
+```
+   state      startdate        endddate         pollster                                        grade     
+   <fctr>     <date>           <date>           <fctr>                                          <fctr>
+1  U.S.	      2016-11-05       2016-11-07	The Times-Picayune/Lucid	                NA	
+2  U.S.	      2016-11-02       2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
+3  U.S.	      2016-11-01       2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
+4  U.S.	      2016-11-04       2016-11-06	The Times-Picayune/Lucid	                NA	
+5  U.S.	      2016-10-31       2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
+6  U.S.	      2016-11-03       2016-11-05	The Times-Picayune/Lucid	                NA	
 6 rows | 1-6 of 17 columns
-
+```
+```
 names(polls)
-
+```
+```
 ##  [1] "state"            "startdate"        "enddate"         
 ##  [4] "pollster"         "grade"            "samplesize"      
 ##  [7] "population"       "rawpoll_clinton"  "rawpoll_trump"   
 ## [10] "rawpoll_johnson"  "rawpoll_mcmullin" "adjpoll_clinton" 
 ## [13] "adjpoll_trump"    "adjpoll_johnson"  "adjpoll_mcmullin"
 ## [16] "spread"
-
+```
+```
 # Create an object called `res` that summarizes the average, standard deviation, and number of polls for the two pollsters.
 res <- polls %>% group_by(pollster) %>% summarize(avg=mean(spread), s = sd(spread), N=n())
 res
-
-pollster
-<fctr>
-	
-avg
-<dbl>
-	
-s
-<dbl>
-	
-N
-<int>
-Rasmussen Reports/Pulse Opinion Research	0.00062500	0.01768945	16
-The Times-Picayune/Lucid	0.05291667	0.02678078	24
+```
+```
+pollster                                  avg             s               N
+<fctr>                                    <dbl>           <dbl>           <int>
+Rasmussen Reports/Pulse Opinion Research  0.00062500	  0.01768945	  16
+The Times-Picayune/Lucid	          0.05291667	  0.02678078	  24
 2 rows
-
+```
+```
 # Store the difference between the larger average and the smaller in a variable called `estimate`. Print this value to the console.
 estimate <- max(res$avg) - min(res$avg)
 estimate
-
+```
+```
 ## [1] 0.05229167
-
+```
+```
 # Store the standard error of the estimates as a variable called `se_hat`. Print this value to the console.
 se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 se_hat
-
+```
+```
 ## [1] 0.007031433
-
+```
+```
 # Calculate the 95% confidence interval of the spreads. Save the lower and then the upper confidence interval to a variable called `ci`.
 ci <- c(estimate - qnorm(0.975)*se_hat, estimate + qnorm(0.975)*se_hat)
+```
+16. Calculate the P-value
 
-    Calculate the P-value
-    The confidence interval tells us there is relatively strong pollster effect resulting in a difference of about 5%. Random variability does not seem to explain it.
+The confidence interval tells us there is relatively strong pollster effect resulting in a difference of about 5%. Random variability does not seem to explain it.
 
 Compute a p-value to relay the fact that chance does not explain the observed pollster effect.
 
 Instructions
-
-    Use the pnorm function to calculate the probability that a random value is larger than the observed ratio of the estimate to the standard error.
-    Multiply the probability by 2, because this is the two-tailed test.
-
+- Use the pnorm function to calculate the probability that a random value is larger than the observed ratio of the estimate to the standard error.
+- Multiply the probability by 2, because this is the two-tailed test.
+```
 # We made an object `res` to summarize the average, standard deviation, and number of polls for the two pollsters.
 res <- polls %>% group_by(pollster) %>% 
   summarize(avg = mean(spread), s = sd(spread), N = n()) 
@@ -1400,29 +1335,28 @@ se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 
 # Calculate the p-value
 2 * (1 - pnorm(estimate / se_hat, 0, 1))
-
+```
+```
 ## [1] 1.030287e-13
+```
+17. Comparing Within-Poll and Between-Poll Variability
 
-    Comparing Within-Poll and Between-Poll Variability
-    We compute statistic called the t-statistic by dividing our estimate of  b2−b1
+We compute statistic called the t-statistic by dividing our estimate of b2−b1 by its estimated standard error:
 
-    by its estimated standard error:
+Ȳ2−Ȳ1/√((s2^2/N2)+(s1^2/N1))
 
- Y¯2−Y¯1s22/N2+s21/N1√
-
-Later we learn will learn of another approximation for the distribution of this statistic for values of N2 and N1 that aren’t large enough for the CLT.
+Later we will learn of another approximation for the distribution of this statistic for values of N2 and N1 that aren’t large enough for the CLT.
 
 Note that our data has more than two pollsters. We can also test for pollster effect using all pollsters, not just two. The idea is to compare the variability across polls to variability within polls. We can construct statistics to test for effects and approximate their distribution. The area of statistics that does this is called Analysis of Variance or ANOVA. We do not cover it here, but ANOVA provides a very useful set of tools to answer questions such as: is there a pollster effect?
 
 Compute the average and standard deviation for each pollster and examine the variability across the averages and how it compares to the variability within the pollsters, summarized by the standard deviation.
 
 Instructions
-
-    Group the polls data by pollster.
-    Summarize the average and standard deviation of the spreads for each pollster.
-    Create an object called var that contains three columns: pollster, mean spread, and standard deviation.
-    Be sure to name the column for mean avg and the column for standard deviation s.
-
+- Group the polls data by pollster.
+- Summarize the average and standard deviation of the spreads for each pollster.
+- Create an object called var that contains three columns: pollster, mean spread, and standard deviation.
+- Be sure to name the column for mean avg and the column for standard deviation s.
+```
 # Execute the following lines of code to filter the polling data and calculate the spread
 polls <- polls_us_election_2016 %>% 
   filter(enddate >= "2016-10-15" &
@@ -1435,61 +1369,56 @@ polls <- polls_us_election_2016 %>%
 # Create an object called `var` that contains columns for the pollster, mean spread, and standard deviation. Print the contents of this object to the console.
 var <- polls %>% group_by(pollster) %>% summarize(avg = mean(spread), s = sd(spread))
 var
-
-pollster
-<fctr>
-	
-avg
-<dbl>
-	
-s
-<dbl>
-ABC News/Washington Post	0.037333333	0.033904628
-CVOTER International	0.027895455	0.017975499
-Google Consumer Surveys	0.030280000	0.018476390
-Gravis Marketing	0.016000000	0.015165751
-IBD/TIPP	0.001047619	0.016832933
-Ipsos	0.055272727	0.019464698
-Morning Consult	0.041428571	0.014638501
-Rasmussen Reports/Pulse Opinion Research	0.000625000	0.017689451
-The Times-Picayune/Lucid	0.052916667	0.026780779
-USC Dornsife/LA Times	-0.021320833	0.020661474
+```
+```
+pollster                                  avg             s
+<fctr>                                    <dbl>           <dbl>
+ABC News/Washington Post	          0.037333333	  0.033904628
+CVOTER International	                  0.027895455	  0.017975499
+Google Consumer Surveys	                  0.030280000	  0.018476390
+Gravis Marketing	                  0.016000000	  0.015165751
+IBD/TIPP	                          0.001047619	  0.016832933
+Ipsos	                                  0.055272727	  0.019464698
+Morning Consult	                          0.041428571	  0.014638501
+Rasmussen Reports/Pulse Opinion Research  0.000625000	  0.017689451
+The Times-Picayune/Lucid	          0.052916667	  0.026780779
+USC Dornsife/LA Times	                 -0.021320833	  0.020661474
 1-10 of 11 rows
-Section 5 Overview
+```
+## Section 5 Overview
 
 In Section 5, you will learn about Bayesian statistics through looking at examples from rare disease diagnosis and baseball.
 
 After completing Section 5, you will be able to:
+- Apply Bayes’ theorem to calculate the probability of A given B.
+- Understand how to use hierarchical models to make better predictions by considering multiple levels of variability.
+- Compute a posterior probability using an empirical Bayesian approach.
+- Calculate a 95% credible interval from a posterior probability.
 
-    Apply Bayes’ theorem to calculate the probability of A given B.
-    Understand how to use hierarchical models to make better predictions by considering multiple levels of variability.
-    Compute a posterior probability using an empirical Bayesian approach.
-    Calculate a 95% credible interval from a posterior probability.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-statistics)
 
-The textbook for this section is available here
-Assessment 5.1: Bayesian Statistics
+## Assessment 5.1: Bayesian Statistics
 
-    Statistics in the Courtroom
-    In 1999 in England Sally Clark was found guilty of the murder of two of her sons. Both infants were found dead in the morning, one in 1996 and another in 1998, and she claimed the cause of death was sudden infant death syndrome (SIDS). No evidence of physical harm was found on the two infants so the main piece of evidence against her was the testimony of Professor Sir Roy Meadow, who testified that the chances of two infants dying of SIDS was 1 in 73 million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500 and then calculating that the chance of two SIDS cases was 8,500 × 8,500 ≈ 73 million.
+Statistics in the Courtroom
+
+In 1999 in England Sally Clark was found guilty of the murder of two of her sons. Both infants were found dead in the morning, one in 1996 and another in 1998, and she claimed the cause of death was sudden infant death syndrome (SIDS). No evidence of physical harm was found on the two infants so the main piece of evidence against her was the testimony of Professor Sir Roy Meadow, who testified that the chances of two infants dying of SIDS was 1 in 73 million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500 and then calculating that the chance of two SIDS cases was 8,500 × 8,500 ≈ 73 million.
 
 Based on what we’ve learned throughout this course, which statement best describes a potential flaw in Sir Meadow’s reasoning?
 
 Possible Answers
+- [X] A. Sir Meadow assumed the second death was independent of the first son being affected, thereby ignoring possible genetic causes.
+- [ ] B. There is no flaw. The multiplicative rule always applies in this way: Pr(A and B)=Pr(A)Pr(B)
+- [ ] C. Sir Meadow should have added the probabilities: Pr(A and B)=Pr(A)+Pr(B)
+- [ ] D. The rate of SIDS is too low to perform these types of statistics.
 
-A. Sir Meadow assumed the second death was independent of the first son being affected, thereby ignoring possible genetic causes.
-B. There is no flaw. The multiplicative rule always applies in this way: Pr(A and B)=Pr(A)Pr(B)
-C. Sir Meadow should have added the probabilities: Pr(A and B)=Pr(A)+Pr(B)
-D. The rate of SIDS is too low to perform these types of statistics.
+2. Recalculating the SIDS Statistics
 
-    Recalculating the SIDS Statistics
-    Let’s assume that there is in fact a genetic component to SIDS and the the probability of Pr(second case of SIDS∣first case of SIDS)=1/100, is much higher than 1 in 8,500.
+Let’s assume that there is in fact a genetic component to SIDS and the the probability of Pr(second case of SIDS∣first case of SIDS) = 1/100, is much higher than 1 in 8,500.
 
 What is the probability of both of Sally Clark’s sons dying of SIDS?
-
 Instructions
-
-    Calculate the probability of both sons dying to SIDS.
-
+- Calculate the probability of both sons dying to SIDS.
+```
 # Define `Pr_1` as the probability of the first son dying of SIDS
 Pr_1 <- 1/8500
 
@@ -1498,41 +1427,39 @@ Pr_2 <- 1/100
 
 # Calculate the probability of both sons dying of SIDS. Print this value to the console.
 Pr_1*Pr_2
-
+```
+```
 ## [1] 1.176471e-06
+```
+3. NBayes’ Rule in the Courtroom
 
-    NBayes’ Rule in the Courtroom
-    Many press reports stated that the expert claimed the probability of Sally Clark being innocent as 1 in 73 million. Perhaps the jury and judge also interpreted the testimony this way. This probability can be written like this:
+Many press reports stated that the expert claimed the probability of Sally Clark being innocent as 1 in 73 million. Perhaps the jury and judge also interpreted the testimony this way. This probability can be written like this:
 
- Pr(mother is a murderer∣two children found dead with no evidence of harm)
+Pr(mother is a murderer∣two children found dead with no evidence of harm)
 
 Possible Answers
+- [ ] A.  Pr(two children found dead with no evidence of harm)Pr(mother is a murderer)/Pr(two children found dead with no evidence of harm)
+- [ ] B.  Pr(two children found dead with no evidence of harm)Pr(mother is a murderer)
+- [X] C.  Pr(two children found dead with no evidence of harm∣mother is a murderer)Pr(mother is a murderer)/Pr(two children found dead with no evidence of harm)
+- [ ] D. 1/8500
 
-A.  Pr(two children found dead with no evidence of harm)Pr(mother is a murderer)Pr(two children found dead with no evidence of harm)
+4. Calculate the Probability
 
-B.  Pr(two children found dead with no evidence of harm)Pr(mother is a murderer)
+Assume that the probability of a murderer finding a way to kill her two children without leaving evidence of physical harm is:
 
-C.  Pr(two children found dead with no evidence of harm∣mother is a murderer)Pr(mother is a murderer)Pr(two children found dead with no evidence of harm)
-
-D. 1/8500
-
-    Calculate the Probability
-    Assume that the probability of a murderer finding a way to kill her two children without leaving evidence of physical harm is:
-
- Pr(two children found dead with no evidence of harm∣mother is a murderer)=0.50
+Pr(two children found dead with no evidence of harm∣mother is a murderer)=0.50
 
 Assume that the murder rate among mothers is 1 in 1,000,000.
 
- Pr(mother is a murderer)=1/1,000,000
+Pr(mother is a murderer)=1/1,000,000
 
 According to Bayes’ rule, what is the probability of:
 
- Pr(mother is a murderer∣two children found dead with no evidence of harm)
+Pr(mother is a murderer∣two children found dead with no evidence of harm)
 
 Instructions
-
-Use Bayes’ rule to calculate the probability that the mother is a murderer, considering the rates of murdering mothers in the population, the probability that two siblings die of SIDS, and the probability that a murderer kills children without leaving evidence of physical harm.
-
+- Use Bayes’ rule to calculate the probability that the mother is a murderer, considering the rates of murdering mothers in the population, the probability that two siblings die of SIDS, and the probability that a murderer kills children without leaving evidence of physical harm.
+```
 # Define `Pr_1` as the probability of the first son dying of SIDS
 Pr_1 <- 1/8500
 
@@ -1551,33 +1478,34 @@ Pr_BA <- 0.50
 # Define Pr_AB as the probability that a mother is a murderer, given that her two children died with no evidence of physical harm. Print this value to the console.
 Pr_AB <- Pr_BA*Pr_A/Pr_B
 Pr_AB
-
+```
+```
 ## [1] 0.425
+```
+5. Misuse of Statistics in the Courts
 
-    Misuse of Statistics in the Courts
-    After Sally Clark was found guilty, the Royal Statistical Society issued a statement saying that there was “no statistical basis” for the expert’s claim. They expressed concern at the “misuse of statistics in the courts”. Eventually, Sally Clark was acquitted in June 2003.
+After Sally Clark was found guilty, the Royal Statistical Society issued a statement saying that there was “no statistical basis” for the expert’s claim. They expressed concern at the “misuse of statistics in the courts”. Eventually, Sally Clark was acquitted in June 2003.
 
 In addition to misusing the multiplicative rule as we saw earlier, what else did Sir Meadow miss?
 
 Possible Answers
+- [ ] A. He made an arithmetic error in forgetting to divide by the rate of SIDS in siblings.
+- [X] B. He did not take into account how rare it is for a mother to murder her children.
+- [ ] C. He mixed up the numerator and denominator of Bayes’ rule.
+- [ ] D. He did not take into account murder rates in the population.
 
-A. He made an arithmetic error in forgetting to divide by the rate of SIDS in siblings.
-B. He did not take into account how rare it is for a mother to murder her children.
-C. He mixed up the numerator and denominator of Bayes’ rule.
-D. He did not take into account murder rates in the population.
-
-    Back to Election Polls
-    Florida is one of the most closely watched states in the U.S. election because it has many electoral votes and the election is generally close. Create a table with the poll spread results from Florida taken during the last days before the election using the sample code.
+6. Back to Election Polls
+    
+Florida is one of the most closely watched states in the U.S. election because it has many electoral votes and the election is generally close. Create a table with the poll spread results from Florida taken during the last days before the election using the sample code.
 
 The CLT tells us that the average of these spreads is approximately normal. Calculate a spread average and provide an estimate of the standard error.
 
 Instructions
-
-    Calculate the average of the spreads. Call this average avg in the final table.
-    Calculate an estimate of the standard error of the spreads. Call this standard error se in the final table.
-    Use the mean and sd functions nested within summarize to find the average and standard deviation of the grouped spread data.
-    Save your results in an object called results.
-
+- Calculate the average of the spreads. Call this average avg in the final table.
+- Calculate an estimate of the standard error of the spreads. Call this standard error se in the final table.
+- Use the mean and sd functions nested within summarize to find the average and standard deviation of the grouped spread data.
+- Save your results in an object called results.
+```
 # Load the libraries and poll data
 library(dplyr)
 library(dslabs)
@@ -1590,81 +1518,62 @@ polls <- polls_us_election_2016 %>%
 
 # Examine the `polls` object using the `head` function
 head(polls)
-
- 
- 
-	
-state
-<fctr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-1	Florida	2016-11-03	2016-11-06	Quinnipiac University	A-	
-2	Florida	2016-11-02	2016-11-04	YouGov	B	
-3	Florida	2016-11-01	2016-11-07	SurveyMonkey	C-	
-4	Florida	2016-11-06	2016-11-06	Trafalgar Group	C	
-5	Florida	2016-11-05	2016-11-06	Opinion Savvy/InsiderAdvantage	C-	
-6	Florida	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
+```
+```
+   state    startdate       endddate        pollster                                        grade
+   <fctr>   <date>          <date>          <fctr>                                          <fctr>
+1  Florida  2016-11-03	    2016-11-06	    Quinnipiac University	                    A-	
+2  Florida  2016-11-02	    2016-11-04	    YouGov	                                    B	
+3  Florida  2016-11-01	    2016-11-07	    SurveyMonkey	                            C-	
+4  Florida  2016-11-06	    2016-11-06	    Trafalgar Group	                            C	
+5  Florida  2016-11-05      2016-11-06	    Opinion Savvy/InsiderAdvantage	            C-	
+6  Florida  2016-11-02      2016-11-06	    Rasmussen Reports/Pulse Opinion Research	    C+	
 6 rows | 1-6 of 17 columns
-
+```
+```
 # Create an object called `results` that has two columns containing the average spread (`avg`) and the standard error (`se`). Print the results to the console.
 results <- polls %>% summarize(avg = mean(spread),  se = sd(spread)/sqrt(n()))
 results
-
-avg
-<dbl>
-	
-se
-<dbl>
-0.004154545	0.007218692
+```
+```
+avg            se
+<dbl>          <dbl>
+0.004154545    0.007218692
 1 row
+```
+7. The Prior Distribution
 
-    The Prior Distribution
-    Assume a Bayesian model sets the prior distribution for Florida’s election night spread d to be normal with expected value μ and standard deviation τ.
+Assume a Bayesian model sets the prior distribution for Florida’s election night spread d to be normal with expected value μ and standard deviation τ.
 
 What are the interpretations of μ and τ?
 
 Possible Answers
+- [ ] A. μ and τ are arbitrary numbers that let us make probability statements about d.
+- [X] B. μ and τ summarize what we would predict for Florida before seeing any polls.
+- [ ] C. μ and τ summarize what we want to be true. We therefore set μ at 0.10 and τ at 0.01.
+- [ ] D. The choice of prior has no effect on the Bayesian analysis.
 
-A. μ and τ are arbitrary numbers that let us make probability statements about d.
-B. μ and τ summarize what we would predict for Florida before seeing any polls.
-C. μ and τ summarize what we want to be true. We therefore set μ at 0.10 and τ at 0.01.
-D. The choice of prior has no effect on the Bayesian analysis.
+8. Estimate the Posterior Distribution
 
-    Estimate the Posterior Distribution
-    The CLT tells us that our estimate of the spread  d^
-
-    has a normal distribution with expected value d and standard deviation σ, which we calculated in a previous exercise.
+The CLT tells us that our estimate of the spread ^d has a normal distribution with expected value d and standard deviation σ, which we calculated in a previous exercise.
 
 Use the formulas for the posterior distribution to calculate the expected value of the posterior distribution if we set μ=0 and τ=0.01.
 
 Instructions
-
-    Define μ and τ Identify which elements stored in the object results represent σ and Y
-    Estimate B using σ and τ
-    Estimate the posterior distribution using B, μ, and Y
-
+- Define μ and τ Identify which elements stored in the object results represent σ and Y
+- Estimate B using σ and τ
+- Estimate the posterior distribution using B, μ, and Y
+```
 # The results` object has already been loaded. Examine the values stored: `avg` and `se` of the spread
 results
-
-avg
-<dbl>
-	
-se
-<dbl>
+```
+```
+avg             se
+<dbl>           <dbl>
 0.004154545	0.007218692
 1 row
-
+```
+```
 # Define `mu` and `tau`
 mu <- 0
 tau <- 0.01
@@ -1680,22 +1589,25 @@ tau <- 0.01
 miu <- 0
 B <- sigma^2 / (sigma^2 + tau^2)
 B
-
+```
+```
 ## [1] 0.342579
-
+```
+```
 # Calculate the expected value of the posterior distribution
 miu + (1 - B) * (Y - miu)
-
+```
+```
 ## [1] 0.002731286
+```
+9. Standard Error of the Posterior Distribution
 
-    Standard Error of the Posterior Distribution
-    Compute the standard error of the posterior distribution.
+Compute the standard error of the posterior distribution.
 
 Instructions
-
-    Using the variables we have defined so far, calculate the standard error of the posterior distribution.
-    Print this value to the console.
-
+- Using the variables we have defined so far, calculate the standard error of the posterior distribution.
+- Print this value to the console.
+```
 # Here are the variables we have defined
 mu <- 0
 tau <- 0.01
@@ -1705,17 +1617,18 @@ B <- sigma^2 / (sigma^2 + tau^2)
 
 # Compute the standard error of the posterior distribution. Print this value to the console.
 sqrt(1 / (1 / sigma ^2 + 1 / tau ^2))
-
+```
+```
 ## [1] 0.005853024
+```
+10. Constructing a Credible Interval
 
-    Constructing a Credible Interval
-    Using the fact that the posterior distribution is normal, create an interval that has a 95% of occurring centered at the posterior expected value. Note that we call these credible intervals.
+Using the fact that the posterior distribution is normal, create an interval that has a 95% of occurring centered at the posterior expected value. Note that we call these credible intervals.
 
 Instructions
-
-    Calculate the 95% credible intervals using the qnorm function.
-    Save the lower and upper confidence intervals as an object called ci. Save the lower - confidence interval first.
-
+- Calculate the 95% credible intervals using the qnorm function.
+- Save the lower and upper confidence intervals as an object called ci. Save the lower - confidence interval first.
+```
 # Here are the variables we have defined in previous exercises
 mu <- 0
 tau <- 0.01
@@ -1727,21 +1640,24 @@ se <- sqrt( 1/ (1/sigma^2 + 1/tau^2))
 # Construct the 95% credible interval. Save the lower and then the upper confidence interval to a variable called `ci`.
 est <- B * mu + (1 - B) * Y
 est
-
+```
+```
 ## [1] 0.002731286
-
+```
+```
 ci <- c(est - qnorm(0.975) * se, est + qnorm(0.975) * se)
 ci
-
+```
+```
 ## [1] -0.008740432  0.014203003
+```
+11. Odds of Winning Florida
 
-    Odds of Winning Florida
-    According to this analysis, what was the probability that Trump wins Florida?
+According to this analysis, what was the probability that Trump wins Florida?
 
 Instructions
-
-    Using the pnorm function, calculate the probability that the spread in Florida was less than 0.
-
+- Using the pnorm function, calculate the probability that the spread in Florida was less than 0.
+```
 # Assign the expected value of the posterior distribution to the variable `exp_value`
 exp_value <- B*mu + (1-B)*Y 
 
@@ -1750,21 +1666,22 @@ se <- sqrt( 1/ (1/sigma^2 + 1/tau^2))
 
 # Using the `pnorm` function, calculate the probability that the actual spread was less than 0 (in Trump's favor). Print this value to the console.
 pnorm(0, exp_value, se)
-
+```
+```
 ## [1] 0.3203769
+```
+12. Change the Priors
 
-    Change the Priors
-    We had set the prior variance τ to 0.01, reflecting that these races are often close.
+We had set the prior variance τ to 0.01, reflecting that these races are often close.
 
 Change the prior variance to include values ranging from 0.005 to 0.05 and observe how the probability of Trump winning Florida changes by making a plot.
 
 Instructions
-
-    Create a vector of values of taus by executing the sample code.
-    Create a function using function(){} called p_calc that first calculates B given tau and sigma and then calculates the probability of Trump winning, as we did in the previous exercise.
-    Apply your p_calc function across all the new values of taus.
-    Use the plot function to plot τ on the x-axis and the new probabilities on the y-axis.
-
+- Create a vector of values of taus by executing the sample code.
+- Create a function using function(){} called p_calc that first calculates B given tau and sigma and then calculates the probability of Trump winning, as we did in the previous exercise.
+- Apply your p_calc function across all the new values of taus.
+- Use the plot function to plot τ on the x-axis and the new probabilities on the y-axis.
+```
 # Define the variables from previous exercises
 mu <- 0
 sigma <- results$se
@@ -1786,8 +1703,11 @@ ps <- p_calc(taus)
 
 # Plot `taus` on the x-axis and `ps` on the y-axis
 plot(taus, ps)
+```
 
-Section 6 Overview
+
+
+## Section 6 Overview
 
 In Section 6, you will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
 
