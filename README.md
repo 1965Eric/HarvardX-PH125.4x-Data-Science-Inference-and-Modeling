@@ -2041,19 +2041,20 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   geom_point()
 ```
 
+![Unknown-4](https://user-images.githubusercontent.com/17474099/76786995-7e5eb200-67b8-11ea-926a-697fa27aa8e6.png)
 
-    Filter Error Plot
-    Some of these states only have a few polls. Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
+10. Filter Error Plot
+
+Some of these states only have a few polls. Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
 
 Instructions
-
-    Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
-    Group the filtered data by state using group_by.
-    Use the filter function to filter the data for states with at least 5 polls.
-    Use the reorder function to order the state data by error.
-    Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
-    Use geom_box to indicate that we want to plot a boxplot.
-    Use geom_point to add data points as a layer.
+- Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
+- Group the filtered data by state using group_by.
+- Use the filter function to filter the data for states with at least 5 polls.
+- Use the reorder function to order the state data by error.
+- Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
+- Use geom_box to indicate that we want to plot a boxplot.
+- Use geom_point to add data points as a layer.
 
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
