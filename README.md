@@ -1995,6 +1995,8 @@ head(errors)
 hist(errors$error)
 ```
 
+![Unknown-3](https://user-images.githubusercontent.com/17474099/76786457-8bc76c80-67b7-11ea-9d37-0ceb1789ddbf.png)
+
 ```
 # Calculate the median of the errors. Print this value to the console.
 median(errors$error)
@@ -2002,51 +2004,34 @@ median(errors$error)
 ```
 ## [1] 0.037
 ```
-    Plot Bias by State
-    We see that, at the state level, the median error was slightly in favor of Clinton. The distribution is not centered at 0, but at 0.037. This value represents the general bias we described in an earlier section.
+9. Plot Bias by State
+
+We see that, at the state level, the median error was slightly in favor of Clinton. The distribution is not centered at 0, but at 0.037. This value represents the general bias we described in an earlier section.
 
 Create a boxplot to examine if the bias was general to all states or if it affected some states differently. Filter the data to include only pollsters with grades B+ or higher.
 
 Instructions
-
-    Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
-    Use the reorder function to order the state data by error.
-    Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
-    Use geom_boxplot to indicate that we want to plot a boxplot.
-    Use geom_point to add data points as a layer.
-
+- Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
+- Use the reorder function to order the state data by error.
+- Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
+- Use geom_boxplot to indicate that we want to plot a boxplot.
+- Use geom_point to add data points as a layer.
+```
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
-
- 
- 
-	
-state
-<chr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-spread
-<dbl>
-	
-1	New Mexico	2016-11-06	2016-11-06	Zia Poll	NA	0.02	
-2	Virginia	2016-11-03	2016-11-04	Public Policy Polling	B+	0.05	
-3	Iowa	2016-11-01	2016-11-04	Selzer & Company	A+	-0.07	
-4	Wisconsin	2016-10-26	2016-10-31	Marquette University	A	0.06	
-5	North Carolina	2016-11-04	2016-11-06	Siena College	A	0.00	
-6	Georgia	2016-11-06	2016-11-06	Landmark Communications	B	-0.03	
+```
+```
+      state            startdate       enddate        pollster                 grade          spread
+      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
+1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
+2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
+3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
+4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
+5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
+6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
 6 rows | 1-7 of 12 columns
-
+```
+```
 # Create a boxplot showing the errors by state for polls with grades B+ or higher
 errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   mutate(state = reorder(state, error)) %>%
@@ -2054,6 +2039,8 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   geom_boxplot() + 
   geom_point()
+```
+
 
     Filter Error Plot
     Some of these states only have a few polls. Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
