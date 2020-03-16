@@ -1732,7 +1732,7 @@ Instructions
 - Create a variable called se that contains the standard error of the spread.
 - Calculate the confidence intervals using the qnorm function and your calculated se.
 - Use the select function to keep the following columns: state, startdate, enddate, pollster, grade, spread, lower, upper.
-
+```
 ## Load the libraries and data
 library(dplyr)
 library(dslabs)
@@ -1747,18 +1747,18 @@ polls <- polls_us_election_2016 %>%
 cis <- polls %>% mutate(X_hat = (spread+1)/2, se = 2*sqrt(X_hat*(1-X_hat)/samplesize), 
                  lower = spread - qnorm(0.975)*se, upper = spread + qnorm(0.975)*se) %>%
   select(state, startdate, enddate, pollster, grade, spread, lower, upper)
+```
+2. Compare to Actual Results
 
-    Compare to Actual Results
-    You can add the final result to the cis table you just created using the left_join function as shown in the sample code.
+You can add the final result to the cis table you just created using the left_join function as shown in the sample code.
 
 Now determine how often the 95% confidence interval includes the actual result.
 
 Instructions
-
-    Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-    Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-    Summarize the proportion of values in hit that are true as a variable called proportion_hits.
-
+- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
+- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
+- Summarize the proportion of values in hit that are true as a variable called proportion_hits.
+```
 # Add the actual results to the `cis` data set
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
@@ -1766,24 +1766,25 @@ ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "
 # Create an object called `p_hits` that summarizes the proportion of confidence intervals that contain the actual value. Print this object to the console.
 p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% summarize(proportion_hits = mean(hit))
 p_hits
-
-proportion_hits
-<dbl>
-0.66133
+```
+```
+                                 proportion_hits
+                                 <dbl>
+                                 0.66133
 1 row
+```
+3. Stratify by Pollster and Grade
 
-    Stratify by Pollster and Grade
-    Now find the proportion of hits for each pollster. Show only pollsters with more than 5 polls and order them from best to worst. Show the number of polls conducted by each pollster and the FiveThirtyEight grade of each pollster.
+Now find the proportion of hits for each pollster. Show only pollsters with more than 5 polls and order them from best to worst. Show the number of polls conducted by each pollster and the FiveThirtyEight grade of each pollster.
 
 Instructions
-
-    Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-    Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-    Use the group_by function to group the data by pollster.
-    Use the filter function to filter for pollsters that have more than 5 polls.
-    Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls by each pollster using the n() function and the grade of each poll.
-    Use the arrange function to arrange the proportion_hits in descending order.
-
+- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
+- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
+- Use the group_by function to group the data by pollster.
+- Use the filter function to filter for pollsters that have more than 5 polls.
+- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls by each pollster using the n() function and the grade of each poll.
+- Use the arrange function to arrange the proportion_hits in descending order.
+```
 # The `cis` data have already been loaded for you
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
@@ -1795,42 +1796,34 @@ p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spre
   summarize(proportion_hits = mean(hit), n = n(), grade = grade[1]) %>%
   arrange(desc(proportion_hits))
 p_hits
-
-pollster
-<fctr>
-	
-proportion_hits
-<dbl>
-	
-n
-<int>
-	
-grade
-<fctr>
-Quinnipiac University	1.0000000	6	A-
-Emerson College	0.9090909	11	B
-Public Policy Polling	0.8888889	9	B+
-University of New Hampshire	0.8571429	7	B+
-Ipsos	0.8067227	119	A-
-Mitchell Research & Communications	0.8000000	5	D
-Gravis Marketing	0.7826087	23	B-
-Trafalgar Group	0.7777778	9	C
-Rasmussen Reports/Pulse Opinion Research	0.7741935	31	C+
-Remington	0.6666667	9	NA
+```
+```
+pollster                                     proportion_hits        n            grade
+<fctr>                                       <dbl>                  <int>        <fctr>
+Quinnipiac University	                     1.0000000	            6	         A-
+Emerson College	                             0.9090909	            11	         B
+Public Policy Polling	                     0.8888889	            9	         B+
+University of New Hampshire	             0.8571429	            7	         B+
+Ipsos	                                     0.8067227	            119	         A-
+Mitchell Research & Communications	     0.8000000	            5	         D
+Gravis Marketing	                     0.7826087	            23	         B-
+Trafalgar Group	                             0.7777778	            9	         C
+Rasmussen Reports/Pulse Opinion Research     0.7741935	            31	         C+
+Remington	                             0.6666667	            9	         NA
 1-10 of 13 rows
+```
+4. Stratify by State
 
-    Stratify by State
-    Repeat the previous exercise, but instead of pollster, stratify by state. Here we can’t show grades.
+Repeat the previous exercise, but instead of pollster, stratify by state. Here we can’t show grades.
 
 Instructions
-
-    Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-    Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-    Use the group_by function to group the data by state.
-    Use the filter function to filter for states that have more than 5 polls.
-    Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
-    Use the arrange function to arrange the proportion_hits in descending order.
-
+- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
+- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
+- Use the group_by function to group the data by state.
+- Use the filter function to filter for states that have more than 5 polls.
+- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
+- Use the arrange function to arrange the proportion_hits in descending order.
+```
 # The `cis` data have already been loaded for you
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
@@ -1842,61 +1835,54 @@ p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spre
   summarize(proportion_hits = mean(hit), n = n()) %>%
   arrange(desc(proportion_hits)) 
 p_hits
-
-state
-<chr>
-	
-proportion_hits
-<dbl>
-	
-n
-<int>
-Connecticut	1.0000000	13
-Delaware	1.0000000	12
-Rhode Island	1.0000000	10
-New Mexico	0.9411765	17
-Washington	0.9333333	15
-Oregon	0.9285714	14
-Illinois	0.9230769	13
-Nevada	0.9230769	26
-Maine	0.9166667	12
-Montana	0.9166667	12
+```
+```
+state           proportion_hits        n
+<chr>           <dbl>                  <int>
+Connecticut	1.0000000	       13
+Delaware	1.0000000	       12
+Rhode Island	1.0000000	       10
+New Mexico	0.9411765	       17
+Washington	0.9333333	       15
+Oregon	        0.9285714	       14
+Illinois	0.9230769	       13
+Nevada	        0.9230769	       26
+Maine	        0.9166667	       12
+Montana	        0.9166667	       12
 1-10 of 51 rows
+```
+5. Plotting Prediction Results
 
-    Plotting Prediction Results
-    Make a barplot based on the result from the previous exercise.
+Make a barplot based on the result from the previous exercise.
 
 Instructions
-
-    Reorder the states in order of the proportion of hits.
-    Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
-    Use geom_bar to indicate that we want to plot a barplot. Specifcy stat = "identity" to indicate that the height of the bar should match the value.
-    Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
-
+- Reorder the states in order of the proportion of hits.
+- Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
+- Use geom_bar to indicate that we want to plot a barplot. Specifcy stat = "identity" to indicate that the height of the bar should match the value.
+- Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
+```
 # The `p_hits` data have already been loaded for you. Use the `head` function to examine it.
 head(p_hits)
-
-state
-<chr>
-	
-proportion_hits
-<dbl>
-	
-n
-<int>
-Connecticut	1.0000000	13
-Delaware	1.0000000	12
-Rhode Island	1.0000000	10
-New Mexico	0.9411765	17
-Washington	0.9333333	15
-Oregon	0.9285714	14
+```
+```
+state          proportion_hits    n
+<chr>          <dbl>              <int>
+Connecticut    1.0000000	  13
+Delaware       1.0000000	  12
+Rhode Island   1.0000000	  10
+New Mexico     0.9411765	  17
+Washington     0.9333333	  15
+Oregon	       0.9285714	  14
 6 rows
-
+```
+```
 # Make a barplot of the proportion of hits for each state
 p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   ggplot(aes(state, proportion_hits)) + 
   geom_bar(stat = "identity") +
   coord_flip()
+```
+
 
     Predicting the Winner
     Even if a forecaster’s confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
