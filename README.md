@@ -1964,57 +1964,44 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
  coord_flip()
 ```
 
+![Unknown-2](https://user-images.githubusercontent.com/17474099/76786053-ce3c7980-67b6-11ea-9573-55b8c23b42c9.png)
 
-    Plotting the Errors
-    In the previous graph, we see that most states’ polls predicted the correct winner 100% of the time. Only a few states polls’ were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
+8. Plotting the Errors
+
+In the previous graph, we see that most states’ polls predicted the correct winner 100% of the time. Only a few states polls’ were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
 
 Make a histogram of the errors. What is the median of these errors?
 
 Instructions
-
-    Use the hist function to generate a histogram of the errors
-    Use the median function to compute the median error
-
+- Use the hist function to generate a histogram of the errors
+- Use the median function to compute the median error
+```
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
-
- 
- 
-	
-state
-<chr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-spread
-<dbl>
-	
-1	New Mexico	2016-11-06	2016-11-06	Zia Poll	NA	0.02	
-2	Virginia	2016-11-03	2016-11-04	Public Policy Polling	B+	0.05	
-3	Iowa	2016-11-01	2016-11-04	Selzer & Company	A+	-0.07	
-4	Wisconsin	2016-10-26	2016-10-31	Marquette University	A	0.06	
-5	North Carolina	2016-11-04	2016-11-06	Siena College	A	0.00	
-6	Georgia	2016-11-06	2016-11-06	Landmark Communications	B	-0.03	
+```
+```
+      state            startdate       enddate        pollster                 grade          spread
+      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
+1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
+2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
+3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
+4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
+5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
+6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
 6 rows | 1-7 of 12 columns
-
+```
+```
 # Generate a histogram of the error
 hist(errors$error)
+```
 
+```
 # Calculate the median of the errors. Print this value to the console.
 median(errors$error)
-
+```
+```
 ## [1] 0.037
-
+```
     Plot Bias by State
     We see that, at the state level, the median error was slightly in favor of Clinton. The distribution is not centered at 0, but at 0.037. This value represents the general bias we described in an earlier section.
 
