@@ -1883,106 +1883,72 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   coord_flip()
 ```
 
+![Unknown](https://user-images.githubusercontent.com/17474099/76785089-122e7f00-67b5-11ea-97eb-cff413640093.png)
 
-    Predicting the Winner
-    Even if a forecaster’s confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
+6. Predicting the Winner
+
+Even if a forecaster’s confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
 
 Add two columns to the cis table by computing, for each poll, the difference between the predicted spread and the actual spread, and define a column hit that is true if the signs are the same.
 
 Instructions
-
-    Use the mutate function to add two new variables to the cis object: error and hit.
-    For the error variable, subtract the actual spread from the spread.
-    For the hit variable, return “TRUE” if the poll predicted the actual winner.
-    Save the new table as an object called errors.
-    Use the tail function to examine the last 6 rows of errors```.
-
+- Use the mutate function to add two new variables to the cis object: error and hit.
+- For the error variable, subtract the actual spread from the spread.
+- For the hit variable, return “TRUE” if the poll predicted the actual winner.
+- Save the new table as an object called errors.
+- Use the tail function to examine the last 6 rows of errors```.
+```
 # The `cis` data have already been loaded. Examine it using the `head` function.
 
 cis <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
 
 head(cis)
-
- 
- 
-	
-state
-<chr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-spread
-<dbl>
-	
-1	New Mexico	2016-11-06	2016-11-06	Zia Poll	NA	0.02	
-2	Virginia	2016-11-03	2016-11-04	Public Policy Polling	B+	0.05	
-3	Iowa	2016-11-01	2016-11-04	Selzer & Company	A+	-0.07	
-4	Wisconsin	2016-10-26	2016-10-31	Marquette University	A	0.06	
-5	North Carolina	2016-11-04	2016-11-06	Siena College	A	0.00	
-6	Georgia	2016-11-06	2016-11-06	Landmark Communications	B	-0.03	
+```
+```
+      state            startdate       enddate        pollster                 grade          spread
+      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
+1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
+2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
+3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
+4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
+5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
+6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
 6 rows | 1-7 of 10 columns
-
+```
+```
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
 errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
 
 # Examine the last 6 rows of `errors`
 tail(errors)
-
- 
- 
-	
-state
-<chr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-spread
-<dbl>
-	
-807	Utah	2016-10-04	2016-11-06	YouGov	B	-0.0910	
-808	Utah	2016-10-25	2016-10-31	Google Consumer Surveys	B	-0.0121	
-809	South Dakota	2016-10-28	2016-11-02	Ipsos	A-	-0.1875	
-810	Washington	2016-10-21	2016-11-02	Ipsos	A-	0.0838	
-811	Utah	2016-11-01	2016-11-07	Google Consumer Surveys	B	-0.1372	
-812	Oregon	2016-10-21	2016-11-02	Ipsos	A-	0.0905	
+```
+```
+      state            startdate       enddate        pollster                 grade          spread
+      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
+807   Utah	       2016-10-04      2016-11-06     YouGov	               B	     -0.0910	
+808   Utah	       2016-10-25      2016-10-31     Google Consumer Surveys  B	     -0.0121	
+809   South Dakota     2016-10-28      2016-11-02     Ipsos	               A-	     -0.1875	
+810   Washington       2016-10-21      2016-11-02     Ipsos	               A-	      0.0838	
+811   Utah	       2016-11-01      2016-11-07     Google Consumer Surveys  B	     -0.1372	
+812   Oregon	       2016-10-21      2016-11-02     Ipsos	               A-	      0.0905	
 6 rows | 1-7 of 12 columns
+```
+7. Plotting Prediction Results
 
-    Plotting Prediction Results
-    Create an object called p_hits that contains the proportion of instances when the sign of the actual spread matches the predicted spread for states with more than 5 polls.
+Create an object called p_hits that contains the proportion of instances when the sign of the actual spread matches the predicted spread for states with more than 5 polls.
 
 Make a barplot based on the result from the previous exercise that shows the proportion of times the sign of the spread matched the actual result for the data in p_hits.
 
 Instructions
-
-    Use the group_by function to group the data by state.
-    Use the filter function to filter for states that have more than 5 polls.
-    Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
-    To make the plot, follow these steps:
-    Reorder the states in order of the proportion of hits.
-    Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
-    Use geom_bar to indicate that we want to plot a barplot.
-    Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
-
+- Use the group_by function to group the data by state.
+- Use the filter function to filter for states that have more than 5 polls.
+- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
+- To make the plot, follow these steps:
+- Reorder the states in order of the proportion of hits.
+- Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
+- Use geom_bar to indicate that we want to plot a barplot.
+- Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
+```
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
 errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
 
@@ -1996,6 +1962,8 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   ggplot(aes(state, proportion_hits)) + 
   geom_bar(stat = "identity") +
  coord_flip()
+```
+
 
     Plotting the Errors
     In the previous graph, we see that most states’ polls predicted the correct winner 100% of the time. Only a few states polls’ were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
