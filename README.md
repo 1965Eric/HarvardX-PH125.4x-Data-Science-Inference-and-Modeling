@@ -2128,22 +2128,22 @@ probs <- sapply(df, pt_func)
 # Plot 'df' on the x-axis and 'probs' on the y-axis
 plot(df, probs)
 ```
+![Unknown](https://user-images.githubusercontent.com/17474099/76887233-3e640180-6882-11ea-975e-88548983d85e.png)
 
+3. Sampling From the Normal Distribution
 
-    Sampling From the Normal Distribution
-    In a previous section, we repeatedly took random samples of 50 heights from a distribution of heights. We noticed that about 95% of the samples had confidence intervals spanning the true population mean.
+In a previous section, we repeatedly took random samples of 50 heights from a distribution of heights. We noticed that about 95% of the samples had confidence intervals spanning the true population mean.
 
 Re-do this Monte Carlo simulation, but now instead of N=50, use N=15. Notice what happens to the proportion of hits.
 
 Instructions
-
-    Use the replicate function to carry out the simulation. Specify the number of times you want the code to run and, within brackets, the three lines of code that should run.
-    First use the sample function to randomly sample N values from x.
-    Second, create a vector called interval that calculates the 95% confidence interval for the sample. You will use the qnorm function.
-    Third, use the between function to determine if the population mean mu is contained between the confidence intervals.
-    Save the results of the Monte Carlo function to a vector called res.
-    Use the mean function to determine the proportion of hits in res.
-
+- Use the replicate function to carry out the simulation. Specify the number of times you want the code to run and, within brackets, the three lines of code that should run.
+- First use the sample function to randomly sample N values from x.
+- Second, create a vector called interval that calculates the 95% confidence interval for the sample. You will use the qnorm function.
+- Third, use the between function to determine if the population mean mu is contained between the confidence intervals.
+- Save the results of the Monte Carlo function to a vector called res.
+- Use the mean function to determine the proportion of hits in res.
+```
 # Load the neccessary libraries and data
 library(dslabs)
 library(dplyr)
@@ -2170,23 +2170,24 @@ res <- replicate(B, {
 
 # Calculate the proportion of times the simulation produced values within the 95% confidence interval. Print this value to the console.
 mean(res)
-
+```
+```
 ## [1] 0.9331
+```
+4. Sampling from the t-Distribution
 
-    Sampling from the t-Distribution
-    N=15 is not that big. We know that heights are normally distributed, so the t-distribution should apply. Repeat the previous Monte Carlo simulation using the t-distribution instead of using the normal distribution to construct the confidence intervals.
+N=15 is not that big. We know that heights are normally distributed, so the t-distribution should apply. Repeat the previous Monte Carlo simulation using the t-distribution instead of using the normal distribution to construct the confidence intervals.
 
 What are the proportion of 95% confidence intervals that span the actual mean height now?
 
 Instructions
-
-    Use the replicate function to carry out the simulation. Specify the number of times you want the code to run and, within brackets, the three lines of code that should run.
-    First use the sample function to randomly sample N values from x.
-    Second, create a vector called interval that calculates the 95% confidence interval for the sample. Remember to use the qt function this time to generate the confidence interval.
-    Third, use the between function to determine if the population mean mu is contained between the confidence intervals.
-    Save the results of the Monte Carlo function to a vector called res.
-    Use the mean function to determine the proportion of hits in res.
-
+- Use the replicate function to carry out the simulation. Specify the number of times you want the code to run and, within brackets, the three lines of code that should run.
+- First use the sample function to randomly sample N values from x.
+- Second, create a vector called interval that calculates the 95% confidence interval for the sample. Remember to use the qt function this time to generate the confidence interval.
+- Third, use the between function to determine if the population mean mu is contained between the confidence intervals.
+- Save the results of the Monte Carlo function to a vector called res.
+- Use the mean function to determine the proportion of hits in res.
+```
 # The vector of filtered heights 'x' has already been loaded for you. Calculate the mean.
 mu <- mean(x)
 
@@ -2204,73 +2205,61 @@ res <- replicate(B, {
 
 # Calculate the proportion of times the simulation produced values within the 95% confidence interval. Print this value to the console.
 mean(res)
-
+```
+```
 ## [1] 0.9512
+```
+5. Why the t-Distribution?
 
-    Why the t-Distribution?
-    Why did the t-distribution confidence intervals work so much better?
+Why did the t-distribution confidence intervals work so much better?
 
 Possible Answers
+- [X] A. The t-distribution takes the variability into account and generates larger confidence intervals. 
+- [ ] B. Because the t-distribution shifts the intervals in the direction towards the actual mean. 
+- [ ] C. This was just a chance occurrence. If we run it again, the CLT will work better. 
+- [ ] D. The t-distribution is always a better approximation than the normal distribution.
 
-A. The t-distribution takes the variability into account and generates larger confidence intervals. B. Because the t-distribution shifts the intervals in the direction towards the actual mean. C. This was just a chance occurrence. If we run it again, the CLT will work better. D. The t-distribution is always a better approximation than the normal distribution.
-Section 7 Overview
+## Section 7 Overview
 
 In Section 7, you will learn how to use association and chi-squared tests to perform inference for binary, categorical, and ordinal data through an example looking at research funding rates.
 
 After completing Section 7, you will be able to:
+- Use association and chi-squared tests to perform inference on binary, categorical, and ordinal data.
+- Calculate an odds ratio to get an idea of the magnitude of an observed effect.
 
-    Use association and chi-squared tests to perform inference on binary, categorical, and ordinal data.
-    Calculate an odds ratio to get an idea of the magnitude of an observed effect.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#association-tests)
 
-The textbook for this section is available here
-Assessment 7.1: Association and Chi-Squared Tests
+## Assessment 7.1: Association and Chi-Squared Tests
 
-    Comparing Proportions of Hits
-    In a previous exercise, we determined whether or not each poll predicted the correct winner for their state in the 2016 U.S. presidential election. Each poll was also assigned a grade by the poll aggregator. Now we’re going to determine if polls rated A- made better predictions than polls rated C-.
+1. Comparing Proportions of Hits
+
+In a previous exercise, we determined whether or not each poll predicted the correct winner for their state in the 2016 U.S. presidential election. Each poll was also assigned a grade by the poll aggregator. Now we’re going to determine if polls rated A- made better predictions than polls rated C-.
 
 In this exercise, filter the errors data for just polls with grades A- and C-. Calculate the proportion of times each grade of poll predicted the correct winner.
 
 Instructions
-
-    Filter errors for grades A- and C-.
-    Group the data by grade and hit.
-    Summarize the number of hits for each grade.
-    Generate a two-by-two table containing the number of hits and misses for each grade.
-    Calculate the proportion of times each grade was correct.
-
+- Filter errors for grades A- and C-.
+- Group the data by grade and hit.
+- Summarize the number of hits for each grade.
+- Generate a two-by-two table containing the number of hits and misses for each grade.
+- Calculate the proportion of times each grade was correct.
+```
 library(tidyr)
 # The 'errors' data have already been loaded. Examine them using the `head` function.
 head(errors)
-
- 
- 
-	
-state
-<chr>
-	
-startdate
-<date>
-	
-enddate
-<date>
-	
-pollster
-<fctr>
-	
-grade
-<fctr>
-	
-spread
-<dbl>
-	
-1	New Mexico	2016-11-06	2016-11-06	Zia Poll	NA	0.02	
-2	Virginia	2016-11-03	2016-11-04	Public Policy Polling	B+	0.05	
-3	Iowa	2016-11-01	2016-11-04	Selzer & Company	A+	-0.07	
-4	Wisconsin	2016-10-26	2016-10-31	Marquette University	A	0.06	
-5	North Carolina	2016-11-04	2016-11-06	Siena College	A	0.00	
-6	Georgia	2016-11-06	2016-11-06	Landmark Communications	B	-0.03	
+```
+```
+      state            startdate       enddate        pollster                 grade          spread
+      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
+1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
+2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
+3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
+4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
+5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
+6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
 6 rows | 1-7 of 12 columns
-
+```
+```
 # Generate an object called 'totals' that contains the numbers of good and bad predictions for polls rated A- and C-
 totals <- errors %>%
   filter(grade %in% c("A-", "C-")) %>%
@@ -2280,81 +2269,80 @@ totals <- errors %>%
 
 # Print the proportion of hits for grade A- polls to the console
 totals[[2,3]]/sum(totals[[3]])
-
+```
+```
 ## [1] 0.8030303
-
+```
+```
 # Print the proportion of hits for grade C- polls to the console
 totals[[2,2]]/sum(totals[[2]])
-
+```
+```
 ## [1] 0.8614958
+```
+2. Chi-squared Test
 
-    Chi-squared Test
-    We found that the A- polls predicted the correct winner about 86% of the time in their states and C- polls predicted the correct winner about 80% of the time.
+We found that the A- polls predicted the correct winner about 86% of the time in their states and C- polls predicted the correct winner about 80% of the time.
 
 Use a chi-squared test to determine if these proportions are different.
 
 Instructions
-
-    Use the chisq.test function to perform the chi-squared test. Save the results to an object called chisq_test.
-    Print the p-value of the test to the console.
-
+- Use the chisq.test function to perform the chi-squared test. Save the results to an object called chisq_test.
+- Print the p-value of the test to the console.
+```
 # The 'totals' data have already been loaded. Examine them using the `head` function.
 head(totals)
-
-hit
-<lgl>
-	
-C-
-<int>
-	
-A-
-<int>
-FALSE	50	26
-TRUE	311	106
+```
+```
+hit     C-        A-
+<lgl>   <int>     <int>
+FALSE	50	  26
+TRUE	311	  106
 2 rows
-
+```
+```
 # Perform a chi-squared test on the hit data. Save the results as an object called 'chisq_test'.
 chisq_test <- totals %>% 
   select(-hit) %>%
   chisq.test()
 chisq_test
-
+```
+```
 ## 
 ##  Pearson's Chi-squared test with Yates' continuity correction
 ## 
 ## data:  .
 ## X-squared = 2.1053, df = 1, p-value = 0.1468
-
+```
+```
 # Print the p-value of the chi-squared test to the console
 chisq_test$p.value
-
+```
+```
 ## [1] 0.1467902
+```
+3. Odds Ratio Calculation
 
-    Odds Ratio Calculation
-    It doesn’t look like the grade A- polls performed significantly differently than the grade C- polls in their states.
+It doesn’t look like the grade A- polls performed significantly differently than the grade C- polls in their states.
 
 Calculate the odds ratio to determine the magnitude of the difference in performance between these two grades of polls.
 
 Instructions
-
-    Calculate the odds that a grade C- poll predicts the correct winner. Save this result to a variable called odds_C.
-    Calculate the odds that a grade A- poll predicts the correct winner. Save this result to a variable called odds_A. -Calculate the odds ratio that tells us how many times larger the odds of a grade A- poll is at predicting the winner than a grade C- poll.
-
+- Calculate the odds that a grade C- poll predicts the correct winner. Save this result to a variable called odds_C.
+- Calculate the odds that a grade A- poll predicts the correct winner. Save this result to a variable called odds_A. 
+- Calculate the odds ratio that tells us how many times larger the odds of a grade A- poll is at predicting the winner than a grade C- poll.
+```
 # The 'totals' data have already been loaded. Examine them using the `head` function.
 head(totals)
-
-hit
-<lgl>
-	
-C-
-<int>
-	
-A-
-<int>
-FALSE	50	26
-TRUE	311	106
+```
+```
+hit     C-        A-
+<lgl>   <int>     <int>
+FALSE	50	  26
+TRUE	311	  106
 2 rows
-
+```
+```
 # Generate a variable called `odds_C` that contains the odds of getting the prediction right for grade C- polls
 odds_C <- (totals[[2,2]] / sum(totals[[2]])) / 
   (totals[[1,2]] / sum(totals[[2]]))
@@ -2365,17 +2353,18 @@ odds_A <- (totals[[2,3]] / sum(totals[[3]])) /
 
 # Calculate the odds ratio to determine how many times larger the odds ratio is for grade A- polls than grade C- polls
 odds_A/odds_C
-
+```
+```
 ## [1] 0.6554539
+```
+4. Significance
 
-    Significance
-    We did not find meaningful differences between the poll results from grade A- and grade C- polls in this subset of the data, which only contains polls for about a week before the election. Imagine we expanded our analysis to include all election polls and we repeat our analysis. In this hypothetical scenario, we get that the p-value for the difference in prediction success if 0.0015 and the odds ratio describing the effect size of the performance of grade A- over grade B- polls is 1.07.
+We did not find meaningful differences between the poll results from grade A- and grade C- polls in this subset of the data, which only contains polls for about a week before the election. Imagine we expanded our analysis to include all election polls and we repeat our analysis. In this hypothetical scenario, we get that the p-value for the difference in prediction success if 0.0015 and the odds ratio describing the effect size of the performance of grade A- over grade B- polls is 1.07.
 
 Based on what we learned in the last section, which statement reflects the best interpretation of this result?
 
 Possible Answers
-
-A. The p-value is below 0.05, so there is a significant difference. Grade A- polls are significantly better at predicting winners.
-B. The p-value is too close to 0.05 to call this a significant difference. We do not observe a difference in performance.
-C. The p-value is below 0.05, but the odds ratio is very close to 1. There is not a scientifically significant difference in performance.
-D. The p-value is below 0.05 and the odds ratio indicates that grade A- polls perform significantly better than grade C- polls.
+- [ ] A. The p-value is below 0.05, so there is a significant difference. Grade A- polls are significantly better at predicting winners.
+- [ ] B. The p-value is too close to 0.05 to call this a significant difference. We do not observe a difference in performance.
+- [X] C. The p-value is below 0.05, but the odds ratio is very close to 1. There is not a scientifically significant difference in performance.
+- [ ] D. The p-value is below 0.05 and the odds ratio indicates that grade A- polls perform significantly better than grade C- polls.
