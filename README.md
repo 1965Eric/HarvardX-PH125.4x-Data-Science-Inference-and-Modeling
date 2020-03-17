@@ -2083,35 +2083,37 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   geom_point()
 ```
 
+![Unknown](https://user-images.githubusercontent.com/17474099/76886959-d01f3f00-6881-11ea-9445-103193358031.png)
 
-Assessment 6.2: The t-Distribution
+## Assessment 6.2: The t-Distribution
 
-    Using the t-Distribution
-    We know that, with a normal distribution, only 5% of values are more than 2 standard deviations away from the mean.
+1. Using the t-Distribution
+
+We know that, with a normal distribution, only 5% of values are more than 2 standard deviations away from the mean.
 
 Calculate the probability of seeing t-distributed random variables being more than 2 in absolute value when the degrees of freedom are 3.
 
 Instructions
-
-Use the pt function to calculate the probability of seeing a value less than or equal to the argument.
-
+- Use the pt function to calculate the probability of seeing a value less than or equal to the argument.
+```
 # Calculate the probability of seeing t-distributed random variables being more than 2 in absolute value when 'df = 3'.
 1 - pt(2, 3) + pt(-2, 3)
-
+```
+```
 ## [1] 0.139326
+```
+2. Plotting the t-distribution
 
-    Plotting the t-distribution
-    Now use sapply to compute the same probability for degrees of freedom from 3 to 50.
+Now use sapply to compute the same probability for degrees of freedom from 3 to 50.
 
 Make a plot and notice when this probability converges to the normal distribution’s 5%.
 
 Instructions
-
-    Make a vector called df that contains a sequence of numbers from 3 to 50.
-    Using function, make a function called pt_func that recreates the calculation for the probability that a value is greater than 2 as an absolute value for any given degrees of freedom.
-    Use sapply to apply the pt_func function across all values contained in df. Call these probabilities probs.
-    Use the plot function to plot df on the x-axis and probs on the y-axis.
-
+- Make a vector called df that contains a sequence of numbers from 3 to 50.
+- Using function, make a function called pt_func that recreates the calculation for the probability that a value is greater than 2 as an absolute value for any given degrees of freedom.
+- Use sapply to apply the pt_func function across all values contained in df. Call these probabilities probs.
+- Use the plot function to plot df on the x-axis and probs on the y-axis.
+```
 # Generate a vector 'df' that contains a sequence of numbers from 3 to 50
 df <- seq(3,50)
 
@@ -2125,6 +2127,8 @@ probs <- sapply(df, pt_func)
 
 # Plot 'df' on the x-axis and 'probs' on the y-axis
 plot(df, probs)
+```
+
 
     Sampling From the Normal Distribution
     In a previous section, we repeatedly took random samples of 50 heights from a distribution of heights. We noticed that about 95% of the samples had confidence intervals spanning the true population mean.
