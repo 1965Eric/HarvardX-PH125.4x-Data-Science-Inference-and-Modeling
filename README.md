@@ -2369,18 +2369,9 @@ Possible Answers
 - [X] C. The p-value is below 0.05, but the odds ratio is very close to 1. There is not a scientifically significant difference in performance.
 - [ ] D. The p-value is below 0.05 and the odds ratio indicates that grade A- polls perform significantly better than grade C- polls.
 
----
-title: 'Data Science: Inference and Modeling - HarvardX: PH125.4x'
-author: 'Luiz Cunha'
-date: '2019-08-12'
-output: html_notebook
----
-
-# Course Wrap-up and Comprehensive Assessment: Brexit
-
 ## Comprehensive Assessment: Brexit
 
-### Brexit poll analysis - Part 1
+## Brexit poll analysis - Part 1
 
 **Directions**
 
@@ -2443,7 +2434,6 @@ d
 2 * se
 ```
 
-
 #### Question 2: Actual Brexit poll estimates
 Load and inspect the brexit_polls dataset from dslabs, which contains actual polling data for the 6 months before the Brexit vote. Raw proportions of voters preferring "Remain", "Leave", and "Undecided" are available (remain, leave, undecided) The spread is also available (spread), which is the difference in the raw proportion of voters choosing "Remain" and the raw proportion choosing "Leave".
 
@@ -2481,8 +2471,7 @@ brexit_polls[1,]$x_hat + qnorm(.975) * sqrt(brexit_polls[1,]$x_hat *(1-brexit_po
 # A: The interval predicts a winner but does not cover the true value of p
 ```
 
-
-### Brexit poll analysis - Part 2
+## Brexit poll analysis - Part 2
 
 This problem set is continued from the previous page. Make sure you have run the following code:
 ```{r}
@@ -2497,7 +2486,6 @@ brexit_polls <- brexit_polls %>%
 # final proportion voting "Remain"
 p <- 0.481
 ```
-
 
 #### Question 4: Confidence intervals for polls in June
 Create the data frame june_polls containing only Brexit polls ending in June 2016 (enddate of "2016-06-01" and later). We will calculate confidence intervals for all polls and determine how many cover the true value of $d$.
@@ -2532,7 +2520,6 @@ june_polls %>%
   summarize(mean(hit))
 ```
 
-
 #### Question 5: Hit rate by pollster
 Group and summarize the june_polls object by pollster to find the proportion of hits for each pollster and the number of polls per pollster. Use arrange to sort by hit rate.
 
@@ -2545,7 +2532,6 @@ june_polls %>%
 
 Which of the following are TRUE?
 A: The results are consistent with a large general bias that affects all pollsters. 
-
 
 #### Question 6: Boxplot of Brexit polls by poll type
 Make a boxplot of the spread in june_polls by poll type.
@@ -2562,7 +2548,6 @@ A: Telephone polls tend to show support "Remain" (spread > 0).
 A: Telephone polls tend to show higher support for "Remain" than online polls (higher spread).
 A: Online polls have a larger interquartile range (IQR) for the spread than telephone polls, indicating that they are more variable.
 A: Poll type introduces a bias that affects poll results.
-
 
 #### Question 7: Combined spread across poll type
 Calculate the confidence intervals of the spread combined across all polls in june_polls, grouping by poll type. Recall that to determine the standard error of the spread, you will need to double the standard error of the estimate.
@@ -2589,8 +2574,7 @@ res %>%
   select(ci_lower, ci_upper)
 ```
 
-
-### Brexit poll analysis - Part 3
+## Brexit poll analysis - Part 3
 
 This problem set is continued from the previous page. Make sure you have run the following code:
 ```{r}
@@ -2605,7 +2589,6 @@ brexit_polls <- brexit_polls %>%
 # final proportion voting "Remain"
 p <- 0.481
 ```
-
 
 #### Question 9: Chi-squared p-value
 Define brexit_hit, with the following code, which computes the confidence intervals for all Brexit polls in 2016 and then calculates whether the confidence interval covers the actual value of the spread $d=???0.038$:
