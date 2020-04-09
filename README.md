@@ -2368,3 +2368,327 @@ Possible Answers
 - [ ] B. The p-value is too close to 0.05 to call this a significant difference. We do not observe a difference in performance.
 - [X] C. The p-value is below 0.05, but the odds ratio is very close to 1. There is not a scientifically significant difference in performance.
 - [ ] D. The p-value is below 0.05 and the odds ratio indicates that grade A- polls perform significantly better than grade C- polls.
+
+---
+title: 'Data Science: Inference and Modeling - HarvardX: PH125.4x'
+author: 'Luiz Cunha'
+date: '2019-08-12'
+output: html_notebook
+---
+
+# Course Wrap-up and Comprehensive Assessment: Brexit
+
+## Comprehensive Assessment: Brexit
+
+### Brexit poll analysis - Part 1
+
+**Directions**
+
+There are 12 multi-part problems in this comprehensive assessment that review concepts from the entire course. The problems are split over 3 pages. Make sure you read the instructions carefully and run all pre-exercise code.
+
+For numeric entry problems, you have 10 attempts to input the correct answer. For true/false problems, you have 2 attempts.
+
+If you have questions, visit the "Brexit poll analysis" discussion forum that follows the assessment.
+
+IMPORTANT: Some of these exercises use dslabs datasets that were added in a July 2019 update. Make sure your package is up to date with the command update.packages("dslabs"). You can also update all packages on your system by running update.packages() with no arguments, and you should consider doing this routinely.
+
+**Overview**
+
+In June 2016, the United Kingdom (UK) held a referendum to determine whether the country would "Remain" in the European Union (EU) or "Leave" the EU. This referendum is commonly known as Brexit. Although the media and others interpreted poll results as forecasting "Remain" (p>0.5), the actual proportion that voted "Remain" was only 48.1% (p=0.481) and the UK thus voted to leave the EU. Pollsters in the UK were criticized for overestimating support for "Remain". 
+
+In this project, you will analyze real Brexit polling data to develop polling models to forecast Brexit results. You will write your own code in R and enter the answers on the edX platform.
+
+**Important definitions**
+
+Data Import  
+Import the brexit_polls polling data from the dslabs package and set options for the analysis:
+```{r}
+# suggested libraries and options
+library(tidyverse)
+options(digits = 3)
+# load brexit_polls object
+library(dslabs)
+data(brexit_polls)
+```
+
+**Final Brexit parameters**
+
+Define $p=0.481$ as the actual percent voting "Remain" on the Brexit referendum and  $d=2p-1=???0.038$ as the actual spread of the Brexit referendum with "Remain" defined as the positive outcome:
+```{r}
+p <- 0.481    # official proportion voting "Remain"
+d <- 2*p-1    # official spread
+```
+
+#### Question 1: Expected value and standard error of a poll
+
+```{r}
+# The final proportion of voters choosing "Remain" was p=0.481. Consider a poll with a sample of N=1500 voters.
+N <- 1500
+# What is the expected total number of voters in the sample choosing "Remain"?
+nb_remain <- N*p
+nb_remain
+# What is the standard error of the total number of voters in the sample choosing "Remain"?
+se_remain <- sqrt(N*p*(1-p))
+se_remain
+# What is the expected value of X_bar, the proportion of "Remain" voters?
+X_bar <- p
+X_bar
+# What is the standard error of X_bar, the proportion of "Remain" voters?
+se <- sqrt(p*(1-p)/N)
+se
+# What is the expected value of d, the spread between the proportion of "Remain" voters and "Leave" voters?
+d <- 2*p-1
+d
+# What is the standard error of d, the spread between the proportion of "Remain" voters and "Leave" voters?
+2 * se
+```
+
+
+#### Question 2: Actual Brexit poll estimates
+Load and inspect the brexit_polls dataset from dslabs, which contains actual polling data for the 6 months before the Brexit vote. Raw proportions of voters preferring "Remain", "Leave", and "Undecided" are available (remain, leave, undecided) The spread is also available (spread), which is the difference in the raw proportion of voters choosing "Remain" and the raw proportion choosing "Leave".
+
+Calculate x_hat for each poll, the estimate of the proportion of voters choosing "Remain" on the referendum day (p=.481), given the observed spread and the relationship $\hat{d} = 2\hat{X}???1$. Use mutate to add a variable x_hat to the brexit_polls object by filling in the skeleton code below:
+
+```{r}
+head(brexit_polls)
+brexit_polls <- brexit_polls %>%
+        mutate(x_hat = (spread+1)/2)
+# What is the average of the observed spreads (spread)?
+mean(brexit_polls$spread)
+ 
+# What is the standard deviation of the observed spreads?
+sd(brexit_polls$spread)
+# What is the average of x_hat, the estimates of the parameter p?
+mean(brexit_polls$x_hat)
+ 
+# What is the standard deviation of x_hat?
+sd(brexit_polls$x_hat)
+```
+
+#### Question 3: Confidence interval of a Brexit poll
+Consider the first poll in brexit_polls, a YouGov poll run on the same day as the Brexit referendum:
+
+```{r}
+brexit_polls[1,]
+# Use qnorm to compute the 95% confidence interval for X_hat.
+# What is the lower bound of the 95% confidence interval?
+brexit_polls[1,]$x_hat - qnorm(.975) * sqrt(brexit_polls[1,]$x_hat *(1-brexit_polls[1,]$x_hat)/brexit_polls[1,]$samplesize)
+ 
+# What is the upper bound of the 95% confidence interval?
+brexit_polls[1,]$x_hat + qnorm(.975) * sqrt(brexit_polls[1,]$x_hat *(1-brexit_polls[1,]$x_hat)/brexit_polls[1,]$samplesize)
+ 
+# Does the 95% confidence interval predict a winner (does not cover p=0.5)? Does the 95% confidence interval cover the true value of p observed during the referendum?
+# A: The interval predicts a winner but does not cover the true value of p
+```
+
+
+### Brexit poll analysis - Part 2
+
+This problem set is continued from the previous page. Make sure you have run the following code:
+```{r}
+# suggested libraries and options
+library(tidyverse)
+options(digits = 3)
+# load brexit_polls object and add x_hat column
+library(dslabs)
+data(brexit_polls)
+brexit_polls <- brexit_polls %>%
+    mutate(x_hat = (spread + 1)/2)
+# final proportion voting "Remain"
+p <- 0.481
+```
+
+
+#### Question 4: Confidence intervals for polls in June
+Create the data frame june_polls containing only Brexit polls ending in June 2016 (enddate of "2016-06-01" and later). We will calculate confidence intervals for all polls and determine how many cover the true value of $d$.
+
+First, use mutate to calculate a plug-in estimate se_x_hat for the standard error of the estimate $\hat{SE}[X]$ for each poll given its sample size and value of $\hat{X}$ (x_hat). Second, use mutate to calculate an estimate for the standard error of the spread for each poll given the value of se_x_hat. 
+Then, use mutate to calculate upper and lower bounds for 95% confidence intervals of the spread. Last, add a column hit that indicates whether the confidence interval for each poll covers the correct spread $d=???0.038$.
+
+```{r}
+d <- -0.038
+june_polls <- brexit_polls %>%
+  filter(enddate > "2016-06-01")
+june_polls <- june_polls %>%
+  mutate(se_x_hat = sqrt(x_hat*(1-x_hat)/samplesize),
+           se_spread = 2 * se_x_hat,
+           lower = spread - qnorm(.975) * se_spread,
+           upper = spread + qnorm(.975) * se_spread,
+           hit = (lower<=d & upper>=d))
+head(june_polls)
+# How many polls are in june_polls?
+nrow(june_polls)
+# What proportion of polls have a confidence interval that covers the value 0?
+june_polls %>%
+#  filter(lower<=0 & upper>=0) %>%
+  summarize(mean(lower<=0 & upper>=0))
+# What proportion of polls predict "Remain" (confidence interval entirely above 0)?
+june_polls %>%
+#  filter(lower<=0 & upper>=0) %>%
+  summarize(mean(lower>0))
+# What proportion of polls have a confidence interval covering the true value of d?
+june_polls %>%
+#  filter(lower<=0 & upper>=0) %>%
+  summarize(mean(hit))
+```
+
+
+#### Question 5: Hit rate by pollster
+Group and summarize the june_polls object by pollster to find the proportion of hits for each pollster and the number of polls per pollster. Use arrange to sort by hit rate.
+
+```{r}
+june_polls %>%
+  group_by(pollster) %>%
+  summarize(hit_rate=mean(hit), n()) %>%
+  arrange(hit_rate)
+```
+
+Which of the following are TRUE?
+A: The results are consistent with a large general bias that affects all pollsters. 
+
+
+#### Question 6: Boxplot of Brexit polls by poll type
+Make a boxplot of the spread in june_polls by poll type.
+
+```{r}
+june_polls %>%
+#  group_by(poll_type) %>%
+  ggplot(aes(poll_type,spread)) +
+  geom_boxplot()
+```
+
+Which of the following are TRUE?
+A: Telephone polls tend to show support "Remain" (spread > 0).
+A: Telephone polls tend to show higher support for "Remain" than online polls (higher spread).
+A: Online polls have a larger interquartile range (IQR) for the spread than telephone polls, indicating that they are more variable.
+A: Poll type introduces a bias that affects poll results.
+
+
+#### Question 7: Combined spread across poll type
+Calculate the confidence intervals of the spread combined across all polls in june_polls, grouping by poll type. Recall that to determine the standard error of the spread, you will need to double the standard error of the estimate.
+
+Use this code (which determines the total sample size per poll type, gives each spread estimate a weight based on the poll's sample size, and adds an estimate of p from the combined spread) to begin your analysis:
+
+```{r}
+combined_by_type <- june_polls %>%
+        group_by(poll_type) %>%
+        summarize(N = sum(samplesize),
+                  spread = sum(spread*samplesize)/N,
+                  p_hat = (spread + 1)/2)
+res <- combined_by_type %>%
+  mutate(
+    se_spread = 2 * sqrt(p_hat * (1-p_hat) / N),
+    ci_lower = spread - qnorm(.975) * se_spread,
+    ci_upper = spread + qnorm(.975) * se_spread
+    )
+res
+#What is the lower bound of the 95% confidence interval for online voters?
+#What is the upper bound of the 95% confidence interval for online voters?
+res %>%
+  filter(poll_type == 'Online') %>%
+  select(ci_lower, ci_upper)
+```
+
+
+### Brexit poll analysis - Part 3
+
+This problem set is continued from the previous page. Make sure you have run the following code:
+```{r}
+# suggested libraries and options
+library(tidyverse)
+options(digits = 3)
+# load brexit_polls object and add x_hat column
+library(dslabs)
+data(brexit_polls)
+brexit_polls <- brexit_polls %>%
+    mutate(x_hat = (spread + 1)/2)
+# final proportion voting "Remain"
+p <- 0.481
+```
+
+
+#### Question 9: Chi-squared p-value
+Define brexit_hit, with the following code, which computes the confidence intervals for all Brexit polls in 2016 and then calculates whether the confidence interval covers the actual value of the spread $d=???0.038$:
+```{r}
+d <- -0.038
+brexit_hit <- brexit_polls %>%
+  mutate(p_hat = (spread + 1)/2,
+         se_spread = 2*sqrt(p_hat*(1-p_hat)/samplesize),
+         spread_lower = spread - qnorm(.975)*se_spread,
+         spread_upper = spread + qnorm(.975)*se_spread,
+         hit = spread_lower < d & spread_upper > d) %>%
+  select(poll_type, hit)
+```
+
+Use brexit_hit to make a two-by-two table of poll type and hit status. 
+Then use the chisq.test function to perform a chi-squared test to determine whether the difference in hit rate is significant.
+
+```{r}
+head(brexit_hit)
+res <- brexit_hit %>% 
+  group_by(poll_type) %>%
+  summarize(T=sum(hit), F=sum(!hit))
+res
+two_by_two <- tibble(hit=c(FALSE,TRUE), 
+       'Online'=c(res[res$poll_type=='Online',]$F, 
+                  res[res$poll_type=='Online',]$T),
+       'Telephone'=c(res[res$poll_type!='Online',]$F, 
+                  res[res$poll_type!='Online',]$T))
+chisq_test <- two_by_two %>%
+    select(-hit) %>%
+  chisq.test()
+chisq_test
+# What is the p-value of the chi-squared test comparing the hit rate of online and telephone polls?
+# A: 0.001
+# Determine which poll type has a higher probability of producing a confidence interval that covers the correct value of the spread. Also determine whether this difference is statistically significant at a p-value cutoff of 0.05. Which of the following is true?
+# A: Online polls are more likely to cover the correct value of the spread and this difference is statistically significant.
+```
+
+#### Question 10: Odds ratio of online and telephone poll hit rate
+Use the two-by-two table constructed in the previous exercise to calculate the odds ratio between the hit rate of online and telephone polls to determine the magnitude of the difference in performance between the poll types.
+
+```{r}
+two_by_two
+# Calculate the odds that an online poll generates a confidence interval that covers the actual value of the spread.
+# Calculate the odds that a telephone poll generates a confidence interval that covers the actual value of the spread.
+#Calculate the odds ratio to determine how many times larger the odds are for online polls to hit versus telephone polls.
+odds_online <- two_by_two$Online[two_by_two$hit==TRUE] / two_by_two$Online[two_by_two$hit==FALSE]
+odds_tel <- two_by_two$Telephone[two_by_two$hit==TRUE] / two_by_two$Telephone[two_by_two$hit==FALSE]
+odds_online
+odds_tel
+odds_online / odds_tel
+```
+
+#### Question 11: Plotting spread over time
+Use brexit_polls to make a plot of the spread (spread) over time (enddate) colored by poll type (poll_type). Use geom_smooth with method = "loess" to plot smooth curves with a span of 0.4. Include the individual data points colored by poll type. Add a horizontal line indicating the final value of ????=???.038.
+
+```{r}
+brexit_polls %>%
+  ggplot(aes(enddate, spread, col=poll_type)) +
+  geom_point() +
+  geom_smooth(method = "loess", span=0.4) +
+  geom_hline(aes(yintercept=-.038))
+```
+
+#### Question 12: Plotting raw percentages over time
+Use the following code to create the object brexit_long, which has a column vote containing the three possible votes on a Brexit poll ("remain", "leave", "undecided") and a column proportion containing the raw proportion choosing that vote option on the given poll:
+
+```{r}
+brexit_long <- brexit_polls %>%
+    gather(vote, proportion, "remain":"undecided") %>%
+    mutate(vote = factor(vote))
+head(brexit_long)
+# Make a graph of proportion over time colored by vote. Add a smooth trendline with geom_smooth and method = "loess" with a span of 0.3.
+brexit_long %>%
+  ggplot(aes(enddate, proportion, col=vote)) +
+  geom_point() +
+  geom_smooth(method = "loess", span=0.3)
+```
+
+Which of the following are TRUE?
+
+* T: The percentage of undecided voters declines over time but is still around 10% throughout June.
+* T: Over most of the date range, the confidence bands for "Leave" and "Remain" overlap.
+* T: Over most of the date range, the confidence bands for "Leave" and "Remain" are below 50%.
+* T: In the first half of June, "Leave" was polling higher than "Remain", although this difference was within the confidence intervals.
+* F: At the time of the election in late June, the percentage voting "Leave" is trending upwards.
