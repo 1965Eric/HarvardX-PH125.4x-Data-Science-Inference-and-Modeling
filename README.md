@@ -2404,7 +2404,7 @@ data(brexit_polls)
 
 **Final Brexit parameters**
 
-Define $p=0.481$ as the actual percent voting "Remain" on the Brexit referendum and  $d=2p-1=???0.038$ as the actual spread of the Brexit referendum with "Remain" defined as the positive outcome:
+Define p=0.481 as the actual percent voting "Remain" on the Brexit referendum and  d=2p-1=-0.038 as the actual spread of the Brexit referendum with "Remain" defined as the positive outcome:
 ```{r}
 p <- 0.481    # official proportion voting "Remain"
 d <- 2*p-1    # official spread
@@ -2437,7 +2437,7 @@ d
 #### Question 2: Actual Brexit poll estimates
 Load and inspect the brexit_polls dataset from dslabs, which contains actual polling data for the 6 months before the Brexit vote. Raw proportions of voters preferring "Remain", "Leave", and "Undecided" are available (remain, leave, undecided) The spread is also available (spread), which is the difference in the raw proportion of voters choosing "Remain" and the raw proportion choosing "Leave".
 
-Calculate x_hat for each poll, the estimate of the proportion of voters choosing "Remain" on the referendum day (p=.481), given the observed spread and the relationship $\hat{d} = 2\hat{X}???1$. Use mutate to add a variable x_hat to the brexit_polls object by filling in the skeleton code below:
+Calculate x_hat for each poll, the estimate of the proportion of voters choosing "Remain" on the referendum day (p=.481), given the observed spread and the relationship 𝑑̂=2𝑋̂−1. Use mutate to add a variable x_hat to the brexit_polls object by filling in the skeleton code below:
 
 ```{r}
 head(brexit_polls)
@@ -2488,10 +2488,10 @@ p <- 0.481
 ```
 
 #### Question 4: Confidence intervals for polls in June
-Create the data frame june_polls containing only Brexit polls ending in June 2016 (enddate of "2016-06-01" and later). We will calculate confidence intervals for all polls and determine how many cover the true value of $d$.
+Create the data frame june_polls containing only Brexit polls ending in June 2016 (enddate of "2016-06-01" and later). We will calculate confidence intervals for all polls and determine how many cover the true value of d.
 
-First, use mutate to calculate a plug-in estimate se_x_hat for the standard error of the estimate $\hat{SE}[X]$ for each poll given its sample size and value of $\hat{X}$ (x_hat). Second, use mutate to calculate an estimate for the standard error of the spread for each poll given the value of se_x_hat. 
-Then, use mutate to calculate upper and lower bounds for 95% confidence intervals of the spread. Last, add a column hit that indicates whether the confidence interval for each poll covers the correct spread $d=???0.038$.
+First, use mutate to calculate a plug-in estimate se_x_hat for the standard error of the estimate SE^[X] for each poll given its sample size and value of 𝑋̂ (x_hat). Second, use mutate to calculate an estimate for the standard error of the spread for each poll given the value of se_x_hat. 
+Then, use mutate to calculate upper and lower bounds for 95% confidence intervals of the spread. Last, add a column hit that indicates whether the confidence interval for each poll covers the correct spread d=-0.038.
 
 ```{r}
 d <- -0.038
@@ -2591,7 +2591,7 @@ p <- 0.481
 ```
 
 #### Question 9: Chi-squared p-value
-Define brexit_hit, with the following code, which computes the confidence intervals for all Brexit polls in 2016 and then calculates whether the confidence interval covers the actual value of the spread $d=???0.038$:
+Define brexit_hit, with the following code, which computes the confidence intervals for all Brexit polls in 2016 and then calculates whether the confidence interval covers the actual value of the spread d=-0.038:
 ```{r}
 d <- -0.038
 brexit_hit <- brexit_polls %>%
@@ -2643,7 +2643,7 @@ odds_online / odds_tel
 ```
 
 #### Question 11: Plotting spread over time
-Use brexit_polls to make a plot of the spread (spread) over time (enddate) colored by poll type (poll_type). Use geom_smooth with method = "loess" to plot smooth curves with a span of 0.4. Include the individual data points colored by poll type. Add a horizontal line indicating the final value of ????=???.038.
+Use brexit_polls to make a plot of the spread (spread) over time (enddate) colored by poll type (poll_type). Use geom_smooth with method = "loess" to plot smooth curves with a span of 0.4. Include the individual data points colored by poll type. Add a horizontal line indicating the final value of d=-.038.
 
 ```{r}
 brexit_polls %>%
