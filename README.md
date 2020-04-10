@@ -2531,8 +2531,7 @@ A: The results are consistent with a large general bias that affects all pollste
 Make a boxplot of the spread in june_polls by poll type.
 
 ```{r}
-june_polls %>%
-#  group_by(poll_type) %>%
+june_polls %>% group_by(poll_type) %>%
   ggplot(aes(poll_type,spread)) +
   geom_boxplot()
 ```
