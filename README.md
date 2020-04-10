@@ -444,7 +444,7 @@ Possible Answers
 For N=100, the central limit theorem tells us that the distribution of X̂ is…
 
 Possible Answers
-- [ ] A. practically equal to $ p $.
+- [ ] A. practically equal to p.
 - [X] B. approximately normal with expected value p and standard error √(p(1−p)/N).
 - [ ] C. approximately normal with expected value X̄ and standard error √(X̄(1−X̄)/N).
 - [ ] D. not a random variable.
