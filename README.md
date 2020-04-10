@@ -2507,17 +2507,11 @@ head(june_polls)
 # How many polls are in june_polls?
 nrow(june_polls)
 # What proportion of polls have a confidence interval that covers the value 0?
-june_polls %>%
-#  filter(lower<=0 & upper>=0) %>%
-  summarize(mean(lower<=0 & upper>=0))
+june_polls %>% summarize(mean(lower<=0 & upper>=0))
 # What proportion of polls predict "Remain" (confidence interval entirely above 0)?
-june_polls %>%
-#  filter(lower<=0 & upper>=0) %>%
-  summarize(mean(lower>0))
+june_polls %>% summarize(mean(lower>0))
 # What proportion of polls have a confidence interval covering the true value of d?
-june_polls %>%
-#  filter(lower<=0 & upper>=0) %>%
-  summarize(mean(hit))
+june_polls %>% summarize(mean(hit))
 ```
 
 #### Question 5: Hit rate by pollster
