@@ -109,7 +109,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 * Many common data science tasks can be framed as estimating a parameter from a sample.
 * We illustrate statistical inference by walking through the process to estimate $p$. From the estimate of $p$, we can easily calculate an estimate of the spread, $2p - 1$.
-* Consider the random variable $X$ that is 1 if a blue bead is chosen and 0 if a red bead is chosen. The proportion of blue beads in $N$ draws is the average of the draws $X_1,,...,X_N$.
+* Consider the random variable $X$ that is 1 if a blue bead is chosen and 0 if a red bead is chosen. The proportion of blue beads in $N$ draws is the average of the draws $X_1,...,X_N$.
 * $\overline{X}$ is the *sample average*. In statistics, a bar on top of a symbol denotes the average. $\overline{X}$ is a random variable because it is the average of random draws - each time we take a sample, $\overline{X}$ is different.
 
 $\overline{X} = \frac{X_1+X_2+...+X_N}{N}$
