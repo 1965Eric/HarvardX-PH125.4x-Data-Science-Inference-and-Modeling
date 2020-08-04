@@ -123,7 +123,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 **Key points**
 
 * A poll taken in advance of an election estimates $p$ for that moment, not for election day.
-* In order to predict election results, forecasters try to use early estimates of $p$ to predict $p$ on election day. We discuss some approaches in 
+* In order to predict election results, forecasters try to use early estimates of $p$ to predict $p$ on election day. We discuss some approaches in later sections.
 
 ## Assessment 1.1: Parameters and Estimates
 

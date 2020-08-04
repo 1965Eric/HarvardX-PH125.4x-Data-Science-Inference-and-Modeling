@@ -117,6 +117,11 @@
 The textbook for the Data Science course series is
 \href{https://rafalab.github.io/dsbook/}{freely available online}.
 
+This course corresponds to the textbook chapters
+\href{https://rafalab.github.io/dsbook/inference.html}{Statistical
+Inference} and
+\href{https://rafalab.github.io/dsbook/models.html}{Statistical Models}.
+
 \hypertarget{learning-objectives}{%
 \subsection{Learning Objectives}\label{learning-objectives}}
 
@@ -136,41 +141,41 @@ The textbook for the Data Science course series is
 \subsection{Course Overview}\label{course-overview}}
 
 \hypertarget{section-1-parameters-and-estimates}{%
-\subsection{Section 1: Parameters and
+\subsubsection{Section 1: Parameters and
 Estimates}\label{section-1-parameters-and-estimates}}
 
 You will learn how to estimate population parameters.
 
 \hypertarget{section-2-the-central-limit-theorem-in-practice}{%
-\subsection{Section 2: The Central Limit Theorem in
+\subsubsection{Section 2: The Central Limit Theorem in
 Practice}\label{section-2-the-central-limit-theorem-in-practice}}
 
 You will apply the central limit theorem to assess how close a sample
 estimate is to the population parameter of interest.
 
 \hypertarget{section-3-confidence-intervals-and-p-values}{%
-\subsection{Section 3: Confidence Intervals and
+\subsubsection{Section 3: Confidence Intervals and
 p-Values}\label{section-3-confidence-intervals-and-p-values}}
 
 You will learn how to calculate confidence intervals and learn about the
 relationship between confidence intervals and p-values.
 
 \hypertarget{section-4-statistical-models}{%
-\subsection{Section 4: Statistical
+\subsubsection{Section 4: Statistical
 Models}\label{section-4-statistical-models}}
 
 You will learn about statistical models in the context of election
 forecasting.
 
 \hypertarget{section-5-bayesian-statistics}{%
-\subsection{Section 5: Bayesian
+\subsubsection{Section 5: Bayesian
 Statistics}\label{section-5-bayesian-statistics}}
 
 You will learn about Bayesian statistics through looking at examples
 from rare disease diagnosis and baseball.
 
 \hypertarget{section-6-election-forecasting}{%
-\subsection{Section 6: Election
+\subsubsection{Section 6: Election
 Forecasting}\label{section-6-election-forecasting}}
 
 You will learn about election forecasting, building on what you've
@@ -178,26 +183,226 @@ learned in the previous sections about statistical modeling and Bayesian
 statistics.
 
 \hypertarget{section-7-association-tests}{%
-\subsection{Section 7: Association
+\subsubsection{Section 7: Association
 Tests}\label{section-7-association-tests}}
 
 You will learn how to use association and chi-squared tests to perform
 inference for binary, categorical, and ordinal data through an example
 looking at research funding rates.
 
+\hypertarget{introduction-to-inference}{%
+\subsection{Introduction to Inference}\label{introduction-to-inference}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#polls}{here}
+
+In this course, we will learn:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{statistical inference}, the process of deducing characteristics
+  of a population using data from a random sample
+\item
+  the statistical concepts necessary to define \emph{estimates} and
+  \emph{margins of errors}
+\item
+  how to \emph{forecast future results} and estimate the precision of
+  our forecast
+\item
+  how to calculate and interpret \emph{confidence intervals and
+  p-values}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Information gathered from a small random sample can be used to infer
+  characteristics of the entire population.
+\item
+  Opinion polls are useful when asking everyone in the population is
+  impossible.
+\item
+  A common use for opinion polls is determining voter preferences in
+  political elections for the purposes of forecasting election results.
+\item
+  The \emph{spread} of a poll is the estimated difference between
+  support two candidates or options.
+\end{itemize}
+
 \hypertarget{section-1-overview}{%
 \subsection{Section 1 Overview}\label{section-1-overview}}
 
 Section 1 introduces you to parameters and estimates.
 
-After completing Section 1, you will be able to: - Understand how to use
-a sampling model to perform a poll. - Explain the terms population,
-parameter, and sample as they relate to statistical inference. - Use a
-sample to estimate the population proportion from the sample average. -
-Calculate the expected value and standard error of the sample average.
+After completing Section 1, you will be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Understand how to use a sampling model to perform a poll.
+\item
+  Explain the terms \textbf{population}, \textbf{parameter}, and
+  \textbf{sample} as they relate to statistical inference.
+\item
+  Use a sample to estimate the population proportion from the sample
+  average.
+\item
+  Calculate the expected value and standard error of the sample average.
+\end{itemize}
+
+\hypertarget{sampling-model-parameters-and-estimates}{%
+\subsection{Sampling Model Parameters and
+Estimates}\label{sampling-model-parameters-and-estimates}}
 
 The textbook for this section is available
-\href{https://rafalab.github.io/dsbook/inference.html}{here}
+\href{https://rafalab.github.io/dsbook/inference.html\#the-sampling-model-for-polls}{here}
+and
+\href{https://rafalab.github.io/dsbook/inference.html\#populations-samples-parameters-and-estimates}{here;
+first part}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The task of statistical inference is to estimate an unknown population
+  parameter using observed data from a sample.
+\item
+  In a sampling model, the collection of elements in the urn is called
+  the \emph{population}.
+\item
+  A \emph{parameter} is a number that summarizes data for an entire
+  population.
+\item
+  A \emph{sample} is observed data from a subset of the population.
+\item
+  An \emph{estimate} is a summary of the observed data about a parameter
+  that we believe is informative. It is a data-driven guess of the
+  population parameter.
+\item
+  We want to predict the proportion of the blue beads in the urn, the
+  parameter \(p\) . The proportion of red beads in the urn is \(1 - p\)
+  and the \emph{spread} is \(2p - 1\).
+\item
+  The sample proportion is a random variable. Sampling gives random
+  results drawn from the population distribution.
+\end{itemize}
+
+\emph{Code: Function for taking a random draw from a specific urn}
+
+The \textbf{dslabs} package includes a function for taking a random draw
+of size \(n\) from the urn:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(tidyverse)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: tidyverse
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.3     v dplyr   1.0.1
+## v tidyr   1.1.1     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(dslabs)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dslabs"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: dslabs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{take\_poll}\NormalTok{(}\DecValTok{25}\NormalTok{)    }\CommentTok{\# draw 25 beads}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\hypertarget{the-sample-average}{%
+\subsection{The Sample Average}\label{the-sample-average}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#the-sample-average}{here}
+and
+\href{https://rafalab.github.io/dsbook/inference.html\#parameters}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Many common data science tasks can be framed as estimating a parameter
+  from a sample.
+\item
+  We illustrate statistical inference by walking through the process to
+  estimate \(p\). From the estimate of \(p\), we can easily calculate an
+  estimate of the spread, \(2p - 1\).
+\item
+  Consider the random variable \(X\) that is 1 if a blue bead is chosen
+  and 0 if a red bead is chosen. The proportion of blue beads in \(N\)
+  draws is the average of the draws \(X_1,...,X_N\).
+\item
+  \(\overline{X}\) is the \emph{sample average}. In statistics, a bar on
+  top of a symbol denotes the average. \(\overline{X}\) is a random
+  variable because it is the average of random draws - each time we take
+  a sample, \(\overline{X}\) is different.
+\end{itemize}
+
+\(\overline{X} = \frac{X_1+X_2+...+X_N}{N}\)
+
+\begin{itemize}
+\tightlist
+\item
+  The number of blue beads drawn in N draws, \(N \overline{X}\), is
+  \(N\) times the proportion of values in the urn. However, we do not
+  know the true proportion: we are trying to estimate this parameter
+  \(p\).
+\end{itemize}
+
+\hypertarget{polling-versus-forecasting}{%
+\subsection{Polling versus
+Forecasting}\label{polling-versus-forecasting}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#polling-versus-forecasting}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  A poll taken in advance of an election estimates \(p\) for that
+  moment, not for election day.
+\item
+  In order to predict election results, forecasters try to use early
+  estimates of \(p\) to predict \(p\) on election day. We discuss some
+  approaches in later sections.
+\end{itemize}
 
 \hypertarget{assessment-1.1-parameters-and-estimates}{%
 \subsection{Assessment 1.1: Parameters and
@@ -3648,33 +3853,11 @@ Import the brexit_polls polling data from the dslabs package and set options for
 ```r
 # suggested libraries and options
 library(tidyverse)
+options(digits = 3)
+# load brexit_polls object
+library(dslabs)
+data(brexit_polls)
 \end{verbatim}
-
-\begin{verbatim}
-## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.2     v purrr   0.3.4
-## v tibble  3.0.3     v dplyr   1.0.1
-## v tidyr   1.1.1     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{options}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
-\CommentTok{\# load brexit\_polls object}
-\KeywordTok{library}\NormalTok{(dslabs)}
-\KeywordTok{data}\NormalTok{(brexit\_polls)}
-\end{Highlighting}
-\end{Shaded}
 
 \textbf{Final Brexit parameters}
 
@@ -4076,7 +4259,7 @@ Make a boxplot of the spread in june\_polls by poll type.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 Which of the following are TRUE? A: Telephone polls tend to show support
 ``Remain'' (spread \textgreater{} 0). A: Telephone polls tend to show
@@ -4352,7 +4535,7 @@ indicating the final value of d=-.038.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \hypertarget{question-12-plotting-raw-percentages-over-time}{%
 \paragraph{Question 12: Plotting raw percentages over
@@ -4404,7 +4587,7 @@ poll:
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 Which of the following are TRUE?
 
