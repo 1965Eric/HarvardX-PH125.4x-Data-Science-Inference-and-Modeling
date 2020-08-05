@@ -943,7 +943,7 @@ head(polls)
 # Add variable called `error` to the object `polls` that contains the difference between d_hat and the actual difference on election day. Then make a plot of the error stratified by pollster.
 error <- polls$d_hat - 0.021
 polls <- mutate(polls, error)
-polls %>% ggplot(aes(x = polls$pollster, y = polls$error)) +
+polls %>% ggplot(aes(x = pollster, y = error)) +
   geom_point() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
@@ -960,16 +960,14 @@ data %>% group_by(variable_for_grouping)
 ```
 
 ```{r}
-if(!require(dplyr)) install.packages("dplyer")
-
 # The `polls` object has already been loaded. Examine it using the `head` function.
 head(polls)
 
 # Add variable called `error` to the object `polls` that contains the difference between d_hat and the actual difference on election day. Then make a plot of the error stratified by pollster, but only for pollsters who took 5 or more polls.
 error <- polls$d_hat - 0.021
 polls <- mutate(polls, error)
-polls %>% group_by(polls$pollster) %>% filter(n() >= 5) 
-polls %>% ggplot(aes(x = polls$pollster, y = polls$error)) +
+polls %>% group_by(pollster) %>% filter(n() >= 5) 
+polls %>% ggplot(aes(x = pollster, y = error)) +
   geom_point() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
