@@ -138,14 +138,14 @@ $E(\overline{X}) = p$
 
 * As the number of draws $N$ increases, the standard error of our estimate $\overline{X}$ decreases. The standard error of the average of $\overline{X}$ over $N$ draws is:
 
-$SE(\overline{X}) = sqrt{p(1-p)/N} 
+$SE(\overline{X}) = \sqrt{p(1-p)/N}$
 
 * In theory, we can get more accurate estimates of $p$ by increasing $N$. In practice, there are limits on the size of $N$ due to costs, as well as other factors we discuss later.
 * We can also use other random variable equations to determine the expected value of the sum of draws $E(S)$ and standard error of the sum of draws $SE(S)$.
 
 $E(S) = Np$ 
 
-$SE(S) = sqrt{Np(1-p)}$ 
+$SE(S) = \sqrt{Np(1-p)}$ 
 
 ## Assessment 1.1: Parameters and Estimates
 

@@ -404,6 +404,56 @@ The textbook for this section is available
   approaches in later sections.
 \end{itemize}
 
+\hypertarget{properties-of-our-estimate}{%
+\subsection{Properties of Our
+Estimate}\label{properties-of-our-estimate}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#properties-of-our-estimate-expected-value-and-standard-error}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  When interpreting values of \(\overline{X}\), it is important to
+  remember that \(\overline{X}\) is a random variable with an expected
+  value and standard error that represents the sample proportion of
+  positive events.
+\item
+  The expected value of \(\overline{X}\) is the parameter of interest
+  \(p\). This follows from the fact that \(\overline{X}\) is the sum of
+  independent draws of a random variable times a constant \(1/N\).
+\end{itemize}
+
+\(E(\overline{X}) = p\)
+
+\begin{itemize}
+\tightlist
+\item
+  As the number of draws \(N\) increases, the standard error of our
+  estimate \(\overline{X}\) decreases. The standard error of the average
+  of \(\overline{X}\) over \(N\) draws is:
+\end{itemize}
+
+\(SE(\overline{X}) = \sqrt{p(1-p)/N}\)
+
+\begin{itemize}
+\tightlist
+\item
+  In theory, we can get more accurate estimates of \(p\) by increasing
+  \(N\). In practice, there are limits on the size of \(N\) due to
+  costs, as well as other factors we discuss later.
+\item
+  We can also use other random variable equations to determine the
+  expected value of the sum of draws \(E(S)\) and standard error of the
+  sum of draws \(SE(S)\).
+\end{itemize}
+
+\(E(S) = Np\)
+
+\(SE(S) = \sqrt{Np(1-p)}\)
+
 \hypertarget{assessment-1.1-parameters-and-estimates}{%
 \subsection{Assessment 1.1: Parameters and
 Estimates}\label{assessment-1.1-parameters-and-estimates}}
