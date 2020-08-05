@@ -1272,35 +1272,33 @@ polls %>% ggplot(aes(pollster, spread)) + geom_boxplot() + geom_point()
 
 However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference, $d$.
 
-We will model the observed data $Y_ij$ in the following way:
+We will model the observed data $Y_{ij}$ in the following way:
 
-$Y_ij = d + b_i + \epsilon_ij$
+$Y_{ij} = d + b_i + \varepsilon_{ij}$
 
-with $i = 1, 2$ indexing the two pollsters, $b_i$ the bias for pollster $i$, and $\epsilon_ij$ poll to poll chance variability. We assume the $\epsilon$ are independent from each other, have expected value ```0``` and standard deviation $\sigma_i$ regardless of $j$.
+with $i = 1, 2$ indexing the two pollsters, $b_i$ the bias for pollster $i$, and $\varepsilon_{ij}$ poll to poll chance variability. We assume the $\varepsilon$ are independent from each other, have expected value 0 and standard deviation $\sigma_i$ regardless of $j$.
 
 Which of the following statements best reflects what we need to know to determine if our data fit the urn model?
 
-- [ ] A. Is $\epsilon_ij = 0$?
-- [ ] B. How close are $Y_ij$ to $d$?
+- [ ] A. Is $\varepsilon_{ij} = 0$?
+- [ ] B. How close are $Y_{ij}$ to $d$?
 - [X] C. Is $b_1 \neq b_2$?
 - [ ] D. Are $b_1 = 0$ and $b_2 = 0$?
 
-8. Derive Expected Value
+8. We modelled the observed data $Y_{ij}$ as:
 
-We modelled the observed data $Y_ij$ as:
+$Y_{ij} = d + b_i + \varepsilon_{ij}$
 
-$Y_ij = d + b_i + \epsilon_ij$
+On the right side of this model, only $\varepsilon_{ij}$ is a random variable. The other two values are constants.
 
-On the right side of this model, only $\epsilon_ij$ is a random variable. The other two values are constants.
-
-What is the expected value of $Y_1j$?
+What is the expected value of $Y_{1j}$?
 
 - [X] A.  $d + b_1$
-- [ ] B.  $b_1 + \epsilon_ij$
+- [ ] B.  $b_1 + \varepsilon_{ij}$
 - [ ] C.  $d$
-- [ ] D.  $d + b_1 + \epsilon_ij$
+- [ ] D.  $d + b_1 + \varepsilon_{ij}$
 
-9. Suppose we define $\overline{Y}_1$ as the average of poll results from the first poll and $/sigma_1$ as the standard deviation of the first poll.
+9. Suppose we define $\overline{Y}_1$ as the average of poll results from the first poll and $\sigma_1$ as the standard deviation of the first poll.
 
 What is the expected value and standard error of $\overline{Y}_1$?
 
@@ -1318,10 +1316,10 @@ What is the expected value and standard error of $\overline{Y}_2$?
 - [X] C. The expected value is $d + b_2$ and the standard error is $\sigma_2/\sqrt{N_2}$
 - [ ] D. The expected value is $d$ and the standard error is $\sigma_2 + \sqrt{N_2}$
 
-11. Using what we learned by answering the previous questions, what is the expected value of $\overline{Y}_2 − \overline{Y}_1?
+11. Using what we learned by answering the previous questions, what is the expected value of $\overline{Y}_2 − \overline{Y}_1$?
 
 - [ ] A.  $(b_2 − b_1)^2$
-- [ ] B.  $b_2 − b_1/\sqrt(N) 
+- [ ] B.  $b_2 − b_1/\sqrt(N)$
 - [ ] C.  $b_2 + b_1$
 - [X] D.  $b_2 − b_1$
 
@@ -1351,10 +1349,10 @@ sigma <- polls %>% group_by(pollster) %>% summarize(s = sd(spread))
 sigma
 ```
 
-14. What does the central limit theorem tell us about the distribution of the differences between the pollster averages, $\overline{Y}_2 − \overline{Y}_1?
+14. What does the central limit theorem tell us about the distribution of the differences between the pollster averages, $\overline{Y}_2 − \overline{Y}_1$?
 
 - [ ] A. The central limit theorem cannot tell us anything because this difference is not the average of a sample.
-- [ ] B. Because $Y_ij$ are approximately normal, the averages are normal too.
+- [ ] B. Because $Y_{ij}$ are approximately normal, the averages are normal too.
 - [X] C. If we assume $N_2$ and $N_1$ are large enough, $\overline{Y}_2$ and $\overline{Y}_1$, and their difference, are approximately normal.
 - [ ] D. These data do not contain vectors of 0 and 1, so the central limit theorem does not apply.
 
@@ -1403,7 +1401,7 @@ se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 2 * (1 - pnorm(estimate / se_hat, 0, 1))
 ```
 
-17. We compute statistic called the t-statistic by dividing our estimate of $b_2 − b_1$ by its estimated standard error:
+17. We compute statistic called the *t-statistic* by dividing our estimate of $b_2 − b_1$ by its estimated standard error:
 
 $\frac{\overline{Y_2} - \overline{Y_1}}{\sqrt{s_2^2/N_2 + s_1^2/N_1}}$
 
