@@ -2546,19 +2546,11 @@ or error, by pollster in a plot.
 \CommentTok{\# Add variable called \textasciigrave{}error\textasciigrave{} to the object \textasciigrave{}polls\textasciigrave{} that contains the difference between d\_hat and the actual difference on election day. Then make a plot of the error stratified by pollster.}
 \NormalTok{error \textless{}{-}}\StringTok{ }\NormalTok{polls}\OperatorTok{$}\NormalTok{d\_hat }\OperatorTok{{-}}\StringTok{ }\FloatTok{0.021}
 \NormalTok{polls \textless{}{-}}\StringTok{ }\KeywordTok{mutate}\NormalTok{(polls, error)}
-\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ polls}\OperatorTok{$}\NormalTok{pollster, }\DataTypeTok{y =}\NormalTok{ polls}\OperatorTok{$}\NormalTok{error)) }\OperatorTok{+}
+\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ pollster, }\DataTypeTok{y =}\NormalTok{ error)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: Use of `polls$pollster` is discouraged. Use `pollster` instead.
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Use of `polls$error` is discouraged. Use `error` instead.
-\end{verbatim}
 
 \includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-32-1.pdf}
 
@@ -2587,8 +2579,6 @@ For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(dplyr)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyer"}\NormalTok{)}
-
 \CommentTok{\# The \textasciigrave{}polls\textasciigrave{} object has already been loaded. Examine it using the \textasciigrave{}head\textasciigrave{} function.}
 \KeywordTok{head}\NormalTok{(polls)}
 \end{Highlighting}
@@ -2637,13 +2627,13 @@ For example:
 \CommentTok{\# Add variable called \textasciigrave{}error\textasciigrave{} to the object \textasciigrave{}polls\textasciigrave{} that contains the difference between d\_hat and the actual difference on election day. Then make a plot of the error stratified by pollster, but only for pollsters who took 5 or more polls.}
 \NormalTok{error \textless{}{-}}\StringTok{ }\NormalTok{polls}\OperatorTok{$}\NormalTok{d\_hat }\OperatorTok{{-}}\StringTok{ }\FloatTok{0.021}
 \NormalTok{polls \textless{}{-}}\StringTok{ }\KeywordTok{mutate}\NormalTok{(polls, error)}
-\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{group\_by}\NormalTok{(polls}\OperatorTok{$}\NormalTok{pollster) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{\textgreater{}=}\StringTok{ }\DecValTok{5}\NormalTok{) }
+\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{group\_by}\NormalTok{(pollster) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{\textgreater{}=}\StringTok{ }\DecValTok{5}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 48 x 22
-## # Groups:   polls$pollster [7]
+## # A tibble: 48 x 21
+## # Groups:   pollster [7]
 ##    state startdate  enddate    pollster grade samplesize population
 ##    <fct> <date>     <date>     <fct>    <fct>      <int> <chr>     
 ##  1 U.S.  2016-11-03 2016-11-06 ABC New~ A+          2220 lv        
@@ -2656,28 +2646,20 @@ For example:
 ##  8 U.S.  2016-11-02 2016-11-05 ABC New~ A+          1937 lv        
 ##  9 U.S.  2016-10-31 2016-11-04 Ipsos    A-          2244 lv        
 ## 10 U.S.  2016-11-01 2016-11-04 ABC New~ A+          1685 lv        
-## # ... with 38 more rows, and 15 more variables: rawpoll_clinton <dbl>,
+## # ... with 38 more rows, and 14 more variables: rawpoll_clinton <dbl>,
 ## #   rawpoll_trump <dbl>, rawpoll_johnson <dbl>, rawpoll_mcmullin <dbl>,
 ## #   adjpoll_clinton <dbl>, adjpoll_trump <dbl>, adjpoll_johnson <dbl>,
 ## #   adjpoll_mcmullin <dbl>, d_hat <dbl>, X_hat <dbl>, se_hat <dbl>,
-## #   lower <dbl>, upper <dbl>, error <dbl>, `polls$pollster` <fct>
+## #   lower <dbl>, upper <dbl>, error <dbl>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ polls}\OperatorTok{$}\NormalTok{pollster, }\DataTypeTok{y =}\NormalTok{ polls}\OperatorTok{$}\NormalTok{error)) }\OperatorTok{+}
+\NormalTok{polls }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ pollster, }\DataTypeTok{y =}\NormalTok{ error)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: Use of `polls$pollster` is discouraged. Use `pollster` instead.
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Use of `polls$error` is discouraged. Use `error` instead.
-\end{verbatim}
 
 \includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-34-1.pdf}
 
