@@ -1111,7 +1111,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * Instead of using an urn model where each poll is a random draw from the same distribution of voters, we instead define a model using an urn that contains poll results from all possible pollsters.
 * We assume the expected value of this model is the actual spread $d = 2p - 1$.
 * Our new standard error $\sigma$ now factors in pollster-to-pollster variability. It can no longer be calculated from $p$ or $d$ and is an unknown parameter.
-* The central limit theorem still works to estimate the sample average of many polls $X_1,...,X_N$ because the average of the sum of many random variables is a normally distributed random variable with expected value $d$ and standard error $ \sigma/\sqrt N$.
+* The central limit theorem still works to estimate the sample average of many polls $X_1,...,X_N$ because the average of the sum of many random variables is a normally distributed random variable with expected value $d$ and standard error $\sigma / \sqrt{N}$.
 * We can estimate the unobserved $\sigma$ as the sample standard deviation, which is calculated with the ```sd``` function.
 
 *Code* 
@@ -1324,8 +1324,6 @@ polls <- polls_us_election_2016 %>%
 polls %>% ggplot(aes(pollster, spread)) + geom_boxplot() + geom_point()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76313005-6b3d7500-62d4-11ea-944a-ff2529ec2369.png)
-    
 7. Defining Pollster Bias
 
 The data do seem to suggest there is a difference between the pollsters. However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference, d.
@@ -1930,8 +1928,6 @@ ps <- p_calc(taus)
 plot(taus, ps)
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/76642941-6be43e80-6554-11ea-8835-89a8268a8f5f.png)
-
 ## Section 6 Overview
 
 In Section 6, you will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
@@ -2108,8 +2104,6 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   coord_flip()
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/76785089-122e7f00-67b5-11ea-97eb-cff413640093.png)
-
 6. Predicting the Winner
 
 Even if a forecaster’s confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
@@ -2189,8 +2183,6 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
  coord_flip()
 ```
 
-![Unknown-2](https://user-images.githubusercontent.com/17474099/76786053-ce3c7980-67b6-11ea-9573-55b8c23b42c9.png)
-
 8. Plotting the Errors
 
 In the previous graph, we see that most states’ polls predicted the correct winner 100% of the time. Only a few states polls’ were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
@@ -2219,8 +2211,6 @@ head(errors)
 # Generate a histogram of the error
 hist(errors$error)
 ```
-
-![Unknown-3](https://user-images.githubusercontent.com/17474099/76786457-8bc76c80-67b7-11ea-9d37-0ceb1789ddbf.png)
 
 ```
 # Calculate the median of the errors. Print this value to the console.
@@ -2266,8 +2256,6 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   geom_point()
 ```
 
-![Unknown-4](https://user-images.githubusercontent.com/17474099/76786995-7e5eb200-67b8-11ea-926a-697fa27aa8e6.png)
-
 10. Filter Error Plot
 
 Some of these states only have a few polls. Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
@@ -2307,8 +2295,6 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
   geom_boxplot() + 
   geom_point()
 ```
-
-![Unknown](https://user-images.githubusercontent.com/17474099/76886959-d01f3f00-6881-11ea-9445-103193358031.png)
 
 ## Assessment 6.2: The t-Distribution
 
@@ -2353,7 +2339,6 @@ probs <- sapply(df, pt_func)
 # Plot 'df' on the x-axis and 'probs' on the y-axis
 plot(df, probs)
 ```
-![Unknown](https://user-images.githubusercontent.com/17474099/76887233-3e640180-6882-11ea-975e-88548983d85e.png)
 
 3. Sampling From the Normal Distribution
 
