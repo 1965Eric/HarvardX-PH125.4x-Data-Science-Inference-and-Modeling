@@ -654,12 +654,151 @@ se_hat <- sqrt(X_hat*(1-X_hat)/N)
 In Section 3, you will look at confidence intervals and p-values.
 
 After completing Section 3, you will be able to:
-- Calculate confidence intervals of difference sizes around an estimate.
-- Understand that a confidence interval is a random interval with the given probability of falling on top of the parameter.
-- Explain the concept of “power” as it relates to inference.
-- Understand the relationship between p-values and confidence intervals and explain why reporting confidence intervals is often preferable.
+
+* Calculate confidence intervals of difference sizes around an estimate.
+* Understand that a confidence interval is a random interval with the given probability of falling on top of the parameter.
+* Explain the concept of “power” as it relates to inference.
+* Understand the relationship between p-values and confidence intervals and explain why reporting confidence intervals is often preferable.
+
+## Confidence Intervals
 
 The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#confidence-intervals)
+
+**Key points**
+
+* We can use statistical theory to compute the probability that a given interval contains the true parameter $p$.
+* 95% confidence intervals are intervals constructed to have a 95% chance of including $p$. The margin of error is approximately a 95% confidence interval.
+* The start and end of these confidence intervals are random variables.
+* To calculate any size confidence interval, we need to calculate the value $z$ for which $Pr(-z \le Z \le z)$ equals the desired confidence. For example, a 99% confidence interval requires calculating $z$ for $Pr(-z \le Z \le z) = 0.99$.
+* For a confidence interval of size $q$, we solve for $z = 1 - \frac{1 - q}{2}$.
+* To determine a 95% confidence interval, use ```z <- qnorm(0.975)```. This value is slightly smaller than 2 times the standard error.
+
+*Code: geom_smooth confidence interval example*
+
+The shaded area around the curve is related to the concept of confidence intervals.
+
+```{r}
+data("nhtemp")
+data.frame(year = as.numeric(time(nhtemp)), temperature = as.numeric(nhtemp)) %>%
+    ggplot(aes(year, temperature)) +
+    geom_point() +
+    geom_smooth() +
+    ggtitle("Average Yearly Temperatures in New Haven")
+```
+
+*Code: Monte Carlo simulation of confidence intervals*
+
+Note that to compute the exact 95% confidence interval, we would use ```qnorm(.975)*SE_hat``` instead of ```2*SE_hat```.
+
+```{r}
+p <- 0.45
+N <- 1000
+X <- sample(c(0,1), size = N, replace = TRUE, prob = c(1-p, p))    # generate N observations
+X_hat <- mean(X)    # calculate X_hat
+SE_hat <- sqrt(X_hat*(1-X_hat)/N)    # calculate SE_hat, SE of the mean of N observations
+c(X_hat - 2*SE_hat, X_hat + 2*SE_hat)    # build interval of 2*SE above and below mean
+```
+
+*Code: Solving for $z$ with ```qnorm```*
+
+```{r}
+z <- qnorm(0.995)    # calculate z to solve for 99% confidence interval
+pnorm(qnorm(0.995))    # demonstrating that qnorm gives the z value for a given probability
+pnorm(qnorm(1-0.995))    # demonstrating symmetry of 1-qnorm
+pnorm(z) - pnorm(-z)    # demonstrating that this z value gives correct probability for interval
+```
+
+## A Monte Carlo Simulation for Confidence Intervals
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation-1)
+
+**Key points**
+
+* We can run a Monte Carlo simulation to confirm that a 95% confidence interval contains the true value of $p$ 95% of the time.
+* A plot of confidence intervals from this simulation demonstrates that most intervals include $p$, but roughly 5% of intervals miss the true value of $p$.
+
+*Code: Monte Carlo simulation*
+
+Note that to compute the exact 95% confidence interval, we would use ```qnorm(.975)*SE_hat``` instead of ```2*SE_hat```.
+
+```{r}
+B <- 10000
+inside <- replicate(B, {
+    X <- sample(c(0,1), size = N, replace = TRUE, prob = c(1-p, p))
+    X_hat <- mean(X)
+    SE_hat <- sqrt(X_hat*(1-X_hat)/N)
+    between(p, X_hat - 2*SE_hat, X_hat + 2*SE_hat)    # TRUE if p in confidence interval
+})
+mean(inside)
+```
+
+## The Correct Language
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-correct-language)
+
+**Key points**
+
+* The 95% confidence intervals are random, but $p$ is not random.
+* 95% refers to the probability that the random interval falls on top of $p$.
+* It is technically incorrect to state that $p$ has a 95% chance of being in between two values because that implies $p$ is random.
+
+## Power
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#power)
+
+**Key points**
+
+* If we are trying to predict the result of an election, then a confidence interval that includes a spread of 0 (a tie) is not helpful.
+* A confidence interval that includes a spread of 0 does not imply a close election, it means the sample size is too small.
+* Power is the probability of detecting an effect when there is a true effect to find. Power increases as sample size increases, because larger sample size means smaller standard error.
+
+*Code: Confidence interval for the spread with sample size of 25*
+
+Note that to compute the exact 95% confidence interval, we would use ```c(-qnorm(.975), qnorm(.975))``` instead of 1.96.
+
+```{r}
+N <- 25
+X_hat <- 0.48
+(2*X_hat - 1) + c(-2, 2)*2*sqrt(X_hat*(1-X_hat)/N)
+```
+
+## p-Values
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#p-values)
+
+**Key points**
+
+* The null hypothesis is the hypothesis that there is no effect. In this case, the null hypothesis is that the spread is 0, or $p = 0.5$.
+* The p-value is the probability of detecting an effect of a certain size or larger when the null hypothesis is true.
+* We can convert the probability of seeing an observed value under the null hypothesis into a standard normal random variable. We compute the value of $z$ that corresponds to the observed result, and then use that $z$ to compute the p-value.
+* If a 95% confidence interval does not include our observed value, then the p-value must be smaller than 0.05.
+* It is preferable to report confidence intervals instead of p-values, as confidence intervals give information about the size of the estimate and p-values do not.
+
+*Code: Computing a p-value for observed spread of 0.02*
+
+```{r}
+N <- 100    # sample size
+z <- sqrt(N) * 0.02/0.5    # spread of 0.02
+1 - (pnorm(z) - pnorm(-z))
+```
+
+## Another Explanation of p-Values
+
+The p-value is the probability of observing a value as extreme or more extreme than the result given that the null hypothesis is true. 
+
+In the context of the normal distribution, this refers to the probability of observing a Z-score whose absolute value is as high or higher than the Z-score of interest.
+
+Suppose we want to find the p-value of an observation 2 standard deviations larger than the mean. This means we are looking for anything with $|z| \ge 2$.
+
+Graphically, the p-value gives the probability of an observation that's at least as far away from the mean or further. This plot shows a standard normal distribution (centered at $z = 0$) with a standard deviation of 1). The shaded tails are the region of the graph that are 2 standard deviations or more away from the mean.
+
+![Standard normal distribution (centered at  z=0  with a standard deviation of 1](images/normal_distribution.jpg)
+
+The p-value is the proportion of area under a normal curve that has z-scores as extreme or more extreme than the given value - the tails on this plot of a normal distribution are shaded to show the region corresponding to the p-value.
+
+The right tail can be found with ```1-pnorm(2)```. We want to have both tails, though, because we want to find the probability of any observation as far away from the mean or farther, in either direction. (This is what's meant by a two-tailed p-value.) Because the distribution is symmetrical, the right and left tails are the same size and we know that our desired value is just ```2*(1-pnorm(2))```.
+
+Recall that, by default, ```pnorm()``` gives the CDF for a normal distribution with a mean of $\mu = 0$ and standard deviation of $\sigma = 1$. To find p-values for a given z-score z in a normal distribution with mean ```mu``` and standard deviation ```sigma```, use ```2*(1-pnorm(z, mu, sigma))``` instead.
 
 ## Assessment 3.1: Confidence Intervals and p-Values
 
