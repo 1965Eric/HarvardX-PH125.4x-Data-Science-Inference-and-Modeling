@@ -147,72 +147,62 @@ $E(S) = Np$
 
 $SE(S) = \sqrt{Np(1-p)}$ 
 
-## Assessment 1.1: Parameters and Estimates
+## Assessment - Parameters and Estimates
 
-1. Polling - expected value of S
+1. Suppose you poll a population in which a proportion $p$ of voters are Democrats and $1-p$ are Republicans. 
 
-Suppose you poll a population in which a proportion **p** of voters are Democrats and **1−p** are Republicans. Your sample size is **N=25**. Consider the random variable **S**, which is the total number of Democrats in your sample.
+Your sample size is $N = 25$. Consider the random variable $S$, which is the **total** number of Democrats in your sample.
 
-What is the expected value of this random variable **S**?
+What is the expected value of this random variable $S$?
 
-Possible Answers
-- [ ] A.  E(S)=25(1−p)
-- [X] B.  E(S)=25p
-- [ ] C.  E(S)=√(25p(1−p))
-- [ ] D.  E(S)=p
+- [ ] A.  $E(S) = 25(1−p)$
+- [X] B.  $E(S) = 25p$
+- [ ] C.  $E(S) = \sqrt{25p(1−p)}$
+- [ ] D.  $E(S) = p$
 
-2. Polling - standard error of S
+2. Again, consider the random variable $S$, which is the **total** number of Democrats in your sample of 25 voters. 
 
-Again, consider the random variable S, which is the total number of Democrats in your sample of 25 voters. The variable p describes the proportion of Democrats in the sample, whereas 1−p describes the proportion of Republicans.
+The variable $p$ describes the proportion of Democrats in the sample, whereas $1-p$ describes the proportion of Republicans.
 
-What is the standard error of S?
+What is the standard error of $S$?
 
-Possible Answers
-- [ ] A.  SE(S)=25p(1−p)
-- [ ] B.  SE(S)=√25p
-- [ ] C.  SE(S)=25(1−p)
-- [X] D.  SE(S)=√(25p(1−p))
+- [ ] A.  $SE(S) = 25p(1−p)$
+- [ ] B.  $SE(S) = \sqrt{25p}$
+- [ ] C.  SE(S) = 25(1−p)$
+- [X] D.  SE(S) = \sqrt{25p(1−p)}$
 
-3. Polling - expected value of X-bar
+3. Consider the random variable $S/N$, which is equivalent to the sample average that we have been denoting as $\overline{X}$. 
 
-Consider the random variable **S/N**, which is equivalent to the sample average that we have been denoting as **X̄**. The variable **N** represents the sample size and **p** is the proportion of Democrats in the population.
+The variable $N$ represents the sample size and $p$ is the proportion of Democrats in the population.
 
-What is the expected value of **X̄**?
+What is the expected value of $\overline{X}$?
 
-Possible Answers
-- [X] A.  E(X̄)=p
-- [ ] B.  E(X̄)=Np
-- [ ] C.  E(X̄)=N(1−p)
-- [ ] D.  E(X̄)=1−p
+- [X] A.  $E(\overline{X}) = p$
+- [ ] B.  $E(\overline{X}) = Np$
+- [ ] C.  $E(\overline{X}) = N(1−p)$
+- [ ] D.  $E(\overline{X}) = 1−p$
 
-4. Polling - standard error of X-bar
+4. What is the standard error of the sample average, $\overline{X}$?
 
-What is the standard error of the sample average, **X̄**?
+The variable $N$ represents the sample size and $p$ is the proportion of Democrats in the population.
 
-The variable **N** represents the sample size and **p** is the proportion of Democrats in the population.
+- [ ] A.  $SE(\overline{X}) = \sqrt{Np(1−p)}$
+- [X] B.  $SE(\overline{X}) = \sqrt{p(1−p)/N}$
+- [ ] C.  $SE(\overline{X}) = \sqrt{p(1−p)}$
+- [ ] D.  $SE(\overline{X}) = \sqrt N$
 
-Possible Answers
-- [ ] A.  SE(X̄)=√(Np(1−p))
-- [X] B.  SE(X̄)=√(p(1−p)/N)
-- [ ] C.  SE(X̄)=√(p(1−p))
-- [ ] D.  SE(X̄)=√N
+5. Write a line of code that calculates the standard error ```se``` of a sample average when you poll 25 people in the population. 
 
-5. se versus p
+Generate a sequence of 100 proportions of Democrats ```p``` that vary from 0 (no Democrats) to 1 (all Democrats).
 
-Write a line of code that calculates the standard error se of a sample average when you poll 25 people in the population. Generate a sequence of 100 proportions of Democrats p that vary from 0 (no Democrats) to 1 (all Democrats).
+Plot ```se``` versus ```p``` for the 100 different proportions.
 
-Plot se versus p for the 100 different proportions.
-
-Instructions
-- Use the seq function to generate a vector of 100 values of p that range from 0 to 1.
-- Use the sqrt function to generate a vector of standard errors for all values of p.
-- Use the plot function to generate a plot with p on the x-axis and se on the y-axis.
-```
+```{r}
 # `N` represents the number of people polled
 N <- 25
 
 # Create a variable `p` that contains 100 proportions ranging from 0 to 1 using the `seq` function
-p <- seq(0,1, length = 100)
+p <- seq(0, 1, length.out = 100)
 
 # Create a variable `se` that contains the standard error of each sample average
 se <- sqrt(p * (1 - p)/N)
@@ -220,18 +210,10 @@ se <- sqrt(p * (1 - p)/N)
 # Plot `p` on the x-axis and `se` on the y-axis
 plot(p,se)
 ```
-![index](https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png)
 
-6. Multiple plots of se versus p
+6. Using the same code as in the previous exercise, create a for-loop that generates three plots of ```p``` versus ```se``` when the sample sizes equal $N = 25$, $N = 100$, and $N = 1000$.
 
-Using the same code as in the previous exercise, create a for-loop that generates three plots of p versus se when the sample sizes equal N=25, N=100, and N=1000.
-
-Instructions
-- Your for-loop should contain two lines of code to be repeated for three different values of N.
-- The first line within the for-loop should use the sqrt function to generate a vector of standard errors se for all values of p.
-- The second line within the for-loop should use the plot function to generate a plot with p on the x-axis and se on the y-axis.
-- Use the ylim argument to keep the y-axis limits constant across all three plots. The lower limit should be equal to 0 and the upper limit should equal the highest calculated standard error across all values of p and N.
-```
+```{r}
 # The vector `p` contains 100 proportions of Democrats ranging from 0 to 1 using the `seq` function
 p <- seq(0, 1, length = 100)
 
@@ -239,48 +221,36 @@ p <- seq(0, 1, length = 100)
 sample_sizes <- c(25, 100, 1000)
 
 # Write a for-loop that calculates the standard error `se` for every value of `p` for each of the three samples sizes `N` in the vector `sample_sizes`. Plot the three graphs, using the `ylim` argument to standardize the y-axis across all three plots.
-for(N in sample_sizes){
-  se <- sqrt(p*(1-p)/N)
-  plot(p, se, ylim = c(0,0.5/sqrt(25)))
+for (N in sample_sizes)
+{
+se <- sqrt(p * (1 - p)/N)
+plot(p,se,ylim = c(0,0.1))
 }
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png)
+7. Our estimate for the difference in proportions of Democrats and Republicans is $d = \overline{X} − (1 − \overline{X})$.
 
-![index](https://user-images.githubusercontent.com/17474099/76228450-0a089980-6221-11ea-80e4-13ac6233f1a1.png)
+Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the expected value of $d$
 
-![index](https://user-images.githubusercontent.com/17474099/76228545-2a385880-6221-11ea-8bb5-2cba961954c3.png)
+- [ ] A.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = N(2p − 1) = Np − N(1 − p)$
+- [ ] B.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [\overline{X} − 1 \right] = E \left [\overline{X} \right] − 1 = p − 1$
+- [ ] C.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2 \sqrt{p(1 − p)} − 1 = p − (1 − p)$
+- [X] D.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2p − 1 = p − (1 − p)$
 
-7. Expected value of d
+8. Our estimate for the difference in proportions of Democrats and Republicans is $d = \overline{X} − (1 − \overline{X})$.
 
-Our estimate for the difference in proportions of Democrats and Republicans is **d=X̄−(1−X̄)**.
+Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the standard error of $d$?
 
-Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the expected value of d?
+- [ ] A.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p/N}$
+- [ ] B.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} - 1 \right] = 2 \sqrt{p(1 − p)/N} − 1$
+- [X] C.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p(1 − p)/N}$
+- [ ] D.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE\left [\overline{X} \right] = \sqrt{p(1 − p)/N}$
 
-Possible Answers
-- [ ] A.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=N(2p−1)=Np−N(1−p)
-- [ ] B.  E[X̄−(1−X̄)]=E[X̄−1]=E[X̄]−1=p−1
-- [ ] C.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2√(p(1−p))−1=p−(1−p)
-- [X] D.  E[X̄−(1−X̄)]=E[2X̄−1]=2E[X̄]−1=2p−1=p−(1−p)
+9. Say the actual proportion of Democratic voters is $p = 0.45$. 
 
-8. Standard error of d
+In this case, the Republican party is winning by a relatively large margin of $d = -0.1$, or a 10% margin of victory. What is the standard error of the spread $2 \overline{X} − 1$ in this case?
 
-Our estimate for the difference in proportions of Democrats and Republicans is **d=X̄−(1−X̄)**.
-
-Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the standard error of **d**?
-
-Possible Answers
-- [ ] A.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=2√(p/N)
-- [ ] B.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄−1]=2√(p(1−p)/N−1)
-- [X] C.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=2√(p(1−p)/N)
-- [ ] D.  SE[X̄−(1−X̄)]=SE[2X̄−1]=2SE[X̄]=√(p(1−p)/N)
-
-9. Standard error of the spread
-
-Say the actual proportion of Democratic voters is p=0.45. In this case, the Republican party is winning by a relatively large margin of d=−0.1, or a 10% margin of victory. What is the standard error of the spread 2X̄−1 in this case?
-
-Use the sqrt function to calculate the standard error of the spread 2X̄−1.
-```
+```{r}
 # `N` represents the number of people polled
 N <- 25
 
@@ -288,19 +258,17 @@ N <- 25
 p <- 0.45
 
 # Calculate the standard error of the spread. Print this value to the console.
-2*sqrt(p*(1-p)/N)
+2*sqrt((p*(1-p)/N))
 ```
-```
-## [1] 0.1989975
-```
-10. Sample size
 
-So far we have said that the difference between the proportion of Democratic voters and Republican voters is about 10% and that the standard error of this spread is about 0.2 when N=25. Select the statement that explains why this sample size is sufficient or not.
+10. So far we have said that the difference between the proportion of Democratic voters and Republican voters is about 10% and that the standard error of this spread is about 0.2 when $N = 25$. 
 
-- [ ] A. This sample size is sufficient because the expected value of our estimate 2X̄−1 is d so our prediction will be right on.
+Select the statement that explains why this sample size is sufficient or not.
+
+- [ ] A. This sample size is sufficient because the expected value of our estimate $2 \overline{X} − 1$ is $d$ so our prediction will be right on.
 - [X] B. This sample size is too small because the standard error is larger than the spread.
 - [ ] C. This sample size is sufficient because the standard error of about 0.2 is much smaller than the spread of 10%.
-- [ ] D. Without knowing p, we have no way of knowing that increasing our sample size would actually improve our standard error.
+- [ ] D. Without knowing ```p```, we have no way of knowing that increasing our sample size would actually improve our standard error.
 
 ## Section 2 Overview
 
