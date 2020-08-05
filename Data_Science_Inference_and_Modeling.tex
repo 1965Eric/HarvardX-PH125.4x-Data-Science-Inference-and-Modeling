@@ -988,50 +988,43 @@ range of values of p}
 
 \includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-8-1.pdf}
 
-\hypertarget{assessment-2.1-introduction-to-inference}{%
-\subsection{Assessment 2.1: Introduction to
-Inference}\label{assessment-2.1-introduction-to-inference}}
+\hypertarget{assessment---introduction-to-inference}{%
+\subsection{Assessment - Introduction to
+Inference}\label{assessment---introduction-to-inference}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Sample average
+  Write function called \texttt{take\_sample} that takes the proportion
+  of Democrats \(p\) and the sample size \(N\) as arguments and returns
+  the sample average of Democrats (1) and Republicans (0).
 \end{enumerate}
-
-Write a function called take\_sample that takes the proportion of
-Democrats p and the sample size N as arguments and returns the sample
-average of Democrats (1) and Republicans (0).
 
 Calculate the sample average if the proportion of Democrats equals 0.45
 and the sample size is 100.
 
-Instructions - Define a function called take\_sample that takes p and N
-as arguments. - Use the sample function as the first statement in your
-function to sample N elements from a vector of options where Democrats
-are assigned the value `1' and Republicans are assigned the value `0'. -
-Use the mean function as the second statement in your function to find
-the average value of the random sample.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write a function called \textasciigrave{}take\_sample\textasciigrave{} that takes \textasciigrave{}p\textasciigrave{} and \textasciigrave{}N\textasciigrave{} as arguements and returns the average value of a randomly sampled population.}
+\NormalTok{take\_sample \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(p, N) \{}
+\NormalTok{  x \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))}
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{mean}\NormalTok{(x))}
+\NormalTok{\}}
 
-\begin{verbatim}
-# Write a function called `take_sample` that takes `p` and `N` as arguements and returns the average value of a randomly sampled population.
-take_sample <- function(p, N){
-    X <- sample(c(0,1), size = N, replace = TRUE, prob = c(1 - p, p))
-    mean(X)
-}
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-# Define `N` as the number of people polled
-N <- 100
-
-# Call the `take_sample` function to determine the sample average of `N` randomly selected people from a population containing a proportion of Democrats equal to `p`. Print this value to the console.
-take_sample(p,N)
-\end{verbatim}
+\CommentTok{\# Call the \textasciigrave{}take\_sample\textasciigrave{} function to determine the sample average of \textasciigrave{}N\textasciigrave{} randomly selected people from a population containing a proportion of Democrats equal to \textasciigrave{}p\textasciigrave{}. Print this value to the console.}
+\KeywordTok{take\_sample}\NormalTok{(p, N)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.46
@@ -1042,108 +1035,117 @@ take_sample(p,N)
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Distribution of errors - 1
+  Assume the proportion of Democrats in the population \(p\) equals 0.45
+  and that your sample size \(N\) is 100 polled voters.
 \end{enumerate}
 
-Assume the proportion of Democrats in the population p equals 0.45 and
-that your sample size N is 100 polled voters. The take\_sample function
-you defined previously generates our estimate, X̄.
+The \texttt{take\_sample} function you defined previously generates our
+estimate, \(\overline{X}\).
 
-Replicate the random sampling 10,000 times and calculate p−X̄ for each
-random sample. Save these differences as a vector called errors. Find
-the average of errors and plot a histogram of the distribution.
+Replicate the random sampling 10,000 times and calculate
+\(p − \overline{X}\) for each random sample. Save these differences as a
+vector called \texttt{errors}. Find the average of \texttt{errors} and
+plot a histogram of the distribution.
 
-Instructions - The function take\_sample that you defined in the
-previous exercise has already been run for you. - Use the replicate
-function to replicate subtracting the result of take\_sample from the
-value of p 10,000 times. - Use the mean function to calculate the
-average of the differences between the sample average and actual value
-of p.~
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-\begin{verbatim}
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-# Define `N` as the number of people polled
-N <- 100
+\CommentTok{\# The variable \textasciigrave{}B\textasciigrave{} specifies the number of times we want the sample to be replicated}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}
 
-# The variable `B` specifies the number of times we want the sample to be replicated
-B <- 10000
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
+\CommentTok{\# Create an objected called \textasciigrave{}errors\textasciigrave{} that replicates subtracting the result of the \textasciigrave{}take\_sample\textasciigrave{} function from \textasciigrave{}p\textasciigrave{} for \textasciigrave{}B\textasciigrave{} replications}
+\NormalTok{errors \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, p }\OperatorTok{{-}}\StringTok{ }\KeywordTok{take\_sample}\NormalTok{(p, N))}
 
-# Create an objected called `errors` that replicates subtracting the result of the `take_sample` function from `p` for `B` replications
-errors <- replicate(B, p - take_sample(p, N))
-
-# Calculate the mean of the errors. Print this value to the console.
-mean(errors)
-\end{verbatim}
+\CommentTok{\# Calculate the mean of the errors. Print this value to the console.}
+\KeywordTok{mean}\NormalTok{(errors)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] -4.9e-05
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(errors)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Distribution of errors - 2
+  In the last exercise, you made a vector of differences between the
+  actual value for \(p\) and an estimate, \(\overline{X}\).
 \end{enumerate}
 
-In the last exercise, you made a vector of differences between the
-actual value for p and an estimate, X̄. We called these differences
-between the actual and estimated values errors.
+We called these differences between the actual and estimated values
+\texttt{errors}.
 
-The errors object has already been loaded for you. Use the hist function
-to plot a histogram of the values contained in the vector errors. Which
-statement best describes the distribution of the errors?
+The \texttt{errors} object has already been loaded for you. Use the
+\texttt{hist} function to plot a histogram of the values contained in
+the vector \texttt{errors}. Which statement best describes the
+distribution of the errors?
 
-Possible Answers - {[} {]} A. The errors are all about 0.05. - {[} {]}
-B. The error are all about -0.05. - {[}X{]} C. The errors are
-symmetrically distributed around 0. - {[} {]} D. The errors range from
--1 to 1.
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. The errors are all about 0.05.
+\item[$\square$]
+  B. The errors are all about -0.05.
+\item[$\boxtimes$]
+  C. The errors are symmetrically distributed around 0.
+\item[$\square$]
+  D. The errors range from -1 to 1.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Average size of error
+  The error \(p - \overline{X}\) is a random variable.
 \end{enumerate}
 
-The error p−X̄ is a random variable. In practice, the error is not
-observed because we do not know the actual proportion of Democratic
-voters, p.~However, we can describe the size of the error by
-constructing a simulation.
+In practice, the error is not observed because we do not know the actual
+proportion of Democratic voters, \(p\). However, we can describe the
+size of the error by constructing a simulation.
 
 What is the average size of the error if we define the size by taking
-the absolute value ∣p−X̄∣?
+the absolute value \(|p - \overline{X}|\)?
 
-Instructions - Use the sample code to generate errors, a vector of
-∣p−X̄∣. - Calculate the absolute value of errors using the abs function.
-- Calculate the average of these values using the mean function.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-\begin{verbatim}
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-# Define `N` as the number of people polled
-N <- 100
+\CommentTok{\# The variable \textasciigrave{}B\textasciigrave{} specifies the number of times we want the sample to be replicated}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}
 
-# The variable `B` specifies the number of times we want the sample to be replicated
-B <- 10000
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
+\CommentTok{\# We generated \textasciigrave{}errors\textasciigrave{} by subtracting the estimate from the actual proportion of Democratic voters}
+\NormalTok{errors \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, p }\OperatorTok{{-}}\StringTok{ }\KeywordTok{take\_sample}\NormalTok{(p, N))}
 
-# We generated `errors` by subtracting the estimate from the actual proportion of Democratic voters
-errors <- replicate(B, p - take_sample(p, N))
-
-# Calculate the mean of the absolute value of each simulated error. Print this value to the console.
-mean(abs(errors))
-\end{verbatim}
+\CommentTok{\# Calculate the mean of the absolute value of each simulated error. Print this value to the console.}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(errors))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.039267
@@ -1154,46 +1156,43 @@ mean(abs(errors))
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Standard deviation of the spread
+  The standard error is related to the typical \textbf{size} of the
+  error we make when predicting.
 \end{enumerate}
 
-The standard error is related to the typical size of the error we make
-when predicting. We say size because, as we just saw, the errors are
-centered around 0. In that sense, the typical error is 0. For
-mathematical reasons related to the central limit theorem, we actually
-use the standard deviation of errors rather than the average of the
+We say \textbf{size} because, as we just saw, the errors are centered
+around 0. In that sense, the typical error is 0. For mathematical
+reasons related to the central limit theorem, we actually use the
+standard deviation of \texttt{errors} rather than the average of the
 absolute values.
 
 As we have discussed, the standard error is the square root of the
-average squared distance (X̄−p)2. The standard deviation is defined as
-the square root of the distance squared.
+average squared distance \((\overline{X} - p)^2\). The standard
+deviation is defined as the square root of the distance squared.
 
 Calculate the standard deviation of the spread.
 
-Instructions - Use the sample code to generate errors, a vector of
-∣p−X̄∣. - Use \^{}2 to square the distances. - Calculate the average
-squared distance using the mean function. - Calculate the square root of
-these values using the sqrt function.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-\begin{verbatim}
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-# Define `N` as the number of people polled
-N <- 100
+\CommentTok{\# The variable \textasciigrave{}B\textasciigrave{} specifies the number of times we want the sample to be replicated}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}
 
-# The variable `B` specifies the number of times we want the sample to be replicated
-B <- 10000
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
+\CommentTok{\# We generated \textasciigrave{}errors\textasciigrave{} by subtracting the estimate from the actual proportion of Democratic voters}
+\NormalTok{errors \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, p }\OperatorTok{{-}}\StringTok{ }\KeywordTok{take\_sample}\NormalTok{(p, N))}
 
-# We generated `errors` by subtracting the estimate from the actual proportion of Democratic voters
-errors <- replicate(B, p - take_sample(p, N))
-
-# Calculate the standard deviation of `errors`
-sqrt(mean(errors^2))
-\end{verbatim}
+\CommentTok{\# Calculate the standard deviation of \textasciigrave{}errors\textasciigrave{}}
+\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(errors}\OperatorTok{\^{}}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.04949939
@@ -1204,27 +1203,25 @@ sqrt(mean(errors^2))
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Estimating the standard error
+  The theory we just learned tells us what this standard deviation is
+  going to be because it is the standard error of \(\overline{X}\).
 \end{enumerate}
-
-The theory we just learned tells us what this standard deviation is
-going to be because it is the standard error of X̄.
 
 Estimate the standard error given an expected value of 0.45 and a sample
 size of 100.
 
-Instructions - Calculate the standard error using the sqrt function
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the expected value equal to 0.45}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-\begin{verbatim}
-# Define `p` as the expected value equal to 0.45
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the sample size}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-# Define `N` as the sample size
-N <- 100
-
-# Calculate the standard error
-sqrt(p*(1-p)/N)
-\end{verbatim}
+\CommentTok{\# Calculate the standard error}
+\KeywordTok{sqrt}\NormalTok{(p}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p)}\OperatorTok{/}\NormalTok{N)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.04974937
@@ -1235,47 +1232,34 @@ sqrt(p*(1-p)/N)
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Standard error of the estimate
+  In practice, we don't know \(p\), so we construct an estimate of the
+  theoretical prediction based by plugging in \(\overline{X}\) for
+  \(p\). Calculate the standard error of the estimate:
+  \(\hat{SE}(\overline{X})\)
 \end{enumerate}
 
-In practice, we don't know p, so we construct an estimate of the
-theoretical prediction based by plugging in X̄ for p.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as a proportion of Democratic voters to simulate}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-Calculate the standard error of the estimate:
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the sample size}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-\textbf{ŜE(X̄)}
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-Instructions - Simulate a poll X using the sample function. - When using
-the sample function, create a vector using c() that contains all
-possible polling options where `1' indicates a Democratic voter and `0'
-indicates a Republican voter. - When using the sample function, use
-replace = TRUE within the sample function to indicate that sampling from
-the vector should occur with replacement. - When using the sample
-function, use prob = within the sample function to indicate the
-probabilities of selecting either element (0 or 1) within the vector of
-possibilities. - Use the mean function to calculate the average of the
-simulated poll, X\_bar. - Calculate the standard error of the X\_bar
-using the sqrt function and print the result.
+\CommentTok{\# Define \textasciigrave{}X\textasciigrave{} as a random sample of \textasciigrave{}N\textasciigrave{} voters with a probability of picking a Democrat (\textquotesingle{}1\textquotesingle{}) equal to \textasciigrave{}p\textasciigrave{}}
+\NormalTok{X \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))}
 
-\begin{verbatim}
-# Define `p` as a proportion of Democratic voters to simulate
-p <- 0.45
+\CommentTok{\# Define \textasciigrave{}X\_bar\textasciigrave{} as the average sampled proportion}
+\NormalTok{X\_bar \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(X)}
 
-# Define `N` as the sample size
-N <- 100
-
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
-
-# Define `X` as a random sample of `N` voters with a probability of picking a Democrat ('1') equal to `p`
-X <- sample(0:1, N, replace=T, p=c(1-p,p))
-
-# Define `X_bar` as the average sampled proportion
-X_bar <- mean(X)
-
-# Calculate the standard error of the estimate. Print the result to the console.
-sqrt(X_bar*(1-X_bar)/N)
-\end{verbatim}
+\CommentTok{\# Calculate the standard error of the estimate. Print the result to the console.}
+\NormalTok{se \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{((X\_bar}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_bar)}\OperatorTok{/}\NormalTok{N))}
+\NormalTok{se}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.04983974
@@ -1286,131 +1270,152 @@ sqrt(X_bar*(1-X_bar)/N)
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Plotting the standard error
+  The standard error estimates obtained from the Monte Carlo simulation,
+  the theoretical prediction, and the estimate of the theoretical
+  prediction are all very close, which tells us that the theory is
+  working.
 \end{enumerate}
 
-The standard error estimates obtained from the Monte Carlo simulation,
-the theoretical prediction, and the estimate of the theoretical
-prediction are all very close, which tells us that the theory is
-working. This gives us a practical approach to knowing the typical error
-we will make if we predict p with X̂. The theoretical result gives us an
-idea of how large a sample size is required to obtain the precision we
-need. Earlier we learned that the largest standard errors occur for
-p=0.5.
+This gives us a practical approach to knowing the typical error we will
+make if we predict \(p\) with \(\hat{X}\). The theoretical result gives
+us an idea of how large a sample size is required to obtain the
+precision we need. Earlier we learned that the largest standard errors
+occur for \(p = 0.5\).
 
-Create a plot of the largest standard error for N ranging from 100 to
-5,000. Based on this plot, how large does the sample size have to be to
-have a standard error of about 1\%?
+Create a plot of the largest standard error for \(N\) ranging from 100
+to 5,000.
 
-\begin{verbatim}
-N <- seq(100, 5000, len = 100)
-p <- 0.5
-se <- sqrt(p*(1-p)/N)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\DataTypeTok{len =} \DecValTok{100}\NormalTok{)}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.5}
+\NormalTok{se \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p)}\OperatorTok{/}\NormalTok{N)}
+\KeywordTok{plot}\NormalTok{(se, N)}
+\end{Highlighting}
+\end{Shaded}
 
-Possible Answers - {[} {]} A. 100 - {[} {]} B. 500 - {[}X{]} C. 2,500 -
-{[} {]} D. 4,000
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+Based on this plot, how large does the sample size have to be to have a
+standard error of about 1\%?
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. 100
+\item[$\square$]
+  B. 500
+\item[$\boxtimes$]
+  C. 2,500
+\item[$\square$]
+  D. 4,000
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{8}
 \tightlist
 \item
-  Distribution of X-hat
+  For \(N = 100\), the central limit theorem tells us that the
+  distribution of \(\hat{X}\) is\ldots{}
 \end{enumerate}
 
-For N=100, the central limit theorem tells us that the distribution of X̂
-is\ldots{}
-
-Possible Answers - {[} {]} A. practically equal to p. - {[}X{]} B.
-approximately normal with expected value p and standard error
-√(p(1−p)/N). - {[} {]} C. approximately normal with expected value X̄ and
-standard error √(X̄(1−X̄)/N). - {[} {]} D. not a random variable.
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. practically equal to \(p\).
+\item[$\boxtimes$]
+  B. approximately normal with expected value \(p\) and standard error
+  \(\sqrt{p(1 − p)/N}\).
+\item[$\square$]
+  C. approximately normal with expected value \(\overline{X}\) and
+  standard error \(\sqrt{\overline{X}(1 − \overline{X}/N}\).
+\item[$\square$]
+  D. not a random variable.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{9}
 \tightlist
 \item
-  Distribution of the errors
+  We calculated a vector \texttt{errors} that contained, for each
+  simulated sample, the difference between the actual value \texttt{p}
+  and our estimate \(\hat{X}\).
 \end{enumerate}
 
-We calculated a vector errors that contained, for each simulated sample,
-the difference between the actual value p and our estimate X̂.
+The errors \(\overline{X} − p\) are:
 
-The errors X̄−p are:
-
-Possible Answers - {[} {]} A. practically equal to 0. - {[}X{]} B.
-approximately normal with expected value 0 and standard error
-√(p(1−p)/N). - {[} {]} C. approximately normal with expected value p and
-standard error √(p(1−p)/N). - {[} {]} D. not a random variable.
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. practically equal to 0.
+\item[$\boxtimes$]
+  B. approximately normal with expected value 0 and standard error
+  \(\sqrt{p(1 − p)/N}\).
+\item[$\square$]
+  C. approximately normal with expected value p and standard error
+  \(\sqrt{p(1 − p)/N}\).
+\item[$\square$]
+  D. not a random variable.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{10}
 \tightlist
 \item
-  Plotting the errors
+  Make a qq-plot of the \texttt{errors} you generated previously to see
+  if they follow a normal distribution.
 \end{enumerate}
 
-Make a qq-plot of the errors you generated previously to see if they
-follow a normal distribution.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-Instructions - Run the supplied code - Use the qqnorm function to
-produce a qq-plot of the errors. - Use the qqline function to plot a
-line showing a normal distribution.
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-\begin{verbatim}
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# The variable \textasciigrave{}B\textasciigrave{} specifies the number of times we want the sample to be replicated}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}
 
-# Define `N` as the number of people polled
-N <- 100
+\CommentTok{\# Use the \textasciigrave{}set.seed\textasciigrave{} function to make sure your answer matches the expected result after random sampling}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 
-# The variable `B` specifies the number of times we want the sample to be replicated
-B <- 10000
+\CommentTok{\# Generate \textasciigrave{}errors\textasciigrave{} by subtracting the estimate from the actual proportion of Democratic voters}
+\NormalTok{errors \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, p }\OperatorTok{{-}}\StringTok{ }\KeywordTok{take\_sample}\NormalTok{(p, N))}
 
-# Use the `set.seed` function to make sure your answer matches the expected result after random sampling
-set.seed(1)
+\CommentTok{\# Generate a qq{-}plot of \textasciigrave{}errors\textasciigrave{} with a qq{-}line showing a normal distribution}
+\KeywordTok{qqnorm}\NormalTok{(errors)}
+\KeywordTok{qqline}\NormalTok{(errors)}
+\end{Highlighting}
+\end{Shaded}
 
-# Generate `errors` by subtracting the estimate from the actual proportion of Democratic voters
-errors <- replicate(B, p - take_sample(p, N))
-
-# Generate a qq-plot of `errors` with a qq-line showing a normal distribution
-qqnorm(errors)
-qqline(errors)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76305614-c156ec00-62c5-11ea-9a5e-0a9c83f21ae5.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{11}
 \tightlist
 \item
-  Estimating the probability of a specific value of X-bar
+  If \(p = 0.45\) and \(N = 100\), use the central limit theorem to
+  estimate the probability that \(\overline{X} > 0.5\).
 \end{enumerate}
 
-If p=0.45 and N=100, use the central limit theorem to estimate the
-probability that X̄\textgreater0.5.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}p\textasciigrave{} as the proportion of Democrats in the population being polled}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-Instructions - Use pnorm to define the probability that a value will be
-greater than 0.5.
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}
 
-\begin{verbatim}
-# Define `p` as the proportion of Democrats in the population being polled
-p <- 0.45
+\CommentTok{\# Calculate the probability that the estimated proportion of Democrats in the population is greater than 0.5. Print this value to the console.}
 
-# Define `N` as the number of people polled
-N <- 100
-
-# Calculate the probability that the estimated proportion of Democrats in the population is greater than 0.5. Print this value to the console.
-1-pnorm(0.5, mean = p, sd=(sqrt(p*(1-p)/N)))
-\end{verbatim}
+\DecValTok{1}\OperatorTok{{-}}\KeywordTok{pnorm}\NormalTok{(}\FloatTok{0.5}\NormalTok{, p, }\KeywordTok{sqrt}\NormalTok{(p}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p)}\OperatorTok{/}\NormalTok{N))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.1574393
@@ -1421,33 +1426,30 @@ N <- 100
 \setcounter{enumi}{12}
 \tightlist
 \item
-  Estimating the probability of a specific error size
+  Assume you are in a practical situation and you don't know \(p\).
 \end{enumerate}
 
-Assume you are in a practical situation and you don't know p.~Take a
-sample of size N=100 and obtain a sample average of X̄=0.51.
+Take a sample of size \(N = 100\) and obtain a sample average of
+\(\overline{X} = 0.51\).
 
-What is the CLT approximation for the probability that your error is
-equal or larger than 0.01?
+What is the CLT approximation for the probability that your error size
+is equal or larger than 0.01?
 
-Instructions - Calculate the standard error of the sample average using
-the sqrt function. - Use pnorm twice to define the probabilities that a
-value will be less than 0.01 or -0.01. - Calculate the probability that
-the error will be 0.01 or larger.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define \textasciigrave{}N\textasciigrave{} as the number of people polled}
+\NormalTok{N \textless{}{-}}\DecValTok{100}
 
-\begin{verbatim}
-# Define `N` as the number of people polled
-N <-100
+\CommentTok{\# Define \textasciigrave{}X\_hat\textasciigrave{} as the sample average}
+\NormalTok{X\_hat \textless{}{-}}\StringTok{ }\FloatTok{0.51}
 
-# Define `X_hat` as the sample average
-X_hat <- 0.51
+\CommentTok{\# Define \textasciigrave{}se\_hat\textasciigrave{} as the standard error of the sample average}
+\NormalTok{se\_hat \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(X\_hat}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_hat)}\OperatorTok{/}\NormalTok{N)}
 
-# Define `se_hat` as the standard error of the sample average
-se_hat <- sqrt(X_hat*(1-X_hat)/N)
-
-# Calculate the probability that the error is 0.01 or larger
-1 - pnorm(.01, 0, se_hat) + pnorm(-0.01, 0, se_hat)
-\end{verbatim}
+\CommentTok{\# Calculate the probability that the error is 0.01 or larger}
+\DecValTok{1}\OperatorTok{{-}}\KeywordTok{pnorm}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\DecValTok{0}\NormalTok{,se\_hat) }\OperatorTok{+}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\OperatorTok{{-}}\FloatTok{0.01}\NormalTok{,}\DecValTok{0}\NormalTok{,se\_hat)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.8414493
@@ -4559,7 +4561,7 @@ Make a boxplot of the spread in june\_polls by poll type.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 Which of the following are TRUE? A: Telephone polls tend to show support
 ``Remain'' (spread \textgreater{} 0). A: Telephone polls tend to show
@@ -4835,7 +4837,7 @@ indicating the final value of d=-.038.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-23-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 \hypertarget{question-12-plotting-raw-percentages-over-time}{%
 \paragraph{Question 12: Plotting raw percentages over
@@ -4887,7 +4889,7 @@ poll:
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-34-1.pdf}
 
 Which of the following are TRUE?
 
