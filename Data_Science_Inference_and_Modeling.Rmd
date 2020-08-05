@@ -1441,7 +1441,7 @@ After completing Section 5, you will be able to:
 
 The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-statistics)
 
-*Key points*
+**Key points**
 
 * In the urn model, it does not make sense to talk about the probability of $p$ being greater than a certain value because $p$ is a fixed value.
 * With Bayesian statistics, we assume that $p$ is in fact random, which allows us to calculate probabilities related to $p$.
