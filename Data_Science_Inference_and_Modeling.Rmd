@@ -290,7 +290,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * Because $\overline{X}$ is the sum of random draws divided by a constant, the distribution of $\overline{X}$ is approximately normal.
 * We can convert $\overline{X}$ to a standard normal random variable $Z$: 
 
-$Z = \frac{\overline{X} - E(\overline{X})}{SE(\overline{X})}
+$Z = \frac{\overline{X} - E(\overline{X})}{SE(\overline{X})}$
 
 * The probability that $\overline{X}$ is within .01 of the actual value of $p$ is:
 

@@ -743,15 +743,250 @@ not.
 
 In Section 2, you will look at the Central Limit Theorem in practice.
 
-After completing Section 2, you will be able to: - Use the Central Limit
-Theorem to calculate the probability that a sample estimate X̄ is close
-to the population proportion p. - Run a Monte Carlo simulation to
-corroborate theoretical results built using probability theory. -
-Estimate the spread based on estimates of X̄ and ŜE(X̄). - Understand why
-bias can mean that larger sample sizes aren't necessarily better.
+After completing Section 2, you will be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Use the Central Limit Theorem to calculate the probability that a
+  sample estimate \(\overline{X}\) is close to the population proportion
+  \(p\).
+\item
+  Run a Monte Carlo simulation to corroborate theoretical results built
+  using probability theory.
+\item
+  Estimate the spread based on estimates of \(\overline{X}\) and
+  \(\hat{SE}(\overline{X})\).
+\item
+  Understand why bias can mean that larger sample sizes aren't
+  necessarily better.
+\end{itemize}
+
+\hypertarget{the-central-limit-theorem-in-practice}{%
+\subsection{The Central Limit Theorem in
+Practice}\label{the-central-limit-theorem-in-practice}}
 
 The textbook for this section is available
-\href{https://rafalab.github.io/dsbook/random-variables.html\#central-limit-theorem}{here}
+\href{https://rafalab.github.io/dsbook/inference.html\#clt}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Because \(\overline{X}\) is the sum of random draws divided by a
+  constant, the distribution of \(\overline{X}\) is approximately
+  normal.
+\item
+  We can convert \(\overline{X}\) to a standard normal random variable
+  \(Z\):
+\end{itemize}
+
+\(Z = \frac{\overline{X} - E(\overline{X})}{SE(\overline{X})}\)
+
+\begin{itemize}
+\tightlist
+\item
+  The probability that \(\overline{X}\) is within .01 of the actual
+  value of \(p\) is:
+\end{itemize}
+
+\(Pr(Z \le .01/\sqrt {p(1 - p)/N}) - Pr(Z \le -.01/\sqrt {p(1 - p)/N})\)
+
+\begin{itemize}
+\tightlist
+\item
+  The Central Limit Theorem (CLT) still works if \(\overline{X}\) is
+  used in place of \(p\). This is called a \emph{plug-in estimate}. Hats
+  over values denote estimates. Therefore:
+\end{itemize}
+
+\(\hat{SE}(\overline{X}) = \sqrt{\overline{X}(1 - \overline{X})/N}\)
+
+Using the CLT, the probability that \(\overline{X}\) is within .01 of
+the actual value of \(p\) is:
+
+\(Pr(Z \le .01/\sqrt {\overline{X}(1 - \overline{X})/N}) - Pr(Z \le -.01/\sqrt {\overline{X}(1 - \overline{X})/N})\)
+
+\emph{Code: Computing the probability of \(\overline{X}\) being within
+.01 of \(p\)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_hat \textless{}{-}}\StringTok{ }\FloatTok{0.48}
+\NormalTok{se \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(X\_hat}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_hat)}\OperatorTok{/}\DecValTok{25}\NormalTok{)}
+\KeywordTok{pnorm}\NormalTok{(}\FloatTok{0.01}\OperatorTok{/}\NormalTok{se) }\OperatorTok{{-}}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\OperatorTok{{-}}\FloatTok{0.01}\OperatorTok{/}\NormalTok{se)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.07971926
+\end{verbatim}
+
+\hypertarget{margin-of-error}{%
+\subsection{Margin of Error}\label{margin-of-error}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#clt}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{margin of error} is defined as 2 times the standard error of
+  the estimate \(\overline{X}\).
+\item
+  There is about a 95\% chance that \(\overline{X}\) will be within two
+  standard errors of the actual parameter \(p\).
+\end{itemize}
+
+\hypertarget{a-monte-carlo-simulation-for-the-clt}{%
+\subsection{A Monte Carlo Simulation for the
+CLT}\label{a-monte-carlo-simulation-for-the-clt}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#a-monte-carlo-simulation}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  We can run Monte Carlo simulations to compare with theoretical results
+  assuming a value of \(p\).
+\item
+  In practice, \(p\) is unknown. We can corroborate theoretical results
+  by running Monte Carlo simulations with one or several values of
+  \(p\).
+\item
+  One practical choice for \(p\) when modeling is \(\overline{X}\), the
+  observed value of \(\hat{X}\) in a sample.
+\end{itemize}
+
+\emph{Code: Monte Carlo simulation using a set value of p}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}    \CommentTok{\# unknown p to estimate}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{1000}
+
+\CommentTok{\# simulate one poll of size N and determine x\_hat}
+\NormalTok{x \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))}
+\NormalTok{x\_hat \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+
+\CommentTok{\# simulate B polls of size N and determine average x\_hat}
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}    \CommentTok{\# number of replicates}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{1000}    \CommentTok{\# sample size per replicate}
+\NormalTok{x\_hat \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, \{}
+\NormalTok{    x \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))}
+    \KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Code: Histogram and QQ-plot of Monte Carlo results}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(gridExtra)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"gridExtra"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: gridExtra
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'gridExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(gridExtra)}
+\NormalTok{p1 \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x\_hat =}\NormalTok{ x\_hat) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(x\_hat)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \FloatTok{0.005}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{)}
+\NormalTok{p2 \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x\_hat =}\NormalTok{ x\_hat) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ x\_hat)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{stat\_qq}\NormalTok{(}\DataTypeTok{dparams =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(x\_hat), }\DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(x\_hat))) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_abline}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"X\_hat"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Theoretical normal"}\NormalTok{)}
+\KeywordTok{grid.arrange}\NormalTok{(p1, p2, }\DataTypeTok{nrow=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{the-spread}{%
+\subsection{The Spread}\label{the-spread}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#the-spread}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The spread between two outcomes with probabilities \(p\) and \(1 - p\)
+  is \(2p - 1\).
+\item
+  The expected value of the spread is \(2 \overline{X} - 1\).
+\item
+  The standard error of the spread is \(2 \hat{SE}(\overline{X})\).
+\item
+  The margin of error of the spread is 2 times the margin of error of
+  \(\overline{X}\).
+\end{itemize}
+
+\hypertarget{bias-why-not-run-a-very-large-poll}{%
+\subsection{Bias: Why Not Run a Very Large
+Poll?}\label{bias-why-not-run-a-very-large-poll}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#bias-why-not-run-a-very-large-poll}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  An extremely large poll would theoretically be able to predict
+  election results almost perfectly.
+\item
+  These sample sizes are not practical. In addition to cost concerns,
+  polling doesn't reach everyone in the population (eventual voters)
+  with equal probability, and it also may include data from outside our
+  population (people who will not end up voting).
+\item
+  These systematic errors in polling are called \emph{bias}. We will
+  learn more about bias in the future.
+\end{itemize}
+
+\emph{Code: Plotting margin of error in an extremely large poll over a
+range of values of p}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100000}
+\NormalTok{p \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.35}\NormalTok{, }\FloatTok{0.65}\NormalTok{, }\DataTypeTok{length =} \DecValTok{100}\NormalTok{)}
+\NormalTok{SE \textless{}{-}}\StringTok{ }\KeywordTok{sapply}\NormalTok{(p, }\ControlFlowTok{function}\NormalTok{(x) }\DecValTok{2}\OperatorTok{*}\KeywordTok{sqrt}\NormalTok{(x}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{x)}\OperatorTok{/}\NormalTok{N))}
+\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{p =}\NormalTok{ p, }\DataTypeTok{SE =}\NormalTok{ SE) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(p, SE)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 \hypertarget{assessment-2.1-introduction-to-inference}{%
 \subsection{Assessment 2.1: Introduction to
@@ -4324,7 +4559,7 @@ Make a boxplot of the spread in june\_polls by poll type.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-13-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 Which of the following are TRUE? A: Telephone polls tend to show support
 ``Remain'' (spread \textgreater{} 0). A: Telephone polls tend to show
@@ -4600,7 +4835,7 @@ indicating the final value of d=-.038.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-23-1.pdf}
 
 \hypertarget{question-12-plotting-raw-percentages-over-time}{%
 \paragraph{Question 12: Plotting raw percentages over
@@ -4652,7 +4887,7 @@ poll:
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-20-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-24-1.pdf}
 
 Which of the following are TRUE?
 
