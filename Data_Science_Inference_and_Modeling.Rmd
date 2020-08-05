@@ -275,12 +275,130 @@ Select the statement that explains why this sample size is sufficient or not.
 In Section 2, you will look at the Central Limit Theorem in practice.
 
 After completing Section 2, you will be able to:
-- Use the Central Limit Theorem to calculate the probability that a sample estimate X̄ is close to the population proportion p.
-- Run a Monte Carlo simulation to corroborate theoretical results built using probability theory.
-- Estimate the spread based on estimates of X̄ and ŜE(X̄).
-- Understand why bias can mean that larger sample sizes aren’t necessarily better.
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/random-variables.html#central-limit-theorem)
+* Use the Central Limit Theorem to calculate the probability that a sample estimate $\overline{X}$ is close to the population proportion $p$.
+* Run a Monte Carlo simulation to corroborate theoretical results built using probability theory.
+* Estimate the spread based on estimates of $\overline{X}$ and $\hat{SE}(\overline{X})$.
+* Understand why bias can mean that larger sample sizes aren’t necessarily better.
+
+## The Central Limit Theorem in Practice
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt)
+
+**Key points**
+
+* Because $\overline{X}$ is the sum of random draws divided by a constant, the distribution of $\overline{X}$ is approximately normal.
+* We can convert $\overline{X}$ to a standard normal random variable $Z$: 
+
+$Z = \frac{\overline{X} - E(\overline{X})}{SE(\overline{X})}
+
+* The probability that $\overline{X}$ is within .01 of the actual value of $p$ is:
+
+$Pr(Z \le .01/\sqrt {p(1 - p)/N}) - Pr(Z \le -.01/\sqrt {p(1 - p)/N})$
+
+* The Central Limit Theorem (CLT) still works if $\overline{X}$ is used in place of $p$. This is called a *plug-in estimate*. Hats over values denote estimates. Therefore:
+
+$\hat{SE}(\overline{X}) = \sqrt{\overline{X}(1 - \overline{X})/N}$
+
+Using the CLT, the probability that $\overline{X}$ is within .01 of the actual value of $p$ is:
+
+$Pr(Z \le .01/\sqrt {\overline{X}(1 - \overline{X})/N}) - Pr(Z \le -.01/\sqrt {\overline{X}(1 - \overline{X})/N})$
+
+*Code: Computing the probability of $\overline{X}$ being within .01 of $p$*
+
+```{r}
+X_hat <- 0.48
+se <- sqrt(X_hat*(1-X_hat)/25)
+pnorm(0.01/se) - pnorm(-0.01/se)
+```
+
+## Margin of Error
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt)
+
+**Key points**
+
+* The *margin of error* is defined as 2 times the standard error of the estimate $\overline{X}$.
+* There is about a 95% chance that $\overline{X}$ will be within two standard errors of the actual parameter $p$.
+
+## A Monte Carlo Simulation for the CLT
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation)
+
+**Key points**
+
+* We can run Monte Carlo simulations to compare with theoretical results assuming a value of $p$.
+* In practice, $p$ is unknown. We can corroborate theoretical results by running Monte Carlo simulations with one or several values of $p$.
+* One practical choice for $p$ when modeling is $\overline{X}$, the observed value of $\hat{X}$ in a sample.
+
+*Code: Monte Carlo simulation using a set value of p*
+
+```{r}
+p <- 0.45    # unknown p to estimate
+N <- 1000
+
+# simulate one poll of size N and determine x_hat
+x <- sample(c(0,1), size = N, replace = TRUE, prob = c(1-p, p))
+x_hat <- mean(x)
+
+# simulate B polls of size N and determine average x_hat
+B <- 10000    # number of replicates
+N <- 1000    # sample size per replicate
+x_hat <- replicate(B, {
+    x <- sample(c(0,1), size = N, replace = TRUE, prob = c(1-p, p))
+    mean(x)
+})
+```
+
+*Code: Histogram and QQ-plot of Monte Carlo results*
+
+```{r}
+if(!require(gridExtra)) install.packages("gridExtra")
+
+library(gridExtra)
+p1 <- data.frame(x_hat = x_hat) %>%
+    ggplot(aes(x_hat)) +
+    geom_histogram(binwidth = 0.005, color = "black")
+p2 <- data.frame(x_hat = x_hat) %>%
+    ggplot(aes(sample = x_hat)) +
+    stat_qq(dparams = list(mean = mean(x_hat), sd = sd(x_hat))) +
+    geom_abline() +
+    ylab("X_hat") +
+    xlab("Theoretical normal")
+grid.arrange(p1, p2, nrow=1)
+```
+
+## The Spread
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-spread)
+
+**Key points**
+
+* The spread between two outcomes with probabilities $p$ and $1 - p$ is $2p - 1$.
+* The expected value of the spread is $2 \overline{X} - 1$.
+* The standard error of the spread is $2 \hat{SE}(\overline{X})$.
+* The margin of error of the spread is 2 times the margin of error of $\overline{X}$.
+
+## Bias: Why Not Run a Very Large Poll?
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#bias-why-not-run-a-very-large-poll)
+
+**Key points**
+
+* An extremely large poll would theoretically be able to predict election results almost perfectly.
+* These sample sizes are not practical. In addition to cost concerns, polling doesn't reach everyone in the population (eventual voters) with equal probability, and it also may include data from outside our population (people who will not end up voting).
+* These systematic errors in polling are called *bias*. We will learn more about bias in the future.
+
+*Code: Plotting margin of error in an extremely large poll over a range of values of p*
+
+```{r}
+N <- 100000
+p <- seq(0.35, 0.65, length = 100)
+SE <- sapply(p, function(x) 2*sqrt(x*(1-x)/N))
+data.frame(p = p, SE = SE) %>%
+    ggplot(aes(p, SE)) +
+    geom_line()
+```
 
 ## Assessment 2.1: Introduction to Inference
 
