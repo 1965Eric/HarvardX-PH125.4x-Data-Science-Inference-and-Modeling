@@ -454,241 +454,255 @@ The textbook for this section is available
 
 \(SE(S) = \sqrt{Np(1-p)}\)
 
-\hypertarget{assessment-1.1-parameters-and-estimates}{%
-\subsection{Assessment 1.1: Parameters and
-Estimates}\label{assessment-1.1-parameters-and-estimates}}
+\hypertarget{assessment---parameters-and-estimates}{%
+\subsection{Assessment - Parameters and
+Estimates}\label{assessment---parameters-and-estimates}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Polling - expected value of S
+  Suppose you poll a population in which a proportion \(p\) of voters
+  are Democrats and \(1-p\) are Republicans.
 \end{enumerate}
 
-Suppose you poll a population in which a proportion \textbf{p} of voters
-are Democrats and \textbf{1−p} are Republicans. Your sample size is
-\textbf{N=25}. Consider the random variable \textbf{S}, which is the
-total number of Democrats in your sample.
+Your sample size is \(N = 25\). Consider the random variable \(S\),
+which is the \textbf{total} number of Democrats in your sample.
 
-What is the expected value of this random variable \textbf{S}?
+What is the expected value of this random variable \(S\)?
 
-Possible Answers - {[} {]} A. E(S)=25(1−p) - {[}X{]} B. E(S)=25p - {[}
-{]} C. E(S)=√(25p(1−p)) - {[} {]} D. E(S)=p
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. \(E(S) = 25(1−p)\)
+\item[$\boxtimes$]
+  B. \(E(S) = 25p\)
+\item[$\square$]
+  C. \(E(S) = \sqrt{25p(1−p)}\)
+\item[$\square$]
+  D. \(E(S) = p\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Polling - standard error of S
+  Again, consider the random variable \(S\), which is the \textbf{total}
+  number of Democrats in your sample of 25 voters.
 \end{enumerate}
 
-Again, consider the random variable S, which is the total number of
-Democrats in your sample of 25 voters. The variable p describes the
-proportion of Democrats in the sample, whereas 1−p describes the
-proportion of Republicans.
+The variable \(p\) describes the proportion of Democrats in the sample,
+whereas \(1-p\) describes the proportion of Republicans.
 
-What is the standard error of S?
+What is the standard error of \(S\)?
 
-Possible Answers - {[} {]} A. SE(S)=25p(1−p) - {[} {]} B. SE(S)=√25p -
-{[} {]} C. SE(S)=25(1−p) - {[}X{]} D. SE(S)=√(25p(1−p))
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. \(SE(S) = 25p(1−p)\)
+\item[$\square$]
+  B. \(SE(S) = \sqrt{25p}\)
+\item[$\square$]
+  C. \(SE(S) = 25(1−p)\)
+\item[$\boxtimes$]
+  D. \(SE(S) = \sqrt{25p(1−p)}\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Polling - expected value of X-bar
+  Consider the random variable \(S/N\), which is equivalent to the
+  sample average that we have been denoting as \(\overline{X}\).
 \end{enumerate}
 
-Consider the random variable \textbf{S/N}, which is equivalent to the
-sample average that we have been denoting as \textbf{X̄}. The variable
-\textbf{N} represents the sample size and \textbf{p} is the proportion
-of Democrats in the population.
+The variable \(N\) represents the sample size and \(p\) is the
+proportion of Democrats in the population.
 
-What is the expected value of \textbf{X̄}?
+What is the expected value of \(\overline{X}\)?
 
-Possible Answers - {[}X{]} A. E(X̄)=p - {[} {]} B. E(X̄)=Np - {[} {]} C.
-E(X̄)=N(1−p) - {[} {]} D. E(X̄)=1−p
+\begin{itemize}
+\tightlist
+\item[$\boxtimes$]
+  A. \(E(\overline{X}) = p\)
+\item[$\square$]
+  B. \(E(\overline{X}) = Np\)
+\item[$\square$]
+  C. \(E(\overline{X}) = N(1−p)\)
+\item[$\square$]
+  D. \(E(\overline{X}) = 1−p\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Polling - standard error of X-bar
+  What is the standard error of the sample average, \(\overline{X}\)?
 \end{enumerate}
 
-What is the standard error of the sample average, \textbf{X̄}?
-
-The variable \textbf{N} represents the sample size and \textbf{p} is the
+The variable \(N\) represents the sample size and \(p\) is the
 proportion of Democrats in the population.
 
-Possible Answers - {[} {]} A. SE(X̄)=√(Np(1−p)) - {[}X{]} B.
-SE(X̄)=√(p(1−p)/N) - {[} {]} C. SE(X̄)=√(p(1−p)) - {[} {]} D. SE(X̄)=√N
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. \(SE(\overline{X}) = \sqrt{Np(1−p)}\)
+\item[$\boxtimes$]
+  B. \(SE(\overline{X}) = \sqrt{p(1−p)/N}\)
+\item[$\square$]
+  C. \(SE(\overline{X}) = \sqrt{p(1−p)}\)
+\item[$\square$]
+  D. \(SE(\overline{X}) = \sqrt N\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{4}
 \tightlist
 \item
-  se versus p
+  Write a line of code that calculates the standard error \texttt{se} of
+  a sample average when you poll 25 people in the population.
 \end{enumerate}
 
-Write a line of code that calculates the standard error se of a sample
-average when you poll 25 people in the population. Generate a sequence
-of 100 proportions of Democrats p that vary from 0 (no Democrats) to 1
-(all Democrats).
+Generate a sequence of 100 proportions of Democrats \texttt{p} that vary
+from 0 (no Democrats) to 1 (all Democrats).
 
-Plot se versus p for the 100 different proportions.
+Plot \texttt{se} versus \texttt{p} for the 100 different proportions.
 
-Instructions - Use the seq function to generate a vector of 100 values
-of p that range from 0 to 1. - Use the sqrt function to generate a
-vector of standard errors for all values of p. - Use the plot function
-to generate a plot with p on the x-axis and se on the y-axis.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \textasciigrave{}N\textasciigrave{} represents the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{25}
 
-\begin{verbatim}
-# `N` represents the number of people polled
-N <- 25
+\CommentTok{\# Create a variable \textasciigrave{}p\textasciigrave{} that contains 100 proportions ranging from 0 to 1 using the \textasciigrave{}seq\textasciigrave{} function}
+\NormalTok{p \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{100}\NormalTok{)}
 
-# Create a variable `p` that contains 100 proportions ranging from 0 to 1 using the `seq` function
-p <- seq(0,1, length = 100)
+\CommentTok{\# Create a variable \textasciigrave{}se\textasciigrave{} that contains the standard error of each sample average}
+\NormalTok{se \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p)}\OperatorTok{/}\NormalTok{N)}
 
-# Create a variable `se` that contains the standard error of each sample average
-se <- sqrt(p * (1 - p)/N)
+\CommentTok{\# Plot \textasciigrave{}p\textasciigrave{} on the x{-}axis and \textasciigrave{}se\textasciigrave{} on the y{-}axis}
+\KeywordTok{plot}\NormalTok{(p,se)}
+\end{Highlighting}
+\end{Shaded}
 
-# Plot `p` on the x-axis and `se` on the y-axis
-plot(p,se)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Multiple plots of se versus p
+  Using the same code as in the previous exercise, create a for-loop
+  that generates three plots of \texttt{p} versus \texttt{se} when the
+  sample sizes equal \(N = 25\), \(N = 100\), and \(N = 1000\).
 \end{enumerate}
 
-Using the same code as in the previous exercise, create a for-loop that
-generates three plots of p versus se when the sample sizes equal N=25,
-N=100, and N=1000.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The vector \textasciigrave{}p\textasciigrave{} contains 100 proportions of Democrats ranging from 0 to 1 using the \textasciigrave{}seq\textasciigrave{} function}
+\NormalTok{p \textless{}{-}}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{length =} \DecValTok{100}\NormalTok{)}
 
-Instructions - Your for-loop should contain two lines of code to be
-repeated for three different values of N. - The first line within the
-for-loop should use the sqrt function to generate a vector of standard
-errors se for all values of p. - The second line within the for-loop
-should use the plot function to generate a plot with p on the x-axis and
-se on the y-axis. - Use the ylim argument to keep the y-axis limits
-constant across all three plots. The lower limit should be equal to 0
-and the upper limit should equal the highest calculated standard error
-across all values of p and N.
+\CommentTok{\# The vector \textasciigrave{}sample\_sizes\textasciigrave{} contains the three sample sizes}
+\NormalTok{sample\_sizes \textless{}{-}}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
 
-\begin{verbatim}
-# The vector `p` contains 100 proportions of Democrats ranging from 0 to 1 using the `seq` function
-p <- seq(0, 1, length = 100)
+\CommentTok{\# Write a for{-}loop that calculates the standard error \textasciigrave{}se\textasciigrave{} for every value of \textasciigrave{}p\textasciigrave{} for each of the three samples sizes \textasciigrave{}N\textasciigrave{} in the vector \textasciigrave{}sample\_sizes\textasciigrave{}. Plot the three graphs, using the \textasciigrave{}ylim\textasciigrave{} argument to standardize the y{-}axis across all three plots.}
+\ControlFlowTok{for}\NormalTok{ (N }\ControlFlowTok{in}\NormalTok{ sample\_sizes)}
+\NormalTok{\{}
+\NormalTok{se \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p)}\OperatorTok{/}\NormalTok{N)}
+\KeywordTok{plot}\NormalTok{(p,se,}\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.1}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
-# The vector `sample_sizes` contains the three sample sizes
-sample_sizes <- c(25, 100, 1000)
-
-# Write a for-loop that calculates the standard error `se` for every value of `p` for each of the three samples sizes `N` in the vector `sample_sizes`. Plot the three graphs, using the `ylim` argument to standardize the y-axis across all three plots.
-for(N in sample_sizes){
-  se <- sqrt(p*(1-p)/N)
-  plot(p, se, ylim = c(0,0.5/sqrt(25)))
-}
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76228027-7931be00-6220-11ea-8096-8f017f7ed223.png}
-\caption{index}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76228450-0a089980-6221-11ea-80e4-13ac6233f1a1.png}
-\caption{index}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76228545-2a385880-6221-11ea-8bb5-2cba961954c3.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-3-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-3-2.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-3-3.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Expected value of d
+  Our estimate for the difference in proportions of Democrats and
+  Republicans is \(d = \overline{X} − (1 − \overline{X})\).
 \end{enumerate}
-
-Our estimate for the difference in proportions of Democrats and
-Republicans is \textbf{d=X̄−(1−X̄)}.
 
 Which derivation correctly uses the rules we learned about sums of
 random variables and scaled random variables to derive the expected
-value of d?
+value of \(d\)
 
-Possible Answers - {[} {]} A.
-E{[}X̄−(1−X̄){]}=E{[}2X̄−1{]}=2E{[}X̄{]}−1=N(2p−1)=Np−N(1−p) - {[} {]} B.
-E{[}X̄−(1−X̄){]}=E{[}X̄−1{]}=E{[}X̄{]}−1=p−1 - {[} {]} C.
-E{[}X̄−(1−X̄){]}=E{[}2X̄−1{]}=2E{[}X̄{]}−1=2√(p(1−p))−1=p−(1−p) - {[}X{]} D.
-E{[}X̄−(1−X̄){]}=E{[}2X̄−1{]}=2E{[}X̄{]}−1=2p−1=p−(1−p)
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A.
+  \(E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = N(2p − 1) = Np − N(1 − p)\)
+\item[$\square$]
+  B.
+  \(E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [\overline{X} − 1 \right] = E \left [\overline{X} \right] − 1 = p − 1\)
+\item[$\square$]
+  C.
+  \(E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2 \sqrt{p(1 − p)} − 1 = p − (1 − p)\)
+\item[$\boxtimes$]
+  D.
+  \(E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2p − 1 = p − (1 − p)\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Standard error of d
+  Our estimate for the difference in proportions of Democrats and
+  Republicans is \(d = \overline{X} − (1 − \overline{X})\).
 \end{enumerate}
-
-Our estimate for the difference in proportions of Democrats and
-Republicans is \textbf{d=X̄−(1−X̄)}.
 
 Which derivation correctly uses the rules we learned about sums of
 random variables and scaled random variables to derive the standard
-error of \textbf{d}?
+error of \(d\)?
 
-Possible Answers - {[} {]} A.
-SE{[}X̄−(1−X̄){]}=SE{[}2X̄−1{]}=2SE{[}X̄{]}=2√(p/N) - {[} {]} B.
-SE{[}X̄−(1−X̄){]}=SE{[}2X̄−1{]}=2SE{[}X̄−1{]}=2√(p(1−p)/N−1) - {[}X{]} C.
-SE{[}X̄−(1−X̄){]}=SE{[}2X̄−1{]}=2SE{[}X̄{]}=2√(p(1−p)/N) - {[} {]} D.
-SE{[}X̄−(1−X̄){]}=SE{[}2X̄−1{]}=2SE{[}X̄{]}=√(p(1−p)/N)
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A.
+  \(SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p/N}\)
+\item[$\square$]
+  B.
+  \(SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} - 1 \right] = 2 \sqrt{p(1 − p)/N} − 1\)
+\item[$\boxtimes$]
+  C.
+  \(SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p(1 − p)/N}\)
+\item[$\square$]
+  D.
+  \(SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [\overline{X} − 1 \right] = SE\left [\overline{X} \right] = \sqrt{p(1 − p)/N}\)
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{8}
 \tightlist
 \item
-  Standard error of the spread
+  Say the actual proportion of Democratic voters is \(p = 0.45\).
 \end{enumerate}
 
-Say the actual proportion of Democratic voters is p=0.45. In this case,
-the Republican party is winning by a relatively large margin of d=−0.1,
-or a 10\% margin of victory. What is the standard error of the spread
-2X̄−1 in this case?
+In this case, the Republican party is winning by a relatively large
+margin of \(d = -0.1\), or a 10\% margin of victory. What is the
+standard error of the spread \(2 \overline{X} − 1\) in this case?
 
-Use the sqrt function to calculate the standard error of the spread
-2X̄−1.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \textasciigrave{}N\textasciigrave{} represents the number of people polled}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{25}
 
-\begin{verbatim}
-# `N` represents the number of people polled
-N <- 25
+\CommentTok{\# \textasciigrave{}p\textasciigrave{} represents the proportion of Democratic voters}
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
 
-# `p` represents the proportion of Democratic voters
-p <- 0.45
-
-# Calculate the standard error of the spread. Print this value to the console.
-2*sqrt(p*(1-p)/N)
-\end{verbatim}
+\CommentTok{\# Calculate the standard error of the spread. Print this value to the console.}
+\DecValTok{2}\OperatorTok{*}\KeywordTok{sqrt}\NormalTok{((p}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p)}\OperatorTok{/}\NormalTok{N))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.1989975
@@ -699,19 +713,20 @@ p <- 0.45
 \setcounter{enumi}{9}
 \tightlist
 \item
-  Sample size
+  So far we have said that the difference between the proportion of
+  Democratic voters and Republican voters is about 10\% and that the
+  standard error of this spread is about 0.2 when \(N = 25\).
 \end{enumerate}
 
-So far we have said that the difference between the proportion of
-Democratic voters and Republican voters is about 10\% and that the
-standard error of this spread is about 0.2 when N=25. Select the
-statement that explains why this sample size is sufficient or not.
+Select the statement that explains why this sample size is sufficient or
+not.
 
 \begin{itemize}
 \tightlist
 \item[$\square$]
   A. This sample size is sufficient because the expected value of our
-  estimate 2X̄−1 is d so our prediction will be right on.
+  estimate \(2 \overline{X} − 1\) is \(d\) so our prediction will be
+  right on.
 \item[$\boxtimes$]
   B. This sample size is too small because the standard error is larger
   than the spread.
@@ -719,8 +734,8 @@ statement that explains why this sample size is sufficient or not.
   C. This sample size is sufficient because the standard error of about
   0.2 is much smaller than the spread of 10\%.
 \item[$\square$]
-  D. Without knowing p, we have no way of knowing that increasing our
-  sample size would actually improve our standard error.
+  D. Without knowing \texttt{p}, we have no way of knowing that
+  increasing our sample size would actually improve our standard error.
 \end{itemize}
 
 \hypertarget{section-2-overview}{%
@@ -4309,7 +4324,7 @@ Make a boxplot of the spread in june\_polls by poll type.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-13-1.pdf}
 
 Which of the following are TRUE? A: Telephone polls tend to show support
 ``Remain'' (spread \textgreater{} 0). A: Telephone polls tend to show
@@ -4585,7 +4600,7 @@ indicating the final value of d=-.038.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 \hypertarget{question-12-plotting-raw-percentages-over-time}{%
 \paragraph{Question 12: Plotting raw percentages over
@@ -4637,7 +4652,7 @@ poll:
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 Which of the following are TRUE?
 

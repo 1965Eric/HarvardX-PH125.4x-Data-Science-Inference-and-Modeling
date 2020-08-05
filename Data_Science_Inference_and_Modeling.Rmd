@@ -168,8 +168,8 @@ What is the standard error of $S$?
 
 - [ ] A.  $SE(S) = 25p(1−p)$
 - [ ] B.  $SE(S) = \sqrt{25p}$
-- [ ] C.  SE(S) = 25(1−p)$
-- [X] D.  SE(S) = \sqrt{25p(1−p)}$
+- [ ] C.  $SE(S) = 25(1−p)$
+- [X] D.  $SE(S) = \sqrt{25p(1−p)}$
 
 3. Consider the random variable $S/N$, which is equivalent to the sample average that we have been denoting as $\overline{X}$. 
 
@@ -244,7 +244,7 @@ Which derivation correctly uses the rules we learned about sums of random variab
 - [ ] A.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p/N}$
 - [ ] B.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} - 1 \right] = 2 \sqrt{p(1 − p)/N} − 1$
 - [X] C.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p(1 − p)/N}$
-- [ ] D.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE\left [\overline{X} \right] = \sqrt{p(1 − p)/N}$
+- [ ] D.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [\overline{X} − 1 \right] = SE\left [\overline{X} \right] = \sqrt{p(1 − p)/N}$
 
 9. Say the actual proportion of Democratic voters is $p = 0.45$. 
 
