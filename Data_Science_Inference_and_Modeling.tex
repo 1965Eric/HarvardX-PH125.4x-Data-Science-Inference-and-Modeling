@@ -1460,16 +1460,321 @@ is equal or larger than 0.01?
 
 In Section 3, you will look at confidence intervals and p-values.
 
-After completing Section 3, you will be able to: - Calculate confidence
-intervals of difference sizes around an estimate. - Understand that a
-confidence interval is a random interval with the given probability of
-falling on top of the parameter. - Explain the concept of ``power'' as
-it relates to inference. - Understand the relationship between p-values
-and confidence intervals and explain why reporting confidence intervals
-is often preferable.
+After completing Section 3, you will be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Calculate confidence intervals of difference sizes around an estimate.
+\item
+  Understand that a confidence interval is a random interval with the
+  given probability of falling on top of the parameter.
+\item
+  Explain the concept of ``power'' as it relates to inference.
+\item
+  Understand the relationship between p-values and confidence intervals
+  and explain why reporting confidence intervals is often preferable.
+\end{itemize}
+
+\hypertarget{confidence-intervals}{%
+\subsection{Confidence Intervals}\label{confidence-intervals}}
 
 The textbook for this section is available
 \href{https://rafalab.github.io/dsbook/inference.html\#confidence-intervals}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  We can use statistical theory to compute the probability that a given
+  interval contains the true parameter \(p\).
+\item
+  95\% confidence intervals are intervals constructed to have a 95\%
+  chance of including \(p\). The margin of error is approximately a 95\%
+  confidence interval.
+\item
+  The start and end of these confidence intervals are random variables.
+\item
+  To calculate any size confidence interval, we need to calculate the
+  value \(z\) for which \(Pr(-z \le Z \le z)\) equals the desired
+  confidence. For example, a 99\% confidence interval requires
+  calculating \(z\) for \(Pr(-z \le Z \le z) = 0.99\).
+\item
+  For a confidence interval of size \(q\), we solve for
+  \(z = 1 - \frac{1 - q}{2}\).
+\item
+  To determine a 95\% confidence interval, use
+  \texttt{z\ \textless{}-\ qnorm(0.975)}. This value is slightly smaller
+  than 2 times the standard error.
+\end{itemize}
+
+\emph{Code: geom\_smooth confidence interval example}
+
+The shaded area around the curve is related to the concept of confidence
+intervals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"nhtemp"}\NormalTok{)}
+\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{year =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{time}\NormalTok{(nhtemp)), }\DataTypeTok{temperature =} \KeywordTok{as.numeric}\NormalTok{(nhtemp)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, temperature)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom\_smooth}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Average Yearly Temperatures in New Haven"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\emph{Code: Monte Carlo simulation of confidence intervals}
+
+Note that to compute the exact 95\% confidence interval, we would use
+\texttt{qnorm(.975)*SE\_hat} instead of \texttt{2*SE\_hat}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p \textless{}{-}}\StringTok{ }\FloatTok{0.45}
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{1000}
+\NormalTok{X \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))    }\CommentTok{\# generate N observations}
+\NormalTok{X\_hat \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(X)    }\CommentTok{\# calculate X\_hat}
+\NormalTok{SE\_hat \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(X\_hat}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_hat)}\OperatorTok{/}\NormalTok{N)    }\CommentTok{\# calculate SE\_hat, SE of the mean of N observations}
+\KeywordTok{c}\NormalTok{(X\_hat }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{SE\_hat, X\_hat }\OperatorTok{+}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{SE\_hat)    }\CommentTok{\# build interval of 2*SE above and below mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4135691 0.4764309
+\end{verbatim}
+
+\emph{Code: Solving for \(z\) with \texttt{qnorm}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z \textless{}{-}}\StringTok{ }\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.995}\NormalTok{)    }\CommentTok{\# calculate z to solve for 99\% confidence interval}
+\KeywordTok{pnorm}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.995}\NormalTok{))    }\CommentTok{\# demonstrating that qnorm gives the z value for a given probability}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.995
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pnorm}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{(}\DecValTok{1}\FloatTok{{-}0.995}\NormalTok{))    }\CommentTok{\# demonstrating symmetry of 1{-}qnorm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.005
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pnorm}\NormalTok{(z) }\OperatorTok{{-}}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\OperatorTok{{-}}\NormalTok{z)    }\CommentTok{\# demonstrating that this z value gives correct probability for interval}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.99
+\end{verbatim}
+
+\hypertarget{a-monte-carlo-simulation-for-confidence-intervals}{%
+\subsection{A Monte Carlo Simulation for Confidence
+Intervals}\label{a-monte-carlo-simulation-for-confidence-intervals}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#a-monte-carlo-simulation-1}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  We can run a Monte Carlo simulation to confirm that a 95\% confidence
+  interval contains the true value of \(p\) 95\% of the time.
+\item
+  A plot of confidence intervals from this simulation demonstrates that
+  most intervals include \(p\), but roughly 5\% of intervals miss the
+  true value of \(p\).
+\end{itemize}
+
+\emph{Code: Monte Carlo simulation}
+
+Note that to compute the exact 95\% confidence interval, we would use
+\texttt{qnorm(.975)*SE\_hat} instead of \texttt{2*SE\_hat}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B \textless{}{-}}\StringTok{ }\DecValTok{10000}
+\NormalTok{inside \textless{}{-}}\StringTok{ }\KeywordTok{replicate}\NormalTok{(B, \{}
+\NormalTok{    X \textless{}{-}}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{size =}\NormalTok{ N, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{p, p))}
+\NormalTok{    X\_hat \textless{}{-}}\StringTok{ }\KeywordTok{mean}\NormalTok{(X)}
+\NormalTok{    SE\_hat \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(X\_hat}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_hat)}\OperatorTok{/}\NormalTok{N)}
+    \KeywordTok{between}\NormalTok{(p, X\_hat }\OperatorTok{{-}}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{SE\_hat, X\_hat }\OperatorTok{+}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{SE\_hat)    }\CommentTok{\# TRUE if p in confidence interval}
+\NormalTok{\})}
+\KeywordTok{mean}\NormalTok{(inside)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9566
+\end{verbatim}
+
+\hypertarget{the-correct-language}{%
+\subsection{The Correct Language}\label{the-correct-language}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#the-correct-language}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The 95\% confidence intervals are random, but \(p\) is not random.
+\item
+  95\% refers to the probability that the random interval falls on top
+  of \(p\).
+\item
+  It is technically incorrect to state that \(p\) has a 95\% chance of
+  being in between two values because that implies \(p\) is random.
+\end{itemize}
+
+\hypertarget{power}{%
+\subsection{Power}\label{power}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#power}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  If we are trying to predict the result of an election, then a
+  confidence interval that includes a spread of 0 (a tie) is not
+  helpful.
+\item
+  A confidence interval that includes a spread of 0 does not imply a
+  close election, it means the sample size is too small.
+\item
+  Power is the probability of detecting an effect when there is a true
+  effect to find. Power increases as sample size increases, because
+  larger sample size means smaller standard error.
+\end{itemize}
+
+\emph{Code: Confidence interval for the spread with sample size of 25}
+
+Note that to compute the exact 95\% confidence interval, we would use
+\texttt{c(-qnorm(.975),\ qnorm(.975))} instead of 1.96.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{25}
+\NormalTok{X\_hat \textless{}{-}}\StringTok{ }\FloatTok{0.48}
+\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{X\_hat }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OperatorTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)}\OperatorTok{*}\DecValTok{2}\OperatorTok{*}\KeywordTok{sqrt}\NormalTok{(X\_hat}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{{-}}\NormalTok{X\_hat)}\OperatorTok{/}\NormalTok{N)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.4396799  0.3596799
+\end{verbatim}
+
+\hypertarget{p-values}{%
+\subsection{p-Values}\label{p-values}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/inference.html\#p-values}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The null hypothesis is the hypothesis that there is no effect. In this
+  case, the null hypothesis is that the spread is 0, or \(p = 0.5\).
+\item
+  The p-value is the probability of detecting an effect of a certain
+  size or larger when the null hypothesis is true.
+\item
+  We can convert the probability of seeing an observed value under the
+  null hypothesis into a standard normal random variable. We compute the
+  value of \(z\) that corresponds to the observed result, and then use
+  that \(z\) to compute the p-value.
+\item
+  If a 95\% confidence interval does not include our observed value,
+  then the p-value must be smaller than 0.05.
+\item
+  It is preferable to report confidence intervals instead of p-values,
+  as confidence intervals give information about the size of the
+  estimate and p-values do not.
+\end{itemize}
+
+\emph{Code: Computing a p-value for observed spread of 0.02}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N \textless{}{-}}\StringTok{ }\DecValTok{100}    \CommentTok{\# sample size}
+\NormalTok{z \textless{}{-}}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(N) }\OperatorTok{*}\StringTok{ }\FloatTok{0.02}\OperatorTok{/}\FloatTok{0.5}    \CommentTok{\# spread of 0.02}
+\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{(}\KeywordTok{pnorm}\NormalTok{(z) }\OperatorTok{{-}}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\OperatorTok{{-}}\NormalTok{z))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6891565
+\end{verbatim}
+
+\hypertarget{another-explanation-of-p-values}{%
+\subsection{Another Explanation of
+p-Values}\label{another-explanation-of-p-values}}
+
+The p-value is the probability of observing a value as extreme or more
+extreme than the result given that the null hypothesis is true.
+
+In the context of the normal distribution, this refers to the
+probability of observing a Z-score whose absolute value is as high or
+higher than the Z-score of interest.
+
+Suppose we want to find the p-value of an observation 2 standard
+deviations larger than the mean. This means we are looking for anything
+with \(|z| \ge 2\).
+
+Graphically, the p-value gives the probability of an observation that's
+at least as far away from the mean or further. This plot shows a
+standard normal distribution (centered at \(z = 0\)) with a standard
+deviation of 1). The shaded tails are the region of the graph that are 2
+standard deviations or more away from the mean.
+
+\begin{figure}
+\centering
+\includegraphics{images/normal_distribution.jpg}
+\caption{Standard normal distribution (centered at z=0 with a standard
+deviation of 1}
+\end{figure}
+
+The p-value is the proportion of area under a normal curve that has
+z-scores as extreme or more extreme than the given value - the tails on
+this plot of a normal distribution are shaded to show the region
+corresponding to the p-value.
+
+The right tail can be found with \texttt{1-pnorm(2)}. We want to have
+both tails, though, because we want to find the probability of any
+observation as far away from the mean or farther, in either direction.
+(This is what's meant by a two-tailed p-value.) Because the distribution
+is symmetrical, the right and left tails are the same size and we know
+that our desired value is just \texttt{2*(1-pnorm(2))}.
+
+Recall that, by default, \texttt{pnorm()} gives the CDF for a normal
+distribution with a mean of \(\mu = 0\) and standard deviation of
+\(\sigma = 1\). To find p-values for a given z-score z in a normal
+distribution with mean \texttt{mu} and standard deviation
+\texttt{sigma}, use \texttt{2*(1-pnorm(z,\ mu,\ sigma))} instead.
 
 \hypertarget{assessment-3.1-confidence-intervals-and-p-values}{%
 \subsection{Assessment 3.1: Confidence Intervals and
@@ -4561,7 +4866,7 @@ Make a boxplot of the spread in june\_polls by poll type.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-27-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 Which of the following are TRUE? A: Telephone polls tend to show support
 ``Remain'' (spread \textgreater{} 0). A: Telephone polls tend to show
@@ -4837,7 +5142,7 @@ indicating the final value of d=-.038.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-39-1.pdf}
 
 \hypertarget{question-12-plotting-raw-percentages-over-time}{%
 \paragraph{Question 12: Plotting raw percentages over
@@ -4889,7 +5194,7 @@ poll:
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{Data_Science_Inference_and_Modeling_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 Which of the following are TRUE?
 
