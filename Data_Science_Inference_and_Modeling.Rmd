@@ -1135,24 +1135,17 @@ results <- one_poll_per_pollster %>%
 round(results*100, 1)
 ```
 
-## Assessment 4.1: Statistical Models
+## Assessment - Statistical Models
 
-1. Heights Revisited
+1. We have been using *urn models* to motivate the use of probability models. 
 
-We have been using urn models to motivate the use of probability models. However, most data science applications are not related to data obtained from urns. More common are data that come from individuals. Probability plays a role because the data come from a random sample. The random sample is taken from a population and the urn serves as an analogy for the population.
+However, most data science applications are not related to data obtained from urns. More common are data that come from individuals. Probability plays a role because the data come from a random sample. The random sample is taken from a population and the urn serves as an analogy for the population.
 
-Let’s revisit the heights dataset. For now, consider x to be the heights of all males in the data set. Mathematically speaking, x is our population. Using the urn analogy, we have an urn with the values of x in it.
+Let's revisit the heights dataset. For now, consider ```x``` to be the heights of all males in the data set. Mathematically speaking, ```x``` is our population. Using the urn analogy, we have an urn with the values of ```x``` in it.
 
 What are the population average and standard deviation of our population?
 
-Instructions
-- Execute the lines of code that create a vector x that contains heights for all males in the population.
-- Calculate the average of x.
-- Calculate the standard deviation of x.
-```
-# Load the 'dslabs' package and data contained in 'heights'
-library(dslabs)
-library(dplyr)
+```{r}
 data(heights)
 
 # Make a vector of heights from all males in the population
@@ -1160,34 +1153,20 @@ x <- heights %>% filter(sex == "Male") %>%
   .$height
 
 # Calculate the population average. Print this value to the console.
-mean(x)
-```
-```
-## [1] 69.31475
-```
-```
+gemiddelde_lengte <- mean(x)
+gemiddelde_lengte
+
 # Calculate the population standard deviation. Print this value to the console.
-sd(x)
+standaard_deviatie <- sd(x)
+standaard_deviatie
 ```
-```
-## [1] 3.611024
-```
-2. Sample the population of heights
 
-Call the population average computed above μ and the standard deviation σ. Now take a sample of size 50, with replacement, and construct an estimate for μ and σ.
+2. Call the population average computed above $\mu$ and the standard deviation $\sigma$. Now take a sample of size 50, with replacement, and construct an estimate for $\mu$ and $\sigma$.
 
-Instructions
-- Use the sample function to sample N values from x.
-- Calculate the mean of the sampled heights.
-- Calculate the standard deviation of the sampled heights.
-```
+```{r}
 # The vector of all male heights in our population `x` has already been loaded for you. You can examine the first six elements using `head`.
 head(x)
-```
-```
-## [1] 75 70 68 74 61 67
-```
-```
+
 # Use the `set.seed` function to make sure your answer matches the expected result after random sampling
 set.seed(1)
 
@@ -1196,47 +1175,32 @@ N <- 50
 
 # Define `X` as a random sample from our population `x`
 X <- sample(x, N, replace = TRUE)
+X
 
 # Calculate the sample average. Print this value to the console.
-mean(X)
-```
-```
-## [1] 70.47293
-```
-```
+mu <- mean(X)
+mu
+
 # Calculate the sample standard deviation. Print this value to the console.
-sd(X)
+sigma <- sd(X)
+sigma
 ```
-```
-## [1] 3.426742
-```
-3. Sample and Population Averages
 
-What does the central limit theory tell us about the sample average and how it is related to μ, the population average?
+3. What does the central limit theory tell us about the sample average and how it is related to $\mu$, the population average?
 
-Possible Answers
-- [ ] A. It is identical to μ.
-- [X] B. It is a random variable with expected value μ and standard error σ/√N.
-- [ ] C. It is a random variable with expected value μ and standard error σ.
-- [ ] D. It underestimates μ.
+- [ ] A. It is identical to $\mu$.
+- [X] B. It is a random variable with expected value $\mu$ and standard error $\sigma / \sqrt{N}$.
+- [ ] C. It is a random variable with expected value $\mu$ and standard error $\sigma$.
+- [ ] D. It underestimates $\mu$.
 
-4. Confidence Interval Calculation
+4. We will use $\overline{X}$ as our estimate of the heights in the population from our sample size $N$. We know from previous exercises that the standard estimate of our error $\overline{X} - \mu$ is $\sigma / \sqrt{N}$.
 
-We will use X̄ as our estimate of the heights in the population from our sample size N. We know from previous exercises that the standard estimate of our error X̄−μ is σ/√N.
+Construct a 95% confidence interval for $\mu$.
 
-Construct a 95% confidence interval for μ.
-
-Instructions
-- Use the sd and sqrt functions to define the standard error se
-- Calculate the 95% confidence intervals using the qnorm function. Save the lower then the upper confidence interval to a variable called ci.
-```
+```{r}
 # The vector of all male heights in our population `x` has already been loaded for you. You can examine the first six elements using `head`.
 head(x)
-```
-```
-## [1] 75 70 68 74 61 67
-```
-```
+
 # Use the `set.seed` function to make sure your answer matches the expected result after random sampling
 set.seed(1)
 
@@ -1248,25 +1212,20 @@ X <- sample(x, N, replace = TRUE)
 
 # Define `se` as the standard error of the estimate. Print this value to the console.
 X_hat <- mean(X)
-se_hat <- sd(X)
-se <- se_hat / sqrt(N)
+se <- sd(X)/sqrt(N)
 se
-```
-```
-## [1] 0.4846145
-```
-```
+
 # Construct a 95% confidence interval for the population average based on our sample. Save the lower and then the upper confidence interval to a variable called `ci`.
-ci <- c(qnorm(0.025, mean(X), se), qnorm(0.975, mean(X), se))
+# Construct a 95% confidence interval for the population average based on our sample. Save the lower and then the upper confidence interval to a variable called `ci`.
+ci <- c(qnorm(0.025, X_hat, se), qnorm(0.975, X_hat, se))
+ci
 ```
-5. Monte Carlo Simulation for Heights
 
-Now run a Monte Carlo simulation in which you compute 10,000 confidence intervals as you have just done. What proportion of these intervals include μ?
+5. Now run a Monte Carlo simulation in which you compute 10,000 confidence intervals as you have just done. 
 
-Instructions
-- Use the replicate function to replicate the sample code for B <- 10000 simulations. Save the results of the replicated code to a variable called res. The replicated code should complete the following steps: -1. Use the sample function to sample N values from x. Save the sampled heights as a vector called X. -2. Create an object called interval that contains the 95% confidence interval for each of the samples. Use the same formula you used in the previous exercise to calculate this interval. -3. Use the between function to determine if μ is contained within the confidence interval of that simulation.
-- Finally, use the mean function to determine the proportion of results in res that contain mu.
-```
+What proportion of these intervals include $\mu$?
+
+```{r}
 # Define `mu` as the population average
 mu <- mean(x)
 
@@ -1282,9 +1241,7 @@ B <- 10000
 # Define an object `res` that contains a logical vector for simulated intervals that contain mu
 res <- replicate(B, {
   X <- sample(x, N, replace = TRUE)
-  X_hat <- mean(X)
-  se_hat <- sd(X)
-  se <- se_hat / sqrt(N)
+  se <- sd(X) / sqrt(N)
   interval <- c(qnorm(0.025, mean(X), se) , qnorm(0.975, mean(X), se))
   between(mu, interval[1], interval[2])
 })
@@ -1292,27 +1249,14 @@ res <- replicate(B, {
 # Calculate the proportion of results in `res` that include mu. Print this value to the console.
 mean(res)
 ```
-```
-## [1] 0.9479
-```
-6. Visualizing Polling Bias
 
-In this section, we used visualization to motivate the presence of pollster bias in election polls. Here we will examine that bias more rigorously. Lets consider two pollsters that conducted daily polls and look at national polls for the month before the election.
+6. In this section, we used visualization to motivate the presence of pollster bias in election polls. 
+
+Here we will examine that bias more rigorously. Lets consider two pollsters that conducted daily polls and look at national polls for the month before the election.
 
 Is there a poll bias? Make a plot of the spreads for each poll.
 
-Instructions
-- Use ggplot to plot the spread for each of the two pollsters.
-- Define the x- and y-axes usingusing aes() within the ggplot function.
-- Use geom_boxplot to make a boxplot of the data.
-- Use geom_point to add data points to the plot.
-```
-# Load the libraries and data you need for the following exercises
-library(dslabs)
-library(dplyr)
-library(ggplot2)
-data("polls_us_election_2016")
-
+```{r}
 # These lines of code filter for the polls we want and calculate the spreads
 polls <- polls_us_election_2016 %>% 
   filter(pollster %in% c("Rasmussen Reports/Pulse Opinion Research","The Times-Picayune/Lucid") &
@@ -1324,230 +1268,129 @@ polls <- polls_us_election_2016 %>%
 polls %>% ggplot(aes(pollster, spread)) + geom_boxplot() + geom_point()
 ```
 
-7. Defining Pollster Bias
+7. The data do seem to suggest there is a difference between the pollsters. 
 
-The data do seem to suggest there is a difference between the pollsters. However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference, d.
+However, these data are subject to variability. Perhaps the differences we observe are due to chance. Under the urn model, both pollsters should have the same expected value: the election day difference, $d$.
 
-We will model the observed data Yij in the following way:
+We will model the observed data $Y_ij$ in the following way:
 
-Yij=d+bi+εij
+$Y_ij = d + b_i + \epsilon_ij$
 
-with i=1,2 indexing the two pollsters, bi the bias for pollster i, and εij poll to poll chance variability. We assume the ε are independent from each other, have expected value 0 and standard deviation σi regardless of j.
+with $i = 1, 2$ indexing the two pollsters, $b_i$ the bias for pollster $i$, and $\epsilon_ij$ poll to poll chance variability. We assume the $\epsilon$ are independent from each other, have expected value ```0``` and standard deviation $\sigma_i$ regardless of $j$.
 
 Which of the following statements best reflects what we need to know to determine if our data fit the urn model?
 
-Possible Answers
-- [ ] A. Is εij=0?
-- [ ] B. How close are Yij to d?
-- [X] C. Is b1≠b2?
-- [ ] D. Are b1=0 and b2=0?
+- [ ] A. Is $\epsilon_ij = 0$?
+- [ ] B. How close are $Y_ij$ to $d$?
+- [X] C. Is $b_1 \neq b_2$?
+- [ ] D. Are $b_1 = 0$ and $b_2 = 0$?
 
 8. Derive Expected Value
 
-We modelled the observed data Yij as:
+We modelled the observed data $Y_ij$ as:
 
-Yij=d+bi+εij
+$Y_ij = d + b_i + \epsilon_ij$
 
-On the right side of this model, only εij is a random variable. The other two values are constants.
+On the right side of this model, only $\epsilon_ij$ is a random variable. The other two values are constants.
 
-What is the expected value of Yij?
+What is the expected value of $Y_1j$?
 
-Possible Answers
-- [X] A.  d+b1
-- [ ] B.  b1+εij
-- [ ] C.  d
-- [ ] D.  d+b1+εij
+- [X] A.  $d + b_1$
+- [ ] B.  $b_1 + \epsilon_ij$
+- [ ] C.  $d$
+- [ ] D.  $d + b_1 + \epsilon_ij$
 
-9. Expected Value and Standard Error of Poll 1
+9. Suppose we define $\overline{Y}_1$ as the average of poll results from the first poll and $/sigma_1$ as the standard deviation of the first poll.
 
-Suppose we define Ȳ1 as the average of poll results from the first poll and σ1 as the standard deviation of the first poll.
+What is the expected value and standard error of $\overline{Y}_1$?
 
-What is the expected value and standard error of Ȳ1?
+- [ ] A. The expected value is $d + b_1$ and the standard error is $\sigma_1$
+- [ ] B. The expected value is $d$ and the standard error is $\sigma_1/\sqrt{N_1}$
+- [X] C. The expected value is $d + b_1$ and the standard error is $\sigma_1/\sqrt{N_1}$
+- [ ] D. The expected value is $d$ and the standard error is $\sigma_1 + \sqrt{N_1}$
 
-Possible Answers
-- [ ] A. The expected value is d+b1 and the standard error is σ1
-- [ ] B. The expected value is d and the standard error is σ1/√N1
-- [X] C. The expected value is d+b1 and the standard error is σ1/√N1
-- [ ] D. The expected value is d and the standard error is σ1+√N1
+10. Now we define $\overline{Y}_2$ as the average of poll results from the second poll.
 
-10. Expected Value and Standard Error of Poll 2
+What is the expected value and standard error of $\overline{Y}_2$?
 
-Now we define Ȳ2 as the average of poll results from the second poll.
+- [ ] A. The expected value is $d + b_2$ and the standard error is $\sigma_2$ 
+- [ ] B. The expected value is $d$ and the standard error is $\sigma_2/\sqrt{N_2}$
+- [X] C. The expected value is $d + b_2$ and the standard error is $\sigma_2/\sqrt{N_2}$
+- [ ] D. The expected value is $d$ and the standard error is $\sigma_2 + \sqrt{N_2}$
 
-What is the expected value and standard error of Ȳ2?
+11. Using what we learned by answering the previous questions, what is the expected value of $\overline{Y}_2 − \overline{Y}_1?
 
-Possible Answers
-- [ ] A. The expected value is d+b2 and the standard error is σ2 
-- [ ] B. The expected value is d and the standard error is σ2/√N2
-- [X] C. The expected value is d+b2 and the standard error is σ2/√N2
-- [ ] D. The expected value is d and the standard error is σ2+√N2
-
-11. Difference in Expected Values Between Polls
-
-Using what we learned by answering the previous questions, what is the expected value of Ȳ2−Ȳ1?
-
-Possible Answers
-- [ ] A.  (b2−b1)^2
-- [ ] B.  b2−b1/(√N) 
-- [ ] C.  b2+b1
-- [X] D.  b2−b1
+- [ ] A.  $(b_2 − b_1)^2$
+- [ ] B.  $b_2 − b_1/\sqrt(N) 
+- [ ] C.  $b_2 + b_1$
+- [X] D.  $b_2 − b_1$
 
 12. Standard Error of the Difference Between Polls
 
-Using what we learned by answering the questions above, what is the standard error of Ȳ2−Ȳ1?
+Using what we learned by answering the questions above, what is the standard error of $\overline{Y}_2 − \overline{Y}_1$?
 
-Possible Answers
-- [X] A.  √(σ2^2/N2+σ1^2/N1)
-- [ ] B.  √(σ2/N2+σ1/N1) 
-- [ ] C.  (σ2^2/N2+σ1^2/N1)^2 
-- [ ] D.  σ2^2/N2+σ1^2/N1
+- [X] A.  $\sqrt{\sigma_2^2/N_2 + \sigma_1^2/N_1}$
+- [ ] B.  $\sqrt{\sigma_2/N_2 + \sigma_1/N_1}$
+- [ ] C.  $(\sigma_2^2/N_2 + \sigma_1^2/N_1)^2$ 
+- [ ] D.  $\sigma_2^2/N_2 + \sigma_1^2/N_1$
 
-13. Compute the Estimates
+13. The answer to the previous question depends on $\sigma_1$ and $\sigma_2$, which we don't know. 
 
-The answer to the previous question depends on σ1 and σ2, which we don’t know. We learned that we can estimate these values using the sample standard deviation.
+We learned that we can estimate these values using the sample standard deviation.
 
-Compute the estimates of σ1 and σ2.
+Compute the estimates of $\sigma_1$ and $\sigma_2$.
 
-Instructions
-- Group the data by pollster.
-- Summarize the standard deviation of the spreads for each of the two pollsters.
-- Store the pollster names and standard deviations of the spreads (σ) in an object called sigma
-```
+```{r}
 # The `polls` data have already been loaded for you. Use the `head` function to examine them.
 head(polls)
-```
-```
-   state      startdate        endddate         pollster                                        grade     
-   <fctr>     <date>           <date>           <fctr>                                          <fctr>
-1  U.S.	      2016-11-05       2016-11-07	The Times-Picayune/Lucid	                NA	
-2  U.S.	      2016-11-02       2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
-3  U.S.	      2016-11-01       2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
-4  U.S.	      2016-11-04       2016-11-06	The Times-Picayune/Lucid	                NA	
-5  U.S.	      2016-10-31       2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
-6  U.S.	      2016-11-03       2016-11-05	The Times-Picayune/Lucid	                NA	
-6 rows | 1-6 of 17 columns
-```
-```
+
 # Create an object called `sigma` that contains a column for `pollster` and a column for `s`, the standard deviation of the spread
-polls %>% group_by(pollster)
-```
-```
-state   startdate       endddate        pollster                                        grade     samplesize   
-<fctr>  <date>          <date>          <fctr>                                          <fctr>    <int>
-U.S.	2016-11-05	2016-11-07	The Times-Picayune/Lucid	                NA	  2521	
-U.S.	2016-11-02	2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
-U.S.	2016-11-01	2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
-U.S.	2016-11-04	2016-11-06	The Times-Picayune/Lucid	                NA	  2584	
-U.S.	2016-10-31	2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
-U.S.	2016-11-03	2016-11-05	The Times-Picayune/Lucid	                NA	  2526	
-U.S.	2016-10-27	2016-10-31	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
-U.S.	2016-10-30	2016-11-01	Rasmussen Reports/Pulse Opinion Research	C+	  1500	
-U.S.	2016-11-02	2016-11-04	The Times-Picayune/Lucid	                NA	  2561	
-U.S.	2016-11-01	2016-11-03	The Times-Picayune/Lucid	                NA	  2627	
-1-10 of 40 rows | 1-6 of 16 columns
-```
-```
 sigma <- polls %>% group_by(pollster) %>% summarize(s = sd(spread))
 
 # Print the contents of sigma to the console
 sigma
 ```
-```
-pollster                                    s
-<fctr>                                      <dbl>
-Rasmussen Reports/Pulse Opinion Research    0.01768945
-The Times-Picayune/Lucid	            0.02678078
-2 rows
-```
-14. Probability Distribution of the Spread
 
-What does the central limit theorem tell us about the distribution of the differences between the pollster averages, Ȳ2−Ȳ1?
+14. What does the central limit theorem tell us about the distribution of the differences between the pollster averages, $\overline{Y}_2 − \overline{Y}_1?
 
-Possible Answers
 - [ ] A. The central limit theorem cannot tell us anything because this difference is not the average of a sample.
-- [ ] B. Because Yij are approximately normal, the averages are normal too.
-- [X] C. If we assume N2 and N1 are large enough, Ȳ2 and Ȳ1, and their difference, are approximately normal.
+- [ ] B. Because $Y_ij$ are approximately normal, the averages are normal too.
+- [X] C. If we assume $N_2$ and $N_1$ are large enough, $\overline{Y}_2$ and $\overline{Y}_1$, and their difference, are approximately normal.
 - [ ] D. These data do not contain vectors of 0 and 1, so the central limit theorem does not apply.
 
-15. Calculate the 95% Confidence Interval of the Spreads
+15. We have constructed a random variable that has expected value $b_2 − b_1$, the pollster bias difference. 
 
-We have constructed a random variable that has expected value b2−b1, the pollster bias difference. If our model holds, then this random variable has an approximately normal distribution. The standard error of this random variable depends on σ1 and  σ2, but we can use the sample standard deviations we computed earlier. We have everything we need to answer our initial question: is b2−b1 different from 0?
+If our model holds, then this random variable has an approximately normal distribution. The standard error of this random variable depends on $\sigma_1$ and $\sigma_2$, but we can use the sample standard deviations we computed earlier. We have everything we need to answer our initial question: is $b_2 − b_1$ different from 0?
 
-Construct a 95% confidence interval for the difference b2 and b1. Does this interval contain zero?
+Construct a 95% confidence interval for the difference $b_2$ and $b_1$. Does this interval contain zero?
 
-Instructions
-- Use pipes %>% to pass the data polls on to functions that will group by pollster and summarize the average spread, standard deviation, and number of polls per pollster.
-- Calculate the estimate by subtracting the average spreads.
-- Calculate the standard error using the standard deviations of the spreads and the sample size.
-- Calculate the 95% confidence intervals using the qnorm function. Save the lower and then the upper confidence interval to a variable called ci.
-```
+```{r}
 # The `polls` data have already been loaded for you. Use the `head` function to examine them.
 head(polls)
-```
-```
-   state      startdate        endddate         pollster                                        grade     
-   <fctr>     <date>           <date>           <fctr>                                          <fctr>
-1  U.S.	      2016-11-05       2016-11-07	The Times-Picayune/Lucid	                NA	
-2  U.S.	      2016-11-02       2016-11-06	Rasmussen Reports/Pulse Opinion Research	C+	
-3  U.S.	      2016-11-01       2016-11-03	Rasmussen Reports/Pulse Opinion Research	C+	
-4  U.S.	      2016-11-04       2016-11-06	The Times-Picayune/Lucid	                NA	
-5  U.S.	      2016-10-31       2016-11-02	Rasmussen Reports/Pulse Opinion Research	C+	
-6  U.S.	      2016-11-03       2016-11-05	The Times-Picayune/Lucid	                NA	
-6 rows | 1-6 of 17 columns
-```
-```
-names(polls)
-```
-```
-##  [1] "state"            "startdate"        "enddate"         
-##  [4] "pollster"         "grade"            "samplesize"      
-##  [7] "population"       "rawpoll_clinton"  "rawpoll_trump"   
-## [10] "rawpoll_johnson"  "rawpoll_mcmullin" "adjpoll_clinton" 
-## [13] "adjpoll_trump"    "adjpoll_johnson"  "adjpoll_mcmullin"
-## [16] "spread"
-```
-```
+
 # Create an object called `res` that summarizes the average, standard deviation, and number of polls for the two pollsters.
-res <- polls %>% group_by(pollster) %>% summarize(avg=mean(spread), s = sd(spread), N=n())
-res
-```
-```
-pollster                                  avg             s               N
-<fctr>                                    <dbl>           <dbl>           <int>
-Rasmussen Reports/Pulse Opinion Research  0.00062500	  0.01768945	  16
-The Times-Picayune/Lucid	          0.05291667	  0.02678078	  24
-2 rows
-```
-```
+res <- polls %>% group_by(pollster) %>% summarise(avg = mean(spread), s = sd(spread), N=n())
+
 # Store the difference between the larger average and the smaller in a variable called `estimate`. Print this value to the console.
 estimate <- max(res$avg) - min(res$avg)
 estimate
-```
-```
-## [1] 0.05229167
-```
-```
+
 # Store the standard error of the estimates as a variable called `se_hat`. Print this value to the console.
 se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 se_hat
-```
-```
-## [1] 0.007031433
-```
-```
+
 # Calculate the 95% confidence interval of the spreads. Save the lower and then the upper confidence interval to a variable called `ci`.
 ci <- c(estimate - qnorm(0.975)*se_hat, estimate + qnorm(0.975)*se_hat)
+ci
 ```
-16. Calculate the P-value
 
-The confidence interval tells us there is relatively strong pollster effect resulting in a difference of about 5%. Random variability does not seem to explain it.
+16. The confidence interval tells us there is relatively strong pollster effect resulting in a difference of about 5%. 
+
+Random variability does not seem to explain it.
 
 Compute a p-value to relay the fact that chance does not explain the observed pollster effect.
 
-Instructions
-- Use the pnorm function to calculate the probability that a random value is larger than the observed ratio of the estimate to the standard error.
-- Multiply the probability by 2, because this is the two-tailed test.
-```
+```{r}
 # We made an object `res` to summarize the average, standard deviation, and number of polls for the two pollsters.
 res <- polls %>% group_by(pollster) %>% 
   summarize(avg = mean(spread), s = sd(spread), N = n()) 
@@ -1559,27 +1402,18 @@ se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 # Calculate the p-value
 2 * (1 - pnorm(estimate / se_hat, 0, 1))
 ```
-```
-## [1] 1.030287e-13
-```
-17. Comparing Within-Poll and Between-Poll Variability
 
-We compute statistic called the t-statistic by dividing our estimate of b2−b1 by its estimated standard error:
+17. We compute statistic called the t-statistic by dividing our estimate of $b_2 − b_1$ by its estimated standard error:
 
-Ȳ2−Ȳ1/√((s2^2/N2)+(s1^2/N1))
+$\frac{\overline{Y_2} - \overline{Y_1}}{\sqrt{s_2^2/N_2 + s_1^2/N_1}}$
 
-Later we will learn of another approximation for the distribution of this statistic for values of N2 and N1 that aren’t large enough for the CLT.
+Later we learn will learn of another approximation for the distribution of this statistic for values of $N_2$ and $N_1$ that aren't large enough for the CLT.
 
 Note that our data has more than two pollsters. We can also test for pollster effect using all pollsters, not just two. The idea is to compare the variability across polls to variability within polls. We can construct statistics to test for effects and approximate their distribution. The area of statistics that does this is called Analysis of Variance or ANOVA. We do not cover it here, but ANOVA provides a very useful set of tools to answer questions such as: is there a pollster effect?
 
 Compute the average and standard deviation for each pollster and examine the variability across the averages and how it compares to the variability within the pollsters, summarized by the standard deviation.
 
-Instructions
-- Group the polls data by pollster.
-- Summarize the average and standard deviation of the spreads for each pollster.
-- Create an object called var that contains three columns: pollster, mean spread, and standard deviation.
-- Be sure to name the column for mean avg and the column for standard deviation s.
-```
+```{r}
 # Execute the following lines of code to filter the polling data and calculate the spread
 polls <- polls_us_election_2016 %>% 
   filter(enddate >= "2016-10-15" &
@@ -1590,24 +1424,10 @@ polls <- polls_us_election_2016 %>%
   ungroup()
 
 # Create an object called `var` that contains columns for the pollster, mean spread, and standard deviation. Print the contents of this object to the console.
-var <- polls %>% group_by(pollster) %>% summarize(avg = mean(spread), s = sd(spread))
+var <- polls %>% group_by(pollster) %>% summarise(avg = mean(spread), s = sd(spread))
 var
 ```
-```
-pollster                                  avg             s
-<fctr>                                    <dbl>           <dbl>
-ABC News/Washington Post	          0.037333333	  0.033904628
-CVOTER International	                  0.027895455	  0.017975499
-Google Consumer Surveys	                  0.030280000	  0.018476390
-Gravis Marketing	                  0.016000000	  0.015165751
-IBD/TIPP	                          0.001047619	  0.016832933
-Ipsos	                                  0.055272727	  0.019464698
-Morning Consult	                          0.041428571	  0.014638501
-Rasmussen Reports/Pulse Opinion Research  0.000625000	  0.017689451
-The Times-Picayune/Lucid	          0.052916667	  0.026780779
-USC Dornsife/LA Times	                 -0.021320833	  0.020661474
-1-10 of 11 rows
-```
+
 ## Section 5 Overview
 
 In Section 5, you will learn about Bayesian statistics through looking at examples from rare disease diagnosis and baseball.
