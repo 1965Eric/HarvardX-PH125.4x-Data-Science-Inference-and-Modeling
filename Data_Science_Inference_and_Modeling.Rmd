@@ -125,6 +125,28 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * A poll taken in advance of an election estimates $p$ for that moment, not for election day.
 * In order to predict election results, forecasters try to use early estimates of $p$ to predict $p$ on election day. We discuss some approaches in later sections.
 
+## Properties of Our Estimate
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#properties-of-our-estimate-expected-value-and-standard-error)
+
+**Key points**
+
+* When interpreting values of $\overline{X}$, it is important to remember that $\overline{X}$ is a random variable with an expected value and standard error that represents the sample proportion of positive events.
+* The expected value of $\overline{X}$ is the parameter of interest $p$. This follows from the fact that $\overline{X}$ is the sum of independent draws of a random variable times a constant $1/N$.
+
+$E(\overline{X}) = p$
+
+* As the number of draws $N$ increases, the standard error of our estimate $\overline{X}$ decreases. The standard error of the average of $\overline{X}$ over $N$ draws is:
+
+$SE(\overline{X}) = sqrt{p(1-p)/N} 
+
+* In theory, we can get more accurate estimates of $p$ by increasing $N$. In practice, there are limits on the size of $N$ due to costs, as well as other factors we discuss later.
+* We can also use other random variable equations to determine the expected value of the sum of draws $E(S)$ and standard error of the sum of draws $SE(S)$.
+
+$E(S) = Np$ 
+
+$SE(S) = sqrt{Np(1-p)}$ 
+
 ## Assessment 1.1: Parameters and Estimates
 
 1. Polling - expected value of S
