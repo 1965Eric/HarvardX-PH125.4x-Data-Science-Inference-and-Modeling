@@ -1431,12 +1431,25 @@ var
 In Section 5, you will learn about Bayesian statistics through looking at examples from rare disease diagnosis and baseball.
 
 After completing Section 5, you will be able to:
-- Apply Bayes’ theorem to calculate the probability of A given B.
-- Understand how to use hierarchical models to make better predictions by considering multiple levels of variability.
-- Compute a posterior probability using an empirical Bayesian approach.
-- Calculate a 95% credible interval from a posterior probability.
+
+* Apply Bayes’ theorem to calculate the probability of A given B.
+* Understand how to use hierarchical models to make better predictions by considering multiple levels of variability.
+* Compute a posterior probability using an empirical Bayesian approach.
+* Calculate a 95% credible interval from a posterior probability.
+
+## Bayesian Statistics
 
 The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-statistics)
+
+*Key points*
+
+* In the urn model, it does not make sense to talk about the probability of $p$ being greater than a certain value because $p$ is a fixed value.
+* With Bayesian statistics, we assume that $p$ is in fact random, which allows us to calculate probabilities related to $p$.
+* Hierarchical models describe variability at different levels and incorporate all these levels into a model for estimating $p$.
+
+## Bayes' Theorem
+
+
 
 ## Assessment 5.1: Bayesian Statistics
 
