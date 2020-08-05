@@ -1032,6 +1032,109 @@ round(d_hat*100,1)
 round(moe*100, 1)
 ```
 
+## Pollsters and Multilevel Models
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-aggregators)
+
+**Key points**
+
+* Different poll aggregators generate different models of election results from the same poll data. This is because they use different statistical models.
+* We will use actual polling data about the popular vote from the 2016 US presidential election to learn the principles of statistical modeling.
+
+## Poll Data and Pollster Bias
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-data) and [here](https://rafalab.github.io/dsbook/models.html#pollster-bias)
+
+**Key points**
+
+* We analyze real 2016 US polling data organized by FiveThirtyEight. We start by using reliable national polls taken within the week before the election to generate an urn model.
+* Consider $p$ the proportion voting for Clinton and $1 - p$ the proportion voting for Trump. We are interested in the spread $d = 2p - 1$.
+* Poll results are a random normal variable with expected value of the spread $d$ and standard error $2 \sqrt{p(1 - p)/N}$.
+* Our initial estimate of the spread did not include the actual spread. Part of the reason is that different pollsters have different numbers of polls in our dataset, and each pollster has a bias.
+* *Pollster bias* reflects the fact that repeated polls by a given pollster have an expected value different from the actual spread and different from other pollsters. Each pollster has a different bias.
+* The urn model does not account for pollster bias. We will develop a more flexible data-driven model that can account for effects like bias.
+
+*Code: Generating simulated poll data*
+
+```{r}
+names(polls_us_election_2016)
+
+# keep only national polls from week before election with a grade considered reliable
+polls <- polls_us_election_2016 %>%
+    filter(state == "U.S." & enddate >= "2016-10-31" &
+               (grade %in% c("A+", "A", "A-", "B+") | is.na(grade)))
+
+# add spread estimate
+polls <- polls %>%
+    mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+
+# compute estimated spread for combined polls
+d_hat <- polls %>%
+    summarize(d_hat = sum(spread * samplesize) / sum(samplesize)) %>%
+    .$d_hat
+
+# compute margin of error
+p_hat <- (d_hat+1)/2
+moe <- 1.96 * 2 * sqrt(p_hat*(1-p_hat)/sum(polls$samplesize))
+
+# histogram of the spread
+polls %>%
+    ggplot(aes(spread)) +
+    geom_histogram(color="black", binwidth = .01)
+```
+
+*Code: Investigating poll data and pollster bias*
+
+```{r}
+# number of polls per pollster in week before election
+polls %>% group_by(pollster) %>% summarize(n())
+
+# plot results by pollsters with at least 6 polls
+polls %>% group_by(pollster) %>%
+    filter(n() >= 6) %>%
+    ggplot(aes(pollster, spread)) +
+    geom_point() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# standard errors within each pollster
+polls %>% group_by(pollster) %>%
+    filter(n() >= 6) %>%
+    summarize(se = 2 * sqrt(p_hat * (1-p_hat) / median(samplesize)))
+```
+
+## Data-Driven Models
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#data-driven-model)
+
+**Key points**
+
+* Instead of using an urn model where each poll is a random draw from the same distribution of voters, we instead define a model using an urn that contains poll results from all possible pollsters.
+* We assume the expected value of this model is the actual spread $d = 2p - 1$.
+* Our new standard error $\sigma$ now factors in pollster-to-pollster variability. It can no longer be calculated from $p$ or $d$ and is an unknown parameter.
+* The central limit theorem still works to estimate the sample average of many polls $X_1,...,X_N$ because the average of the sum of many random variables is a normally distributed random variable with expected value $d$ and standard error $ \sigma/\sqrt N$.
+* We can estimate the unobserved $\sigma$ as the sample standard deviation, which is calculated with the ```sd``` function.
+
+*Code* 
+
+Note that to compute the exact 95% confidence interval, we would use ```qnorm(.975)``` instead of ```1.96```.
+
+```{r}
+# collect last result before the election for each pollster
+one_poll_per_pollster <- polls %>% group_by(pollster) %>%
+    filter(enddate == max(enddate)) %>%      # keep latest poll
+    ungroup()
+
+# histogram of spread estimates
+one_poll_per_pollster %>%
+    ggplot(aes(spread)) + geom_histogram(binwidth = 0.01)
+
+# construct 95% confidence interval
+results <- one_poll_per_pollster %>%
+    summarize(avg = mean(spread), se = sd(spread)/sqrt(length(spread))) %>%
+    mutate(start = avg - 1.96*se, end = avg + 1.96*se)
+round(results*100, 1)
+```
+
 ## Assessment 4.1: Statistical Models
 
 1. Heights Revisited
