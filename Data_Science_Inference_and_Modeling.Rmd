@@ -1533,15 +1533,16 @@ $E(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \tau^2}$
 
 1. In 1999 in England [Sally Clark](https://en.wikipedia.org/wiki/Sally_Clark) was found guilty of the murder of two of her sons. 
 
-Both infants were found dead in the morning, one in 1996 and another in 1998, and she claimed the cause of death was sudden infant death syndrome (SIDS). No evidence of physical harm was found on the two infants so the main piece of evidence against her was the testimony of Professor Sir Roy Meadow, who testified that the chances of two infants dying of SIDS was 1 in 73 million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500 and then calculating that the chance of two SIDS cases was $8,500 × 8,500 \approx 73 million$.
+Both infants were found dead in the morning, one in 1996 and another in 1998, and she claimed the cause of death was sudden infant death syndrome (SIDS). No evidence of physical harm was found on the two infants so the main piece of evidence against her was the testimony of Professor Sir Roy Meadow, who testified that the chances of two infants dying of SIDS was 1 in 73 million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500 and then calculating that the chance of two SIDS cases was $8,500 × 8,500 \approx \text{73 million}$.
 
 Based on what we've learned throughout this course, which statement best describes a potential flaw in Sir Meadow's reasoning?
+
 - [X] A. Sir Meadow assumed the second death was independent of the first son being affected, thereby ignoring possible genetic causes.
-- [ ] B. There is no flaw. The multiplicative rule always applies in this way: $Pr(\mod{A and B}) = Pr(A)Pr(B)$
-- [ ] C. Sir Meadow should have added the probabilities: $Pr(\mob{A and B}) = Pr(A) + Pr(B)$
+- [ ] B. There is no flaw. The multiplicative rule always applies in this way: $Pr(\text{A and B}) = Pr(A)Pr(B)$
+- [ ] C. Sir Meadow should have added the probabilities: $Pr(\text{A and B}) = Pr(A) + Pr(B)$
 - [ ] D. The rate of SIDS is too low to perform these types of statistics.
 
-2. Let's assume that there is in fact a genetic component to SIDS and the the probability of $Pr(\mod{second case of SIDS} \mid \mod{first case of SIDS}) = 1/100$, is much higher than 1 in 8,500.
+2. Let's assume that there is in fact a genetic component to SIDS and the the probability of $Pr(\text{second case of SIDS} \mid \text{first case of SIDS}) = 1/100$, is much higher than 1 in 8,500.
 
 What is the probability of both of Sally Clark's sons dying of SIDS?
 
@@ -1560,26 +1561,26 @@ Pr_1 * Pr_2
 
 Perhaps the jury and judge also interpreted the testimony this way. This probability can be written like this:
 
-$Pr(\mod{mother is a murderer} \mid \mod{two children found dead with no evidence of harm})$
+$Pr(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
 
 Bayes' rule tells us this probability is equal to:
 
-- [ ] A.  $\frac{Pr(\mod{two children found dead with no evidence of harm})Pr(\mod{mother is a murderer})}{Pr(\mod{two children found dead with no evidence of harm})$
-- [ ] B.  $Pr(\mod{two children found dead with no evidence of harm})Pr(\mod{mother is a murderer})$
-- [X] C.  $\frac{Pr(\mod{two children found dead with no evidence of harm} \mid \mod{mother is a murderer})Pr(\mod{mother is a murderer})}{Pr(\mod{two children found dead with no evidence of harm})$
+- [ ] A.  $\frac{Pr(\text{two children found dead with no evidence of harm})Pr(\text{mother is a murderer})}{Pr(\text{two children found dead with no evidence of harm})}$
+- [ ] B.  $Pr(\text{two children found dead with no evidence of harm})Pr(\text{mother is a murderer})$
+- [X] C.  $\frac{Pr(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer})Pr(\text{mother is a murderer})}{Pr(\text{two children found dead with no evidence of harm})}$
 - [ ] D. 1/8500
 
 4. Assume that the probability of a murderer finding a way to kill her two children without leaving evidence of physical harm is:
 
-$Pr(\mod{two children found dead with no evidence of harm} \mid \mod{mother is a murderer}) = 0.50$
+$Pr(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer}) = 0.50$
 
 Assume that the murder rate among mothers is 1 in 1,000,000.
 
-$Pr(\mod{mother is a murderer}) = 1/1,000,000
+$Pr(\text{mother is a murderer}) = 1/1,000,000$
 
 According to Bayes' rule, what is the probability of:
 
-$Pr(\mod{mother is a murderer} \mid \mod{two children found dead with no evidence of harm})$
+$Pr(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
 
 ```{r}
 # Define `Pr_1` as the probability of the first son dying of SIDS
