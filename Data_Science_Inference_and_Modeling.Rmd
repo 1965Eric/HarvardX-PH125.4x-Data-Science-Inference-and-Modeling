@@ -1529,7 +1529,7 @@ $\mbox{E}(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \ta
 * The *standard error of the posterior distribution*  $\mbox{SE}(p\mid Y)^2$  is $\frac{1}{{1/\sigma^2} + {1/\tau^2}}$. Note that you will need to take the square root of both sides to solve for the standard error.
 * This Bayesian approach is also known as *shrinking*. When $\sigma$ is large, $B$ is close to 1 and our prediction of $p$ shrinks towards the mean ($\mu$). When $\sigma$ is small, $B$ is close to 0 and our prediction of $p$ is more weighted towards the observed data $Y$.
 
-## Assessment 5.1: Bayesian Statistics
+## Assessment - Bayesian Statistics
 
 1. In 1999 in England [Sally Clark](https://en.wikipedia.org/wiki/Sally_Clark) was found guilty of the murder of two of her sons. 
 
@@ -1881,45 +1881,197 @@ posterior_se <- sqrt(1 / (1/sigma^2 + 1/tau^2))
 1 - pnorm(0, posterior_mean, posterior_se)
 ```
 
-## Assessment 6.1: Election Forecasting
+## Predicting the Electoral College
 
-1. Confidence Intervals of Polling Data
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#predicting-the-electoral-college)
 
-For each poll in the polling data set, use the CLT to create a 95% confidence interval for the spread. Create a new table called cis that contains columns for the lower and upper limits of the confidence intervals.
+**Key points**
 
-Instructions
-- Use pipes %>% to pass the poll object on to the mutate function, which creates new variables.
-- Create a variable called X_hat that contains the estimate of the proportion of Clinton voters for each poll.
-- Create a variable called se that contains the standard error of the spread.
-- Calculate the confidence intervals using the qnorm function and your calculated se.
-- Use the select function to keep the following columns: state, startdate, enddate, pollster, grade, spread, lower, upper.
+* In the US election, each state has a certain number of votes that are won all-or-nothing based on the popular vote result in that state (with minor exceptions not discussed here).
+* We use the ```left_join()``` function to combine the number of electoral votes with our poll results.
+* For each state, we apply a Bayesian approach to generate an Election Day $d$ . We keep our prior simple by assuming an expected value of 0 and a standard deviation based on recent history of 0.02.
+* We can run a Monte Carlo simulation that for each iteration simulates poll results in each state using that state's average and standard deviation, awards electoral votes for each state to Clinton if the spread is greater than 0, then compares the number of electoral votes won to the number of votes required to win the election (over 269).
+* If we run a Monte Carlo simulation for the electoral college without accounting for general bias, we overestimate Clinton's chances of winning at over 99%.
+* If we include a general bias term, the estimated probability of Clinton winning decreases significantly.
+
+*Code: Top 5 states ranked by electoral votes*
+
+The results_us_election_2016 object is defined in the **dslabs** package:
+
+```{r}
+head(results_us_election_2016)
+
+results_us_election_2016 %>% arrange(desc(electoral_votes)) %>% top_n(5, electoral_votes)
 ```
-## Load the libraries and data
-library(dplyr)
-library(dslabs)
-data("polls_us_election_2016")
 
+*Code: Computing the average and standard deviation for each state*
+
+```{r}
+results <- polls_us_election_2016 %>%
+    filter(state != "U.S." &
+            !grepl("CD", "state") &
+            enddate >= "2016-10-31" &
+            (grade %in% c("A+", "A", "A-", "B+") | is.na(grade))) %>%
+    mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100) %>%
+    group_by(state) %>%
+    summarize(avg = mean(spread), sd = sd(spread), n = n()) %>%
+    mutate(state = as.character(state))
+
+# 10 closest races = battleground states
+results %>% arrange(abs(avg))
+
+# joining electoral college votes and results
+results <- left_join(results, results_us_election_2016, by="state")
+
+# states with no polls: note Rhode Island and District of Columbia = Democrat
+results_us_election_2016 %>% filter(!state %in% results$state)
+
+# assigns sd to states with just one poll as median of other sd values
+results <- results %>%
+    mutate(sd = ifelse(is.na(sd), median(results$sd, na.rm = TRUE), sd))
+```
+
+*Code: Calculating the posterior mean and posterior standard error*
+
+```{r}
+mu <- 0
+tau <- 0.02
+results %>% mutate(sigma = sd/sqrt(n),
+                   B = sigma^2/ (sigma^2 + tau^2),
+                   posterior_mean = B*mu + (1-B)*avg,
+                   posterior_se = sqrt( 1 / (1/sigma^2 + 1/tau^2))) %>%
+    arrange(abs(posterior_mean))
+```
+
+*Code: Monte Carlo simulation of Election Night results (no general bias)*
+
+```{r}
+mu <- 0
+tau <- 0.02
+clinton_EV <- replicate(1000, {
+    results %>% mutate(sigma = sd/sqrt(n),
+                       B = sigma^2/ (sigma^2 + tau^2),
+                       posterior_mean = B*mu + (1-B)*avg,
+                       posterior_se = sqrt( 1 / (1/sigma^2 + 1/tau^2)),
+                       simulated_result = rnorm(length(posterior_mean), posterior_mean, posterior_se),
+                       clinton = ifelse(simulated_result > 0, electoral_votes, 0)) %>%    # award votes if Clinton wins state
+        summarize(clinton = sum(clinton)) %>%    # total votes for Clinton
+        .$clinton + 7    # 7 votes for Rhode Island and DC
+})
+mean(clinton_EV > 269)    # over 269 votes wins election
+
+# histogram of outcomes
+data.frame(clintonEV) %>%
+    ggplot(aes(clintonEV)) +
+    geom_histogram(binwidth = 1) +
+    geom_vline(xintercept = 269)
+```
+
+*Code: Monte Carlo simulation including general bias*
+
+```{r}
+mu <- 0
+tau <- 0.02
+bias_sd <- 0.03
+clinton_EV_2 <- replicate(1000, {
+    results %>% mutate(sigma = sqrt(sd^2/(n) + bias_sd^2),    # added bias_sd term
+                        B = sigma^2/ (sigma^2 + tau^2),
+                        posterior_mean = B*mu + (1-B)*avg,
+                        posterior_se = sqrt( 1 / (1/sigma^2 + 1/tau^2)),
+                        simulated_result = rnorm(length(posterior_mean), posterior_mean, posterior_se),
+                        clinton = ifelse(simulated_result > 0, electoral_votes, 0)) %>%    # award votes if Clinton wins state
+        summarize(clinton = sum(clinton)) %>%    # total votes for Clinton
+        .$clinton + 7    # 7 votes for Rhode Island and DC
+})
+mean(clinton_EV_2 > 269)    # over 269 votes wins election
+```
+
+## Forecasting
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#forecasting)
+
+**Key points**
+
+* In poll results, $p$ is not fixed over time. Variability within a single pollster comes from time variation.
+* In order to forecast, our model must include a bias term $b_t$ to model the time effect.
+* Pollsters also try to estimate $f(t)$, the trend of $p$ given time $t$ using a model like:
+
+$Y_{i, j, t} = d + b + h_j + b_t + f(t) + \epsilon_{i, j, t}$
+
+* Once we decide on a model, we can use historical data and current data to estimate the necessary parameters to make predictions.
+
+*Code: Variability across one pollster*
+
+```{r}
+# select all national polls by one pollster
+one_pollster <- polls_us_election_2016 %>%
+    filter(pollster == "Ipsos" & state == "U.S.") %>%
+    mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+
+# the observed standard error is higher than theory predicts
+se <- one_pollster %>%
+    summarize(empirical = sd(spread),
+            theoretical = 2*sqrt(mean(spread)*(1-mean(spread))/min(samplesize)))
+se
+
+# the distribution of the data is not normal
+one_pollster %>% ggplot(aes(spread)) +
+    geom_histogram(binwidth = 0.01, color = "black")
+```
+
+*Code: Trend across time for several pollsters*
+
+```{r}
+polls_us_election_2016 %>%
+    filter(state == "U.S." & enddate >= "2016-07-01") %>%
+    group_by(pollster) %>%
+    filter(n() >= 10) %>%
+    ungroup() %>%
+    mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100) %>%
+    ggplot(aes(enddate, spread)) +
+    geom_smooth(method = "loess", span = 0.1) +
+    geom_point(aes(color = pollster), show.legend = FALSE, alpha = 0.6)
+```
+
+*Code: Plotting raw percentages across time*
+
+```{r}
+polls_us_election_2016 %>%
+    filter(state == "U.S." & enddate >= "2016-07-01") %>%
+    select(enddate, pollster, rawpoll_clinton, rawpoll_trump) %>%
+    rename(Clinton = rawpoll_clinton, Trump = rawpoll_trump) %>%
+    gather(candidate, percentage, -enddate, -pollster) %>%
+    mutate(candidate = factor(candidate, levels = c("Trump", "Clinton"))) %>%
+    group_by(pollster) %>%
+    filter(n() >= 10) %>%
+    ungroup() %>%
+    ggplot(aes(enddate, percentage, color = candidate)) +
+    geom_point(show.legend = FALSE, alpha = 0.4) +
+    geom_smooth(method = "loess", span = 0.15) +
+    scale_y_continuous(limits = c(30, 50))
+```
+
+## Assessment - Election Forecasting
+
+1. For each poll in the polling data set, use the CLT to create a 95% confidence interval for the spread. 
+
+Create a new table called ```cis``` that contains columns for the lower and upper limits of the confidence intervals.
+
+```{r}
 # Create a table called `polls` that filters by  state, date, and reports the spread
 polls <- polls_us_election_2016 %>% 
   filter(state != "U.S." & enddate >= "2016-10-31") %>% 
   mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
 
 # Create an object called `cis` that has the columns indicated in the instructions
-cis <- polls %>% mutate(X_hat = (spread+1)/2, se = 2*sqrt(X_hat*(1-X_hat)/samplesize), 
-                 lower = spread - qnorm(0.975)*se, upper = spread + qnorm(0.975)*se) %>%
-  select(state, startdate, enddate, pollster, grade, spread, lower, upper)
+cis <- polls %>% mutate(X_hat = (spread+1)/2, se = 2*sqrt(X_hat*(1-X_hat)/samplesize), lower = spread - qnorm(0.975)*se, upper = spread + qnorm(0.975)*se) %>% select(state, startdate, enddate, pollster, grade, spread, lower, upper)
 ```
-2. Compare to Actual Results
 
-You can add the final result to the cis table you just created using the left_join function as shown in the sample code.
+2. You can add the final result to the ```cis``` table you just created using the ```left_join``` function as shown in the sample code.
 
 Now determine how often the 95% confidence interval includes the actual result.
 
-Instructions
-- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-- Summarize the proportion of values in hit that are true as a variable called proportion_hits.
-```
+```{r}
 # Add the actual results to the `cis` data set
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
@@ -1928,115 +2080,39 @@ ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "
 p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% summarize(proportion_hits = mean(hit))
 p_hits
 ```
-```
-                                 proportion_hits
-                                 <dbl>
-                                 0.66133
-1 row
-```
-3. Stratify by Pollster and Grade
 
-Now find the proportion of hits for each pollster. Show only pollsters with more than 5 polls and order them from best to worst. Show the number of polls conducted by each pollster and the FiveThirtyEight grade of each pollster.
+3. Now find the proportion of hits for each pollster. 
 
-Instructions
-- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-- Use the group_by function to group the data by pollster.
-- Use the filter function to filter for pollsters that have more than 5 polls.
-- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls by each pollster using the n() function and the grade of each poll.
-- Use the arrange function to arrange the proportion_hits in descending order.
-```
+Show only pollsters with at least 5 polls and order them from best to worst. Show the number of polls conducted by each pollster and the FiveThirtyEight grade of each pollster.
+
+```{r}
 # The `cis` data have already been loaded for you
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
 
-# Create an object called `p_hits` that summarizes the proportion of hits for each pollster that has at least 5 polls. 
-p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% 
-  group_by(pollster) %>%
-  filter(n() >=  5) %>%
-  summarize(proportion_hits = mean(hit), n = n(), grade = grade[1]) %>%
-  arrange(desc(proportion_hits))
+# Create an object called `p_hits` that summarizes the proportion of hits for each pollster that has at least 5 polls.
+p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% group_by(pollster) %>% filter(n() >=  5) %>% summarize(proportion_hits = mean(hit), n = n(), grade = grade[1]) %>% arrange(desc(proportion_hits))
 p_hits
 ```
-```
-pollster                                     proportion_hits        n            grade
-<fctr>                                       <dbl>                  <int>        <fctr>
-Quinnipiac University	                     1.0000000	            6	         A-
-Emerson College	                             0.9090909	            11	         B
-Public Policy Polling	                     0.8888889	            9	         B+
-University of New Hampshire	             0.8571429	            7	         B+
-Ipsos	                                     0.8067227	            119	         A-
-Mitchell Research & Communications	     0.8000000	            5	         D
-Gravis Marketing	                     0.7826087	            23	         B-
-Trafalgar Group	                             0.7777778	            9	         C
-Rasmussen Reports/Pulse Opinion Research     0.7741935	            31	         C+
-Remington	                             0.6666667	            9	         NA
-1-10 of 13 rows
-```
-4. Stratify by State
 
-Repeat the previous exercise, but instead of pollster, stratify by state. Here we can’t show grades.
+4. Repeat the previous exercise, but instead of pollster, stratify by state. Here we can’t show grades.
 
-Instructions
-- Create an object called p_hits that contains the proportion of intervals that contain the actual spread using the following steps.
-- Use the mutate function to create a new variable called hit that contains a logical vector for whether the actual_spread falls between the lower and upper confidence intervals.
-- Use the group_by function to group the data by state.
-- Use the filter function to filter for states that have more than 5 polls.
-- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
-- Use the arrange function to arrange the proportion_hits in descending order.
-```
-# The `cis` data have already been loaded for you
+```{r}
+ The `cis` data have already been loaded for you
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
 
-# Create an object called `p_hits` that summarizes the proportion of hits for each state that has more than 5 polls. 
-p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% 
-  group_by(state) %>%
-  filter(n() >=  5) %>%
-  summarize(proportion_hits = mean(hit), n = n()) %>%
-  arrange(desc(proportion_hits)) 
+# Create an object called `p_hits` that summarizes the proportion of hits for each state that has more than 5 polls.
+p_hits <- ci_data %>% mutate(hit = lower <= actual_spread & upper >= actual_spread) %>% group_by(state) %>% filter(n() >=  5) %>% summarize(proportion_hits = mean(hit), n = n()) %>% arrange(desc(proportion_hits))
 p_hits
 ```
-```
-state           proportion_hits        n
-<chr>           <dbl>                  <int>
-Connecticut	1.0000000	       13
-Delaware	1.0000000	       12
-Rhode Island	1.0000000	       10
-New Mexico	0.9411765	       17
-Washington	0.9333333	       15
-Oregon	        0.9285714	       14
-Illinois	0.9230769	       13
-Nevada	        0.9230769	       26
-Maine	        0.9166667	       12
-Montana	        0.9166667	       12
-1-10 of 51 rows
-```
-5. Plotting Prediction Results
 
-Make a barplot based on the result from the previous exercise.
+5. Make a barplot based on the result from the previous exercise.
 
-Instructions
-- Reorder the states in order of the proportion of hits.
-- Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
-- Use geom_bar to indicate that we want to plot a barplot. Specifcy stat = "identity" to indicate that the height of the bar should match the value.
-- Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
-```
+```{r}
 # The `p_hits` data have already been loaded for you. Use the `head` function to examine it.
 head(p_hits)
-```
-```
-state          proportion_hits    n
-<chr>          <dbl>              <int>
-Connecticut    1.0000000	  13
-Delaware       1.0000000	  12
-Rhode Island   1.0000000	  10
-New Mexico     0.9411765	  17
-Washington     0.9333333	  15
-Oregon	       0.9285714	  14
-6 rows
-```
-```
+
 # Make a barplot of the proportion of hits for each state
 p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   ggplot(aes(state, proportion_hits)) + 
@@ -2044,196 +2120,78 @@ p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   coord_flip()
 ```
 
-6. Predicting the Winner
+6. Even if a forecaster's confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
 
-Even if a forecaster’s confidence interval is incorrect, the overall predictions will do better if they correctly called the right winner.
+Add two columns to the ```cis``` table by computing, for each poll, the difference between the predicted spread and the actual spread, and define a column ```hit``` that is true if the signs are the same.
 
-Add two columns to the cis table by computing, for each poll, the difference between the predicted spread and the actual spread, and define a column hit that is true if the signs are the same.
-
-Instructions
-- Use the mutate function to add two new variables to the cis object: error and hit.
-- For the error variable, subtract the actual spread from the spread.
-- For the hit variable, return “TRUE” if the poll predicted the actual winner.
-- Save the new table as an object called errors.
-- Use the tail function to examine the last 6 rows of errors```.
-```
+```{r}
 # The `cis` data have already been loaded. Examine it using the `head` function.
-
-cis <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
-
 head(cis)
-```
-```
-      state            startdate       enddate        pollster                 grade          spread
-      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
-1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
-2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
-3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
-4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
-5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
-6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
-6 rows | 1-7 of 10 columns
-```
-```
+
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
 errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
 
 # Examine the last 6 rows of `errors`
 tail(errors)
 ```
-```
-      state            startdate       enddate        pollster                 grade          spread
-      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
-807   Utah	       2016-10-04      2016-11-06     YouGov	               B	     -0.0910	
-808   Utah	       2016-10-25      2016-10-31     Google Consumer Surveys  B	     -0.0121	
-809   South Dakota     2016-10-28      2016-11-02     Ipsos	               A-	     -0.1875	
-810   Washington       2016-10-21      2016-11-02     Ipsos	               A-	      0.0838	
-811   Utah	       2016-11-01      2016-11-07     Google Consumer Surveys  B	     -0.1372	
-812   Oregon	       2016-10-21      2016-11-02     Ipsos	               A-	      0.0905	
-6 rows | 1-7 of 12 columns
-```
-7. Plotting Prediction Results
 
-Create an object called p_hits that contains the proportion of instances when the sign of the actual spread matches the predicted spread for states with more than 5 polls.
+7. Create an object called ```p_hits``` that contains the proportion of instances when the sign of the actual spread matches the predicted spread for states with 5 or more polls.
 
-Make a barplot based on the result from the previous exercise that shows the proportion of times the sign of the spread matched the actual result for the data in p_hits.
+Make a barplot based on the result from the previous exercise that shows the proportion of times the sign of the spread matched the actual result for the data in ```p_hits```.
 
-Instructions
-- Use the group_by function to group the data by state.
-- Use the filter function to filter for states that have more than 5 polls.
-- Summarize the proportion of values in hit that are true as a variable called proportion_hits. Also create new variables for the number of polls in each state using the n() function.
-- To make the plot, follow these steps:
-- Reorder the states in order of the proportion of hits.
-- Using ggplot, set the aesthetic with state as the x-variable and proportion of hits as the y-variable.
-- Use geom_bar to indicate that we want to plot a barplot.
-- Use coord_flip to flip the axes so the states are displayed from top to bottom and proportions are displayed from left to right.
-```
+```{r}
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
 errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
 
-# Create an object called `p_hits` that summarizes the proportion of hits for each state that has more than 5 polls
-p_hits <- errors %>%  group_by(state) %>%
-  filter(n() >=  5) %>%
-  summarize(proportion_hits = mean(hit), n = n())
+# Create an object called `p_hits` that summarizes the proportion of hits for each state that has 5 or more polls
+p_hits <- errors %>% group_by(state) %>% filter(n() >=  5) %>% summarize(proportion_hits = mean(hit), n = n())
 
 # Make a barplot of the proportion of hits for each state
 p_hits %>% mutate(state = reorder(state, proportion_hits)) %>%
   ggplot(aes(state, proportion_hits)) + 
   geom_bar(stat = "identity") +
- coord_flip()
+  coord_flip()
 ```
 
-8. Plotting the Errors
+8. In the previous graph, we see that most states' polls predicted the correct winner 100% of the time. 
 
-In the previous graph, we see that most states’ polls predicted the correct winner 100% of the time. Only a few states polls’ were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
+Only a few states polls' were incorrect more than 25% of the time. Wisconsin got every single poll wrong. In Pennsylvania and Michigan, more than 90% of the polls had the signs wrong.
 
 Make a histogram of the errors. What is the median of these errors?
 
-Instructions
-- Use the hist function to generate a histogram of the errors
-- Use the median function to compute the median error
-```
+```{r}
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
-```
-```
-      state            startdate       enddate        pollster                 grade          spread
-      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
-1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
-2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
-3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
-4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
-5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
-6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
-6 rows | 1-7 of 12 columns
-```
-```
+
 # Generate a histogram of the error
 hist(errors$error)
-```
 
-```
 # Calculate the median of the errors. Print this value to the console.
 median(errors$error)
 ```
-```
-## [1] 0.037
-```
-9. Plot Bias by State
 
-We see that, at the state level, the median error was slightly in favor of Clinton. The distribution is not centered at 0, but at 0.037. This value represents the general bias we described in an earlier section.
+9. We see that, at the state level, the median error was slightly in favor of Clinton. The distribution is not centered at 0, but at 0.037. This value represents the general bias we described in an earlier section.
 
 Create a boxplot to examine if the bias was general to all states or if it affected some states differently. Filter the data to include only pollsters with grades B+ or higher.
 
-Instructions
-- Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
-- Use the reorder function to order the state data by error.
-- Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
-- Use geom_boxplot to indicate that we want to plot a boxplot.
-- Use geom_point to add data points as a layer.
-```
+```{r}
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
-```
-```
-      state            startdate       enddate        pollster                 grade          spread
-      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
-1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
-2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
-3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
-4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
-5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
-6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
-6 rows | 1-7 of 12 columns
-```
-```
+
 # Create a boxplot showing the errors by state for polls with grades B+ or higher
-errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
-  mutate(state = reorder(state, error)) %>%
-  ggplot(aes(state, error)) + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  geom_boxplot() + 
-  geom_point()
+errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>% mutate(state = reorder(state, error)) %>% ggplot(aes(state, error)) + geom_boxplot() + geom_point()
 ```
 
-10. Filter Error Plot
+10. Some of these states only have a few polls. 
 
-Some of these states only have a few polls. Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
+Repeat the previous exercise to plot the errors for each state, but only include states with five good polls or more.
 
-Instructions
-- Use the filter function to filter the data for polls with grades equal to A+, A, A-, or B+.
-- Group the filtered data by state using group_by.
-- Use the filter function to filter the data for states with at least 5 polls.
-- Use the reorder function to order the state data by error.
-- Using ggplot, set the aesthetic with state as the x-variable and error as the y-variable.
-- Use geom_box to indicate that we want to plot a boxplot.
-- Use geom_point to add data points as a layer.
-```
+```{r}
 # The `errors` data have already been loaded. Examine them using the `head` function.
 head(errors)
-```
-```
-      state            startdate       enddate        pollster                 grade          spread
-      <chr>            <date>          <date>         <fctr>                   <fctr>         <dbl>
-1     New Mexico       2016-11-06      2016-11-06     Zia Poll	               NA	      0.02	
-2     Virginia	       2016-11-03      2016-11-04     Public Policy Polling    B+	      0.05	
-3     Iowa	       2016-11-01      2016-11-04     Selzer & Company	       A+	     -0.07	
-4     Wisconsin	       2016-10-26      2016-10-31     Marquette University     A	      0.06	
-5     North Carolina   2016-11-04      2016-11-06     Siena College	       A	      0.00	
-6     Georgia	       2016-11-06      2016-11-06     Landmark Communications  B	     -0.03	
-6 rows | 1-7 of 12 columns
-```
-```
+
 # Create a boxplot showing the errors by state for states with at least 5 polls with grades B+ or higher
-errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>%
-  group_by(state) %>%
-  filter(n() >= 5) %>%
-  ungroup() %>%
-  mutate(state = reorder(state, error)) %>%
-  ggplot(aes(state, error)) + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  geom_boxplot() + 
-  geom_point()
+errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>% group_by(state) %>% filter(n() >= 5) %>% ungroup() %>%mutate(state = reorder(state, error)) %>% ggplot(aes(state, error)) + geom_boxplot() + geom_point()
 ```
 
 ## Assessment 6.2: The t-Distribution
