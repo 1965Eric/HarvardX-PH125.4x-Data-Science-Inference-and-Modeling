@@ -110,11 +110,11 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * Many common data science tasks can be framed as estimating a parameter from a sample.
 * We illustrate statistical inference by walking through the process to estimate $p$. From the estimate of $p$, we can easily calculate an estimate of the spread, $2p - 1$.
 * Consider the random variable $X$ that is 1 if a blue bead is chosen and 0 if a red bead is chosen. The proportion of blue beads in $N$ draws is the average of the draws $X_1,...,X_N$.
-* $\overline{X}$ is the *sample average*. In statistics, a bar on top of a symbol denotes the average. $\overline{X}$ is a random variable because it is the average of random draws - each time we take a sample, $\overline{X}$ is different.
+* $\bar{X}$ is the *sample average*. In statistics, a bar on top of a symbol denotes the average. $\bar{X}$ is a random variable because it is the average of random draws - each time we take a sample, $\bar{X}$ is different.
 
-$\overline{X} = \frac{X_1+X_2+...+X_N}{N}$
+$\bar{X} = \frac{X_1+X_2+...+X_N}{N}$
 
-* The number of blue beads drawn in N draws, $N \overline{X}$, is $N$ times the proportion of values in the urn. However, we do not know the true proportion: we are trying to estimate this parameter $p$.
+* The number of blue beads drawn in N draws, $N\bar{X}$, is $N$ times the proportion of values in the urn. However, we do not know the true proportion: we are trying to estimate this parameter $p$.
 
 ## Polling versus Forecasting
 
@@ -131,21 +131,21 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 **Key points**
 
-* When interpreting values of $\overline{X}$, it is important to remember that $\overline{X}$ is a random variable with an expected value and standard error that represents the sample proportion of positive events.
-* The expected value of $\overline{X}$ is the parameter of interest $p$. This follows from the fact that $\overline{X}$ is the sum of independent draws of a random variable times a constant $1/N$.
+* When interpreting values of $\bar{X}$, it is important to remember that $\bar{X}$ is a random variable with an expected value and standard error that represents the sample proportion of positive events.
+* The expected value of $\bar{X}$ is the parameter of interest $p$. This follows from the fact that $\bar{X}$ is the sum of independent draws of a random variable times a constant $1/N$.
 
-$E(\overline{X}) = p$
+$\mbox{E}(\bar{X}) = p$
 
-* As the number of draws $N$ increases, the standard error of our estimate $\overline{X}$ decreases. The standard error of the average of $\overline{X}$ over $N$ draws is:
+* As the number of draws $N$ increases, the standard error of our estimate $\bar{X}$ decreases. The standard error of the average of $\bar{X}$ over $N$ draws is:
 
-$SE(\overline{X}) = \sqrt{p(1-p)/N}$
+$\mbox{SE}(\bar{X}) = \sqrt{p(1-p)/N}$
 
 * In theory, we can get more accurate estimates of $p$ by increasing $N$. In practice, there are limits on the size of $N$ due to costs, as well as other factors we discuss later.
-* We can also use other random variable equations to determine the expected value of the sum of draws $E(S)$ and standard error of the sum of draws $SE(S)$.
+* We can also use other random variable equations to determine the expected value of the sum of draws $\mbox{E}(S)$ and standard error of the sum of draws $\mbox{SE}(S)$.
 
-$E(S) = Np$ 
+$\mbox{E}(S) = Np$ 
 
-$SE(S) = \sqrt{Np(1-p)}$ 
+$\mbox{SE}(S) = \sqrt{Np(1-p)}$ 
 
 ## Assessment - Parameters and Estimates
 
@@ -155,10 +155,10 @@ Your sample size is $N = 25$. Consider the random variable $S$, which is the **t
 
 What is the expected value of this random variable $S$?
 
-- [ ] A.  $E(S) = 25(1−p)$
-- [X] B.  $E(S) = 25p$
-- [ ] C.  $E(S) = \sqrt{25p(1−p)}$
-- [ ] D.  $E(S) = p$
+- [ ] A.  $\mbox{E}(S) = 25(1−p)$
+- [X] B.  $\mbox{E}(S) = 25p$
+- [ ] C.  $\mbox{E}(S) = \sqrt{25p(1−p)}$
+- [ ] D.  $\mbox{E}(S) = p$
 
 2. Again, consider the random variable $S$, which is the **total** number of Democrats in your sample of 25 voters. 
 
@@ -166,30 +166,30 @@ The variable $p$ describes the proportion of Democrats in the sample, whereas $1
 
 What is the standard error of $S$?
 
-- [ ] A.  $SE(S) = 25p(1−p)$
-- [ ] B.  $SE(S) = \sqrt{25p}$
-- [ ] C.  $SE(S) = 25(1−p)$
-- [X] D.  $SE(S) = \sqrt{25p(1−p)}$
+- [ ] A.  $\mbox{SE}(S) = 25p(1−p)$
+- [ ] B.  $\mbox{SE}(S) = \sqrt{25p}$
+- [ ] C.  $\mbox{SE}(S) = 25(1−p)$
+- [X] D.  $\mbox{SE}(S) = \sqrt{25p(1−p)}$
 
-3. Consider the random variable $S/N$, which is equivalent to the sample average that we have been denoting as $\overline{X}$. 
-
-The variable $N$ represents the sample size and $p$ is the proportion of Democrats in the population.
-
-What is the expected value of $\overline{X}$?
-
-- [X] A.  $E(\overline{X}) = p$
-- [ ] B.  $E(\overline{X}) = Np$
-- [ ] C.  $E(\overline{X}) = N(1−p)$
-- [ ] D.  $E(\overline{X}) = 1−p$
-
-4. What is the standard error of the sample average, $\overline{X}$?
+3. Consider the random variable $S/N$, which is equivalent to the sample average that we have been denoting as $\bar{X}$. 
 
 The variable $N$ represents the sample size and $p$ is the proportion of Democrats in the population.
 
-- [ ] A.  $SE(\overline{X}) = \sqrt{Np(1−p)}$
-- [X] B.  $SE(\overline{X}) = \sqrt{p(1−p)/N}$
-- [ ] C.  $SE(\overline{X}) = \sqrt{p(1−p)}$
-- [ ] D.  $SE(\overline{X}) = \sqrt N$
+What is the expected value of $\bar{X}$?
+
+- [X] A.  $\mbox{E}(\bar{X}) = p$
+- [ ] B.  $\mbox{E}(\bar{X}) = Np$
+- [ ] C.  $\mbox{E}(\bar{X}) = N(1−p)$
+- [ ] D.  $\mbox{E}(\bar{X}) = 1−p$
+
+4. What is the standard error of the sample average, $\bar{X}$?
+
+The variable $N$ represents the sample size and $p$ is the proportion of Democrats in the population.
+
+- [ ] A.  $\mbox{SE}(\bar{X}) = \sqrt{Np(1−p)}$
+- [X] B.  $\mbox{SE}(\bar{X}) = \sqrt{p(1−p)/N}$
+- [ ] C.  $\mbox{SE}(\bar{X}) = \sqrt{p(1−p)}$
+- [ ] D.  $\mbox{SE}(\bar{X}) = \sqrt N$
 
 5. Write a line of code that calculates the standard error ```se``` of a sample average when you poll 25 people in the population. 
 
@@ -228,27 +228,27 @@ plot(p,se,ylim = c(0,0.1))
 }
 ```
 
-7. Our estimate for the difference in proportions of Democrats and Republicans is $d = \overline{X} − (1 − \overline{X})$.
+7. Our estimate for the difference in proportions of Democrats and Republicans is $d = \bar{X} − (1 − \bar{X})$.
 
 Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the expected value of $d$
 
-- [ ] A.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = N(2p − 1) = Np − N(1 − p)$
-- [ ] B.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [\overline{X} − 1 \right] = E \left [\overline{X} \right] − 1 = p − 1$
-- [ ] C.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2 \sqrt{p(1 − p)} − 1 = p − (1 − p)$
-- [X] D.  $E \left [\overline{X} − (1 − \overline{X}) \right] = E \left [2 \overline{X} − 1 \right] = 2E \left [\overline{X} \right] - 1 = 2p − 1 = p − (1 − p)$
+- [ ] A.  $\mbox{E} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{E} \left[2 \bar{X} − 1 \right] = 2\mbox{E} \left[\bar{X} \right] - 1 = N(2p − 1) = Np − N(1 − p)$
+- [ ] B.  $\mbox{E} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{E} \left[\bar{X} − 1 \right] = \mbox{E} \left[\bar{X} \right] − 1 = p − 1$
+- [ ] C.  $\mbox{E} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{E} \left[2 \bar{X} − 1 \right] = 2\mbox{E} \left[\bar{X} \right] - 1 = 2 \sqrt{p(1 − p)} − 1 = p − (1 − p)$
+- [X] D.  $\mbox{E} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{E} \left[2 \bar{X} − 1 \right] = 2\mbox{E} \left[\bar{X} \right] - 1 = 2p − 1 = p − (1 − p)$
 
-8. Our estimate for the difference in proportions of Democrats and Republicans is $d = \overline{X} − (1 − \overline{X})$.
+8. Our estimate for the difference in proportions of Democrats and Republicans is $d = \bar{X} − (1 − \bar{X})$.
 
 Which derivation correctly uses the rules we learned about sums of random variables and scaled random variables to derive the standard error of $d$?
 
-- [ ] A.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p/N}$
-- [ ] B.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} - 1 \right] = 2 \sqrt{p(1 − p)/N} − 1$
-- [X] C.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [2 \overline{X} − 1 \right] = 2SE \left [\overline{X} \right] = 2 \sqrt{p(1 − p)/N}$
-- [ ] D.  $SE \left [\overline{X} − (1 − \overline{X}) \right] = SE \left [\overline{X} − 1 \right] = SE\left [\overline{X} \right] = \sqrt{p(1 − p)/N}$
+- [ ] A.  $\mbox{SE} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{SE} \left[2 \bar{X} − 1 \right] = 2\mbox{SE} \left[\bar{X} \right] = 2 \sqrt{p/N}$
+- [ ] B.  $\mbox{SE} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{SE} \left[2 \bar{X} − 1 \right] = 2\mbox{SE} \left[\bar{X} - 1 \right] = 2 \sqrt{p(1 − p)/N} − 1$
+- [X] C.  $\mbox{SE} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{SE} \left[2 \bar{X} − 1 \right] = 2\mbox{SE} \left[\bar{X} \right] = 2 \sqrt{p(1 − p)/N}$
+- [ ] D.  $\mbox{SE} \left[\bar{X} − (1 − \bar{X}) \right] = \mbox{SE} \left[\bar{X} − 1 \right] = \mbox{SE} \left [\bar{X} \right] = \sqrt{p(1 − p)/N}$
 
 9. Say the actual proportion of Democratic voters is $p = 0.45$. 
 
-In this case, the Republican party is winning by a relatively large margin of $d = -0.1$, or a 10% margin of victory. What is the standard error of the spread $2 \overline{X} − 1$ in this case?
+In this case, the Republican party is winning by a relatively large margin of $d = -0.1$, or a 10% margin of victory. What is the standard error of the spread $2 \bar{X} − 1$ in this case?
 
 ```{r}
 # `N` represents the number of people polled
@@ -265,7 +265,7 @@ p <- 0.45
 
 Select the statement that explains why this sample size is sufficient or not.
 
-- [ ] A. This sample size is sufficient because the expected value of our estimate $2 \overline{X} − 1$ is $d$ so our prediction will be right on.
+- [ ] A. This sample size is sufficient because the expected value of our estimate $2 \bar{X} − 1$ is $d$ so our prediction will be right on.
 - [X] B. This sample size is too small because the standard error is larger than the spread.
 - [ ] C. This sample size is sufficient because the standard error of about 0.2 is much smaller than the spread of 10%.
 - [ ] D. Without knowing ```p```, we have no way of knowing that increasing our sample size would actually improve our standard error.
@@ -276,9 +276,9 @@ In Section 2, you will look at the Central Limit Theorem in practice.
 
 After completing Section 2, you will be able to:
 
-* Use the Central Limit Theorem to calculate the probability that a sample estimate $\overline{X}$ is close to the population proportion $p$.
+* Use the Central Limit Theorem to calculate the probability that a sample estimate $\bar{X}$ is close to the population proportion $p$.
 * Run a Monte Carlo simulation to corroborate theoretical results built using probability theory.
-* Estimate the spread based on estimates of $\overline{X}$ and $\hat{SE}(\overline{X})$.
+* Estimate the spread based on estimates of $\bar{X}$ and $\hat{\mbox{SE}}(\bar{X})$.
 * Understand why bias can mean that larger sample sizes aren’t necessarily better.
 
 ## The Central Limit Theorem in Practice
@@ -287,24 +287,24 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 **Key points**
 
-* Because $\overline{X}$ is the sum of random draws divided by a constant, the distribution of $\overline{X}$ is approximately normal.
-* We can convert $\overline{X}$ to a standard normal random variable $Z$: 
+* Because $\bar{X}$ is the sum of random draws divided by a constant, the distribution of $\bar{X}$ is approximately normal.
+* We can convert $\bar{X}$ to a standard normal random variable $Z$: 
 
-$Z = \frac{\overline{X} - E(\overline{X})}{SE(\overline{X})}$
+$Z = \frac{\bar{X} - \mbox{E}(\bar{X})}{\mbox{SE}(\bar{X})}$
 
-* The probability that $\overline{X}$ is within .01 of the actual value of $p$ is:
+* The probability that $\bar{X}$ is within .01 of the actual value of $p$ is:
 
 $Pr(Z \le .01/\sqrt {p(1 - p)/N}) - Pr(Z \le -.01/\sqrt {p(1 - p)/N})$
 
-* The Central Limit Theorem (CLT) still works if $\overline{X}$ is used in place of $p$. This is called a *plug-in estimate*. Hats over values denote estimates. Therefore:
+* The Central Limit Theorem (CLT) still works if $\bar{X}$ is used in place of $p$. This is called a *plug-in estimate*. Hats over values denote estimates. Therefore:
 
-$\hat{SE}(\overline{X}) = \sqrt{\overline{X}(1 - \overline{X})/N}$
+$\hat{\mbox{SE}}(\bar{X}) = \sqrt{\bar{X}(1 - \bar{X})/N}$
 
-Using the CLT, the probability that $\overline{X}$ is within .01 of the actual value of $p$ is:
+Using the CLT, the probability that $\bar{X}$ is within .01 of the actual value of $p$ is:
 
-$Pr(Z \le .01/\sqrt {\overline{X}(1 - \overline{X})/N}) - Pr(Z \le -.01/\sqrt {\overline{X}(1 - \overline{X})/N})$
+$Pr(Z \le .01/\sqrt {\bar{X}(1 - \bar{X})/N}) - Pr(Z \le -.01/\sqrt {\bar{X}(1 - \bar{X})/N})$
 
-*Code: Computing the probability of $\overline{X}$ being within .01 of $p$*
+*Code: Computing the probability of $\bar{X}$ being within .01 of $p$*
 
 ```{r}
 X_hat <- 0.48
@@ -318,8 +318,8 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 **Key points**
 
-* The *margin of error* is defined as 2 times the standard error of the estimate $\overline{X}$.
-* There is about a 95% chance that $\overline{X}$ will be within two standard errors of the actual parameter $p$.
+* The *margin of error* is defined as 2 times the standard error of the estimate $\bar{X}$.
+* There is about a 95% chance that $\bar{X}$ will be within two standard errors of the actual parameter $p$.
 
 ## A Monte Carlo Simulation for the CLT
 
@@ -329,7 +329,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 * We can run Monte Carlo simulations to compare with theoretical results assuming a value of $p$.
 * In practice, $p$ is unknown. We can corroborate theoretical results by running Monte Carlo simulations with one or several values of $p$.
-* One practical choice for $p$ when modeling is $\overline{X}$, the observed value of $\hat{X}$ in a sample.
+* One practical choice for $p$ when modeling is $\bar{X}$, the observed value of $\hat{X}$ in a sample.
 
 *Code: Monte Carlo simulation using a set value of p*
 
@@ -375,9 +375,9 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 **Key points**
 
 * The spread between two outcomes with probabilities $p$ and $1 - p$ is $2p - 1$.
-* The expected value of the spread is $2 \overline{X} - 1$.
-* The standard error of the spread is $2 \hat{SE}(\overline{X})$.
-* The margin of error of the spread is 2 times the margin of error of $\overline{X}$.
+* The expected value of the spread is $2 \bar{X} - 1$.
+* The standard error of the spread is $2 \hat{\mbox{SE}}(\bar{X})$.
+* The margin of error of the spread is 2 times the margin of error of $\bar{X}$.
 
 ## Bias: Why Not Run a Very Large Poll?
 
@@ -428,9 +428,9 @@ take_sample(p, N)
 
 2. Assume the proportion of Democrats in the population $p$ equals 0.45 and that your sample size $N$ is 100 polled voters. 
 
-The ```take_sample``` function you defined previously generates our estimate, $\overline{X}$.
+The ```take_sample``` function you defined previously generates our estimate, $\bar{X}$.
 
-Replicate the random sampling 10,000 times and calculate $p − \overline{X}$ for each random sample. Save these differences as a vector called ```errors```. Find the average of ```errors``` and plot a histogram of the distribution.
+Replicate the random sampling 10,000 times and calculate $p − \bar{X}$ for each random sample. Save these differences as a vector called ```errors```. Find the average of ```errors``` and plot a histogram of the distribution.
 
 ```{r}
 # Define `p` as the proportion of Democrats in the population being polled
@@ -453,7 +453,7 @@ mean(errors)
 hist(errors)
 ```
 
-3. In the last exercise, you made a vector of differences between the actual value for $p$ and an estimate, $\overline{X}$. 
+3. In the last exercise, you made a vector of differences between the actual value for $p$ and an estimate, $\bar{X}$. 
 
 We called these differences between the actual and estimated values ```errors```.
 
@@ -464,11 +464,11 @@ The ```errors``` object has already been loaded for you. Use the ```hist``` func
 - [X] C. The errors are symmetrically distributed around 0.
 - [ ] D. The errors range from -1 to 1.
 
-4. The error $p - \overline{X}$ is a random variable. 
+4. The error $p - \bar{X}$ is a random variable. 
 
 In practice, the error is not observed because we do not know the actual proportion of Democratic voters, $p$. However, we can describe the size of the error by constructing a simulation.
 
-What is the average size of the error if we define the size by taking the absolute value $|p - \overline{X}|$?
+What is the average size of the error if we define the size by taking the absolute value $|p - \bar{X}|$?
 
 ```{r}
 # Define `p` as the proportion of Democrats in the population being polled
@@ -494,7 +494,7 @@ mean(abs(errors))
 
 We say **size** because, as we just saw, the errors are centered around 0. In that sense, the typical error is 0. For mathematical reasons related to the central limit theorem, we actually use the standard deviation of ```errors``` rather than the average of the absolute values.
 
-As we have discussed, the standard error is the square root of the average squared distance $(\overline{X} - p)^2$. The standard deviation is defined as the square root of the distance squared.
+As we have discussed, the standard error is the square root of the average squared distance $(\bar{X} - p)^2$. The standard deviation is defined as the square root of the distance squared.
 
 Calculate the standard deviation of the spread.
 
@@ -518,7 +518,7 @@ errors <- replicate(B, p - take_sample(p, N))
 sqrt(mean(errors^2))
 ```
 
-6. The theory we just learned tells us what this standard deviation is going to be because it is the standard error of $\overline{X}$.
+6. The theory we just learned tells us what this standard deviation is going to be because it is the standard error of $\bar{X}$.
 
 Estimate the standard error given an expected value of 0.45 and a sample size of 100.
 
@@ -533,7 +533,7 @@ N <- 100
 sqrt(p*(1-p)/N)
 ```
 
-7. In practice, we don't know $p$, so we construct an estimate of the theoretical prediction based by plugging in $\overline{X}$ for $p$. Calculate the standard error of the estimate: $\hat{SE}(\overline{X})$
+7. In practice, we don't know $p$, so we construct an estimate of the theoretical prediction based by plugging in $\bar{X}$ for $p$. Calculate the standard error of the estimate: $\hat{\mbox{SE}}(\bar{X})$
 
 ```{r}
 # Define `p` as a proportion of Democratic voters to simulate
@@ -580,12 +580,12 @@ Based on this plot, how large does the sample size have to be to have a standard
 
 - [ ] A. practically equal to $p$.
 - [X] B. approximately normal with expected value $p$ and standard error $\sqrt{p(1 − p)/N}$.
-- [ ] C. approximately normal with expected value $\overline{X}$ and standard error $\sqrt{\overline{X}(1 − \overline{X}/N}$.
+- [ ] C. approximately normal with expected value $\bar{X}$ and standard error $\sqrt{\bar{X}(1 − \bar{X}/N}$.
 - [ ] D. not a random variable.
 
 10. We calculated a vector ```errors``` that contained, for each simulated sample, the difference between the actual value ```p``` and our estimate $\hat{X}$.
 
-The errors $\overline{X} − p$ are:
+The errors $\bar{X} − p$ are:
 
 - [ ] A. practically equal to 0.
 - [X] B. approximately normal with expected value 0 and standard error $\sqrt{p(1 − p)/N}$.
@@ -615,7 +615,7 @@ qqnorm(errors)
 qqline(errors)
 ```
 
-12. If $p = 0.45$ and $N = 100$, use the central limit theorem to estimate the probability that $\overline{X} > 0.5$.
+12. If $p = 0.45$ and $N = 100$, use the central limit theorem to estimate the probability that $\bar{X} > 0.5$.
 
 ```{r}
 # Define `p` as the proportion of Democrats in the population being polled
@@ -631,7 +631,7 @@ N <- 100
 
 13. Assume you are in a practical situation and you don't know $p$. 
 
-Take a sample of size $N = 100$ and obtain a sample average of $\overline{X} = 0.51$.
+Take a sample of size $N = 100$ and obtain a sample average of $\bar{X} = 0.51$.
 
 What is the CLT approximation for the probability that your error size is equal or larger than 0.01?
 
@@ -934,7 +934,7 @@ avg_hit
 
 8. Although the proportion of confidence intervals that include the actual difference between the proportion of voters increases substantially, it is still lower that 0.95. 
 
-In the next chapter, we learn the reason for this. To motivate our next exercises, calculate the difference between each poll's estimate $\overline{d}$ and the actual $d = 0.021$. Stratify this difference, or error, by pollster in a plot.
+In the next chapter, we learn the reason for this. To motivate our next exercises, calculate the difference between each poll's estimate $\bar{d}$ and the actual $d = 0.021$. Stratify this difference, or error, by pollster in a plot.
 
 ```{r}
 # The `polls` object has already been loaded. Examine it using the `head` function.
@@ -1193,7 +1193,7 @@ sigma
 - [ ] C. It is a random variable with expected value $\mu$ and standard error $\sigma$.
 - [ ] D. It underestimates $\mu$.
 
-4. We will use $\overline{X}$ as our estimate of the heights in the population from our sample size $N$. We know from previous exercises that the standard estimate of our error $\overline{X} - \mu$ is $\sigma / \sqrt{N}$.
+4. We will use $\bar{X}$ as our estimate of the heights in the population from our sample size $N$. We know from previous exercises that the standard estimate of our error $\bar{X} - \mu$ is $\sigma / \sqrt{N}$.
 
 Construct a 95% confidence interval for $\mu$.
 
@@ -1298,25 +1298,25 @@ What is the expected value of $Y_{1j}$?
 - [ ] C.  $d$
 - [ ] D.  $d + b_1 + \varepsilon_{ij}$
 
-9. Suppose we define $\overline{Y}_1$ as the average of poll results from the first poll and $\sigma_1$ as the standard deviation of the first poll.
+9. Suppose we define $\bar{Y}_1$ as the average of poll results from the first poll and $\sigma_1$ as the standard deviation of the first poll.
 
-What is the expected value and standard error of $\overline{Y}_1$?
+What is the expected value and standard error of $\bar{Y}_1$?
 
 - [ ] A. The expected value is $d + b_1$ and the standard error is $\sigma_1$
 - [ ] B. The expected value is $d$ and the standard error is $\sigma_1/\sqrt{N_1}$
 - [X] C. The expected value is $d + b_1$ and the standard error is $\sigma_1/\sqrt{N_1}$
 - [ ] D. The expected value is $d$ and the standard error is $\sigma_1 + \sqrt{N_1}$
 
-10. Now we define $\overline{Y}_2$ as the average of poll results from the second poll.
+10. Now we define $\bar{Y}_2$ as the average of poll results from the second poll.
 
-What is the expected value and standard error of $\overline{Y}_2$?
+What is the expected value and standard error of $\bar{Y}_2$?
 
 - [ ] A. The expected value is $d + b_2$ and the standard error is $\sigma_2$ 
 - [ ] B. The expected value is $d$ and the standard error is $\sigma_2/\sqrt{N_2}$
 - [X] C. The expected value is $d + b_2$ and the standard error is $\sigma_2/\sqrt{N_2}$
 - [ ] D. The expected value is $d$ and the standard error is $\sigma_2 + \sqrt{N_2}$
 
-11. Using what we learned by answering the previous questions, what is the expected value of $\overline{Y}_2 − \overline{Y}_1$?
+11. Using what we learned by answering the previous questions, what is the expected value of $\bar{Y}_2 − \bar{Y}_1$?
 
 - [ ] A.  $(b_2 − b_1)^2$
 - [ ] B.  $b_2 − b_1/\sqrt(N)$
@@ -1325,7 +1325,7 @@ What is the expected value and standard error of $\overline{Y}_2$?
 
 12. Standard Error of the Difference Between Polls
 
-Using what we learned by answering the questions above, what is the standard error of $\overline{Y}_2 − \overline{Y}_1$?
+Using what we learned by answering the questions above, what is the standard error of $\bar{Y}_2 − \bar{Y}_1$?
 
 - [X] A.  $\sqrt{\sigma_2^2/N_2 + \sigma_1^2/N_1}$
 - [ ] B.  $\sqrt{\sigma_2/N_2 + \sigma_1/N_1}$
@@ -1349,11 +1349,11 @@ sigma <- polls %>% group_by(pollster) %>% summarize(s = sd(spread))
 sigma
 ```
 
-14. What does the central limit theorem tell us about the distribution of the differences between the pollster averages, $\overline{Y}_2 − \overline{Y}_1$?
+14. What does the central limit theorem tell us about the distribution of the differences between the pollster averages, $\bar{Y}_2 − \bar{Y}_1$?
 
 - [ ] A. The central limit theorem cannot tell us anything because this difference is not the average of a sample.
 - [ ] B. Because $Y_{ij}$ are approximately normal, the averages are normal too.
-- [X] C. If we assume $N_2$ and $N_1$ are large enough, $\overline{Y}_2$ and $\overline{Y}_1$, and their difference, are approximately normal.
+- [X] C. If we assume $N_2$ and $N_1$ are large enough, $\bar{Y}_2$ and $\bar{Y}_1$, and their difference, are approximately normal.
 - [ ] D. These data do not contain vectors of 0 and 1, so the central limit theorem does not apply.
 
 15. We have constructed a random variable that has expected value $b_2 − b_1$, the pollster bias difference. 
@@ -1403,7 +1403,7 @@ se_hat <- sqrt(res$s[2]^2/res$N[2] + res$s[1]^2/res$N[1])
 
 17. We compute statistic called the *t-statistic* by dividing our estimate of $b_2 − b_1$ by its estimated standard error:
 
-$\frac{\overline{Y_2} - \overline{Y_1}}{\sqrt{s_2^2/N_2 + s_1^2/N_1}}$
+$\frac{\bar{Y_2} - \bar{Y_1}}{\sqrt{s_2^2/N_2 + s_1^2/N_1}}$
 
 Later we learn will learn of another approximation for the distribution of this statistic for values of $N_2$ and $N_1$ that aren't large enough for the CLT.
 
@@ -1524,9 +1524,9 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * The *posterior distribution* allows us to compute the probability distribution of $p$ given that we have observed data $Y$.
 * By the continuous version of Bayes' rule, the *expected value of the posterior distribution* $p$ given $Y = y$ is a weighted average between the prior mean $\mu$ and the observed data $Y$:
 
-$E(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \tau^2}$
+$\mbox{E}(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \tau^2}$
 
-* The *standard error of the posterior distribution*  $SE(p\mid Y)^2$  is $\frac{1}{{1/\sigma^2} + {1/\tau^2}}$. Note that you will need to take the square root of both sides to solve for the standard error.
+* The *standard error of the posterior distribution*  $\mbox{SE}(p\mid Y)^2$  is $\frac{1}{{1/\sigma^2} + {1/\tau^2}}$. Note that you will need to take the square root of both sides to solve for the standard error.
 * This Bayesian approach is also known as *shrinking*. When $\sigma$ is large, $B$ is close to 1 and our prediction of $p$ shrinks towards the mean ($\mu$). When $\sigma$ is small, $B$ is close to 0 and our prediction of $p$ is more weighted towards the observed data $Y$.
 
 ## Assessment 5.1: Bayesian Statistics
