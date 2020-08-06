@@ -1961,8 +1961,8 @@ clinton_EV <- replicate(1000, {
 mean(clinton_EV > 269)    # over 269 votes wins election
 
 # histogram of outcomes
-data.frame(clintonEV) %>%
-    ggplot(aes(clintonEV)) +
+data.frame(clinton_EV) %>%
+    ggplot(aes(clinton_EV)) +
     geom_histogram(binwidth = 1) +
     geom_vline(xintercept = 269)
 ```
@@ -2098,7 +2098,7 @@ p_hits
 4. Repeat the previous exercise, but instead of pollster, stratify by state. Here we can’t show grades.
 
 ```{r}
- The `cis` data have already been loaded for you
+# The `cis` data have already been loaded for you
 add <- results_us_election_2016 %>% mutate(actual_spread = clinton/100 - trump/100) %>% select(state, actual_spread)
 ci_data <- cis %>% mutate(state = as.character(state)) %>% left_join(add, by = "state")
 
@@ -2129,7 +2129,7 @@ Add two columns to the ```cis``` table by computing, for each poll, the differen
 head(cis)
 
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
-errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
+errors <- cis %>% mutate(error = spread - ci_data$actual_spread, hit = sign(spread) == sign(ci_data$actual_spread))
 
 # Examine the last 6 rows of `errors`
 tail(errors)
@@ -2141,7 +2141,7 @@ Make a barplot based on the result from the previous exercise that shows the pro
 
 ```{r}
 # Create an object called `errors` that calculates the difference between the predicted and actual spread and indicates if the correct winner was predicted
-errors <- cis %>% mutate(error = spread - actual_spread, hit = sign(spread) == sign(actual_spread))
+errors <- cis %>% mutate(error = spread - ci_data$actual_spread, hit = sign(spread) == sign(ci_data$actual_spread))
 
 # Create an object called `p_hits` that summarizes the proportion of hits for each state that has 5 or more polls
 p_hits <- errors %>% group_by(state) %>% filter(n() >=  5) %>% summarize(proportion_hits = mean(hit), n = n())
