@@ -1749,13 +1749,137 @@ plot(taus, ps)
 In Section 6, you will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
 
 After completing Section 6, you will be able to:
-- Understand how pollsters use hierarchical models to forecast the results of elections.
-- Incorporate multiple sources of variability into a mathematical model to make predictions.
-- Construct confidence intervals that better model deviations such as those seen in election data using the t-distribution. 
 
-There are 2 assignments that use the DataCamp platform for you to practice your coding skills.
+* Understand how pollsters use hierarchical models to forecast the results of elections.
+* Incorporate multiple sources of variability into a mathematical model to make predictions.
+* Construct confidence intervals that better model deviations such as those seen in election data using the t-distribution.
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#election-forecasting)
+## Election Forecasting
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-approach)
+
+**Key points**
+
+* In our model:
+    * The spread $d \sim N(\mu, \tau)$ describes our best guess in the absence of polling data. We set $\mu = 0$ and $\tau = 0.035$ using historical data.
+    * The average of observed data $\bar{X} \mid d \sim N(d, \sigma)$ describes randomness due to sampling and the pollster effect.
+* Because the posterior distribution is normal, we can report a 95% *credible interval* that has a 95% chance of overlapping the parameter using $\mbox{E}(p \mid Y)$ and $\mbox{SE}(p \mid Y)$.
+* Given an estimate of $\mbox{E}(p \mid Y)$ and $\mbox{SE}(p \mid Y)$, we can use ```pnorm``` to compute the probability that $d>0$.
+* It is common to see a general bias that affects all pollsters in the same way. This bias cannot be predicted or measured before the election. We will include a term in later models to account for this variability.
+
+*Code: Definition of results object*
+
+This code defines the results object used for empirical Bayes election forecasting.
+
+```{r}
+polls <- polls_us_election_2016 %>%
+    filter(state == "U.S." & enddate >= "2016-10-31" &
+                 (grade %in% c("A+", "A", "A-", "B+") | is.na(grade))) %>%
+    mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+
+one_poll_per_pollster <- polls %>% group_by(pollster) %>%
+    filter(enddate == max(enddate)) %>%
+    ungroup()
+
+results <- one_poll_per_pollster %>%
+    summarize(avg = mean(spread), se = sd(spread)/sqrt(length(spread))) %>%
+    mutate(start = avg - 1.96*se, end = avg + 1.96*se)
+```
+
+*Code: Computing the posterior mean, standard error, credible interval and probability*
+
+Note that to compute an exact 95% credible interval, we would use ```qnorm(.975)``` instead of 1.96.
+
+```{r}
+mu <- 0
+tau <- 0.035
+sigma <- results$se
+Y <- results$avg
+B <- sigma^2 / (sigma^2 + tau^2)
+posterior_mean <- B*mu + (1-B)*Y
+posterior_se <- sqrt(1 / (1/sigma^2 + 1/tau^2))
+
+posterior_mean
+posterior_se
+
+# 95% credible interval
+posterior_mean + c(-1.96, 1.96)*posterior_se
+
+# probability of d > 0
+1 - pnorm(0, posterior_mean, posterior_se)
+```
+
+## Mathematical Representations of Models
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#mathematical-representations-of-models)
+
+**Key points**
+
+* If we collect several polls with measured spreads $X_1, ..., X_j$ with a sample size of $N$ , these random variables have expected value $d$ and standard error $2\sqrt{p(1-p)/N}$.
+* We represent each measurement as $X_{i,j} = d + b + h_i + \epsilon_{i,j}$ where:
+    * The index $i$ represents the different pollsters
+    * The index $j$ represents the different polls
+    * $X_{i,j}$ is the $j$th poll by the $i$th pollster 
+    * $d$ is the actual spread of the election
+    * $b$ is the general bias affecting all pollsters
+    * $h_i$ represents the house effect for the $i$th pollster
+    * $\epsilon_{i,j}$ represents the random error associated with the $i,j$th poll.
+* The sample average is now $\bar{X} = d + b + \frac{1}{N} \sum\limits_{i=1}^{N} X_i$ with standard deviation $\mbox{SE}(\bar{X}) = \sqrt{\sigma^2/N + \sigma_b^2}$.
+* The standard error of the general bias $\sigma_b$ does not get reduced by averaging multiple polls, which increases the variability of our final estimate.
+
+*Code: Simulated data with $X_j = d + \epsilon_j$*
+
+```{r}
+J <- 6
+N <- 2000
+d <- .021
+p <- (d+1)/2
+X <- d + rnorm(J, 0, 2*sqrt(p*(1-p)/N))
+```
+
+*Code: Simulated data with $X_j = d + \epsilon_{i,j}$*
+
+```{r}
+I <- 5
+J <- 6
+N <- 2000
+d <- .021
+p <- (d+1)/2
+X <- sapply(1:I, function(i){
+    d + rnorm(J, 0, 2*sqrt(p*(1-p)/N))
+})
+```
+
+*Code: Simulated data with $X_{i,j} = d + h_i + \epsilon_{i,j}$*
+
+```{r}
+I <- 5
+J <- 6
+N <- 2000
+d <- .021
+p <- (d+1)/2
+h <- rnorm(I, 0, 0.025)    # assume standard error of pollster-to-pollster variability is 0.025
+X <- sapply(1:I, function(i){
+    d + rnorm(J, 0, 2*sqrt(p*(1-p)/N))
+})
+```
+
+*Code: Calculating probability of $d > 0$ with general bias*
+
+Note that ```sigma``` now includes an estimate of the variability due to general bias $\sigma_b = .025$.
+
+```{r}
+mu <- 0
+tau <- 0.035
+sigma <- sqrt(results$se^2 + .025^2)
+Y <- results$avg
+B <- sigma^2 / (sigma^2 + tau^2)
+
+posterior_mean <- B*mu + (1-B)*Y
+posterior_se <- sqrt(1 / (1/sigma^2 + 1/tau^2))
+
+1 - pnorm(0, posterior_mean, posterior_se)
+```
 
 ## Assessment 6.1: Election Forecasting
 
