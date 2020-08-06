@@ -1449,7 +1449,85 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Bayes' Theorem
 
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-theorem)
 
+**Key points**
+
+* Bayes' Theorem states that the probability of event A happening given event B is equal to the probability of both A and B divided by the probability of event B:
+
+$Pr(A \mid B) = \frac{Pr(B \mid A)Pr(A)}{Pr(B)
+
+* Bayes' Theorem shows that a test for a very rare disease will have a high percentage of false positives even if the accuracy of the test is high.
+
+*Equations: Cystic fibrosis test probabilities*
+
+In these probabilities, + represents a positive test, - represents a negative test, $D = 0$ indicates no disease, and $D = 1$ indicates the disease is present.
+
+Probability of having the disease given a positive test: $Pr(D = 1 \mid +)$
+
+99% test accuracy when disease is present: $Pr(+ \mid D = 1) = 0.99$ 
+
+99% test accuracy when disease is absent:  $Pr(- \mid D = 0) = 0.99$ 
+
+Rate of cystic fibrosis: $Pr(D = 1) = 0.00025$ 
+
+Bayes' theorem can be applied like this:
+
+$Pr(D = 1 \mid +) = \frac{Pr(+ \mid D = 1)⋅Pr(D = 1)}{Pr(+)}$
+
+$Pr(D = 1 \mid +) = \frac{Pr(+ \mid D = 1)⋅Pr(D = 1)}{Pr(+ \mid D=1)⋅Pr(D = 1) + Pr(+ \mid D = 0)⋅Pr(D = 0)$ 
+
+Substituting known values, we obtain:
+
+$\frac{0.99⋅0.00025}{0.99⋅0.00025 + 0.01⋅0.99975} = 0.02$ 
+
+*Code: Monte Carlo simulation*
+
+```{r}
+prev <- 0.00025    # disease prevalence
+N <- 100000    # number of tests
+outcome <- sample(c("Disease", "Healthy"), N, replace = TRUE, prob = c(prev, 1-prev))
+
+N_D <- sum(outcome == "Disease")    # number with disease
+N_H <- sum(outcome == "Healthy")    # number healthy
+
+# for each person, randomly determine if test is + or -
+accuracy <- 0.99
+test <- vector("character", N)
+test[outcome == "Disease"] <- sample(c("+", "-"), N_D, replace=TRUE, prob = c(accuracy, 1-accuracy))
+test[outcome == "Healthy"] <- sample(c("-", "+"), N_H, replace=TRUE, prob = c(accuracy, 1-accuracy))
+
+table(outcome, test)
+```
+
+## Bayes in Practice
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-in-practice)
+
+**Key points**
+
+* The techniques we have used up until now are referred to as *frequentist statistics* as they consider only the frequency of outcomes in a dataset and do not include any outside information. Frequentist statistics allow us to compute confidence intervals and p-values.
+* Frequentist statistics can have problems when sample sizes are small and when the data are extreme compared to historical results.
+* *Bayesian statistics* allows prior knowledge to modify observed results, which alters our conclusions about event probabilities.
+
+## The Hierarchical Model
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#hierarchical-models)
+
+**Key points**
+
+* Hierarchical models use multiple levels of variability to model results. They are hierarchical because values in the lower levels of the model are computed using values from higher levels of the model.
+* We model baseball player batting average using a hierarchical model with two levels of variability:
+    * $p \tilde N(\mu, \tau)$ describes player-to-player variability in natural ability to hit, which has a mean $\mu$ and standard deviation $\tau$.
+    * $Y \mid p \tilde N(p, \sigma)$ describes a player's observed batting average given their ability $p$, which has a mean $p$ and standard deviation $\sigma = \sqrt{p(1 - p)/N}$. This represents variability due to luck.
+    * In Bayesian hierarchical models, the first level is called the *prior distribution* and the second level is called the *sampling distribution*.
+* The *posterior distribution* allows us to compute the probability distribution of $p$ given that we have observed data $Y$.
+* By the continuous version of Bayes' rule, the *expected value of the posterior distribution* $p$ given $Y = y$ is a weighted average between the prior mean $\mu$ and the observed data $Y$:
+
+$E(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \tau^2}$
+
+* The *standard error of the posterior distribution*  $SE(p\mid Y)^2  is \frac{1}{{1/\sigma^2} + {1/\tau^2}}$. Note that you will need to take the square root of both sides to solve for the standard error.
+* This Bayesian approach is also known as *shrinking*. When $\sigma$ is large, $B$ is close to 1 and our prediction of $p$ shrinks towards the mean ($\mu$). When $\sigma$ is small, $B$ is close to 0 and our prediction of $p$ is more weighted towards the observed data $Y$.
 
 ## Assessment 5.1: Bayesian Statistics
 
