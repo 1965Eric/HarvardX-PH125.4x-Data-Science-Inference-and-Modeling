@@ -1,9 +1,9 @@
 ---
 title: "Data Science Inference and Modeling"
 output:
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
   word_document: default
 urlcolor: blue
 ---
@@ -2204,7 +2204,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * If the population data are known to follow a normal distribution, theory tells us how much larger to make confidence intervals to account for estimation of $\sigma$.
 * Given $s$ as an estimate of $\sigma$, then $Z = \frac{\bar{X} - d}{s/\sqrt{N}}$ follows a t-distribution with $N - 1$ degrees of freedom.
 * Degrees of freedom determine the weight of the tails of the distribution. Small values of degrees of freedom lead to increased probabilities of extreme values.
-* We can determine confidence intervals using the t-distribution instead of the normal distribution by calculating the desired quantile with the function ```qt()``.
+* We can determine confidence intervals using the t-distribution instead of the normal distribution by calculating the desired quantile with the function ```qt()```.
 
 *Code: Calculating 95% confidence intervals with the t-distribution*
 
