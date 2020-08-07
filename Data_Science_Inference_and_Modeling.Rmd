@@ -2194,7 +2194,32 @@ head(errors)
 errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>% group_by(state) %>% filter(n() >= 5) %>% ungroup() %>%mutate(state = reorder(state, error)) %>% ggplot(aes(state, error)) + geom_boxplot() + geom_point()
 ```
 
-## Assessment 6.2: The t-Distribution
+## The t-Distribution
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#t-dist)
+
+**Key points**
+
+* In models where we must estimate two parameters, $p$ and $\sigma$, the Central Limit Theorem can result in overconfident confidence intervals for sample sizes smaller than approximately 30.
+* If the population data are known to follow a normal distribution, theory tells us how much larger to make confidence intervals to account for estimation of $\sigma$.
+* Given $s$ as an estimate of $\sigma$, then $Z = \frac{\bar{X} - d}{s/\sqrt{N}}$ follows a t-distribution with $N - 1$ degrees of freedom.
+* Degrees of freedom determine the weight of the tails of the distribution. Small values of degrees of freedom lead to increased probabilities of extreme values.
+* We can determine confidence intervals using the t-distribution instead of the normal distribution by calculating the desired quantile with the function ```qt()``.
+
+*Code: Calculating 95% confidence intervals with the t-distribution*
+
+```{r}
+z <- qt(0.975, nrow(one_poll_per_pollster) - 1)
+one_poll_per_pollster %>%
+    summarize(avg = mean(spread), moe = z*sd(spread)/sqrt(length(spread))) %>%
+    mutate(start = avg - moe, end = avg + moe)
+
+# quantile from t-distribution versus normal distribution
+qt(0.975, 14)    # 14 = nrow(one_poll_per_pollster) - 1
+qnorm(0.975)
+```
+
+## Assessment - The t-Distribution
 
 1. Using the t-Distribution
 
