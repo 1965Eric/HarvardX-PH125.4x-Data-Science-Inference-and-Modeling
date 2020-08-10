@@ -1,10 +1,10 @@
 ---
 title: "Data Science Inference and Modeling"
 output:
+  word_document: default
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
-  word_document: default
 urlcolor: blue
 ---
 
@@ -2595,7 +2595,7 @@ What is the standard error of $d$, the spread between the proportion of "Remain"
 
 Raw proportions of voters preferring "Remain", "Leave", and "Undecided" are available (```remain```, ```leave```, ```undecided```) The spread is also available (```spread```), which is the difference in the raw proportion of voters choosing "Remain" and the raw proportion choosing "Leave".
 
-Calculate ```x_hat``` for each poll, the estimate of the proportion of voters choosing "Remain" on the referendum day ($p = 0.481$), given the observed ```spread`` and the relationship $\hat{d} = 2\hat{X} - 1$. Use ```mutate()``` to add a variable ```x_hat``` to the ```brexit_polls`` object by filling in the skeleton code below:
+Calculate ```x_hat``` for each poll, the estimate of the proportion of voters choosing "Remain" on the referendum day ($p = 0.481$), given the observed ```spread``` and the relationship $\hat{d} = 2\hat{X} - 1$. Use ```mutate()``` to add a variable ```x_hat``` to the ```brexit_polls`` object by filling in the skeleton code below:
 
 ```{r, eval=FALSE, echo=TRUE}
 brexit_polls <- brexit_polls %>%
@@ -2629,7 +2629,9 @@ What is the standard deviation of ```x_hat```?
 sd(brexit_polls$x_hat)
 ```
 
-#### Question 3: Consider the first poll in ```brexit_polls```, a YouGov poll run on the same day as the Brexit referendum:
+#### Question 3: Confidence interval of a Brexit poll
+
+Consider the first poll in ```brexit_polls```, a YouGov poll run on the same day as the Brexit referendum:
 
 ```{r}
 brexit_polls[1,]
@@ -2725,7 +2727,9 @@ Which of the following are TRUE?
 - [ ] D. All pollsters produced confidence intervals covering the correct spread in at least 1 of their polls.
 - [X] E. The results are consistent with a large general bias that affects all pollsters. 
 
-#### Question 6: Make a boxplot of the spread in ```june_polls``` by poll type.
+#### Question 6: Boxplot of Brexit polls by poll type
+
+Make a boxplot of the spread in ```june_polls``` by poll type.
 
 ```{r}
 june_polls %>% group_by(poll_type) %>%
@@ -2869,7 +2873,7 @@ Calculate the odds ratio to determine how many times larger the odds are for onl
 online_odds/phone_odds
 ```
 
-#### Use ```brexit_polls``` to make a plot of the spread (```spread```) over time (```enddate```) colored by poll type (```poll_type```).
+#### Question 11: Use ```brexit_polls``` to make a plot of the spread (```spread```) over time (```enddate```) colored by poll type (```poll_type```).
 
 Use ```geom_smooth()``` with ```method = "loess"``` to plot smooth curves with a span of 0.4. Include the individual data points colored by poll type. Add a horizontal line indicating the final value of $d = -.038$.
 
