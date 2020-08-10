@@ -294,7 +294,7 @@ $Z = \frac{\bar{X} - \mbox{E}(\bar{X})}{\mbox{SE}(\bar{X})}$
 
 * The probability that $\bar{X}$ is within .01 of the actual value of $p$ is:
 
-$Pr(Z \le .01/\sqrt {p(1 - p)/N}) - Pr(Z \le -.01/\sqrt {p(1 - p)/N})$
+$\mbox{Pr}(Z \le .01/\sqrt {p(1 - p)/N}) - \mbox{Pr}(Z \le -.01/\sqrt {p(1 - p)/N})$
 
 * The Central Limit Theorem (CLT) still works if $\bar{X}$ is used in place of $p$. This is called a *plug-in estimate*. Hats over values denote estimates. Therefore:
 
@@ -302,7 +302,7 @@ $\hat{\mbox{SE}}(\bar{X}) = \sqrt{\bar{X}(1 - \bar{X})/N}$
 
 Using the CLT, the probability that $\bar{X}$ is within .01 of the actual value of $p$ is:
 
-$Pr(Z \le .01/\sqrt {\bar{X}(1 - \bar{X})/N}) - Pr(Z \le -.01/\sqrt {\bar{X}(1 - \bar{X})/N})$
+$\mbox{Pr}(Z \le .01/\sqrt {\bar{X}(1 - \bar{X})/N}) - \mbox{Pr}(Z \le -.01/\sqrt {\bar{X}(1 - \bar{X})/N})$
 
 *Code: Computing the probability of $\bar{X}$ being within .01 of $p$*
 
@@ -669,7 +669,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * We can use statistical theory to compute the probability that a given interval contains the true parameter $p$.
 * 95% confidence intervals are intervals constructed to have a 95% chance of including $p$. The margin of error is approximately a 95% confidence interval.
 * The start and end of these confidence intervals are random variables.
-* To calculate any size confidence interval, we need to calculate the value $z$ for which $Pr(-z \le Z \le z)$ equals the desired confidence. For example, a 99% confidence interval requires calculating $z$ for $Pr(-z \le Z \le z) = 0.99$.
+* To calculate any size confidence interval, we need to calculate the value $z$ for which $\mbox{Pr}(-z \le Z \le z)$ equals the desired confidence. For example, a 99% confidence interval requires calculating $z$ for $\mbox{Pr}(-z \le Z \le z) = 0.99$.
 * For a confidence interval of size $q$, we solve for $z = 1 - \frac{1 - q}{2}$.
 * To determine a 95% confidence interval, use ```z <- qnorm(0.975)```. This value is slightly smaller than 2 times the standard error.
 
@@ -1455,7 +1455,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 * Bayes' Theorem states that the probability of event A happening given event B is equal to the probability of both A and B divided by the probability of event B:
 
-$Pr(A \mid B) = \frac{Pr(B \mid A)Pr(A)}{Pr(B)}$
+$\mbox{Pr}(A \mid B) = \frac{\mbox{Pr}(B \mid A)\mbox{Pr}(A)}{\mbox{Pr}(B)}$
 
 * Bayes' Theorem shows that a test for a very rare disease will have a high percentage of false positives even if the accuracy of the test is high.
 
@@ -1463,19 +1463,19 @@ $Pr(A \mid B) = \frac{Pr(B \mid A)Pr(A)}{Pr(B)}$
 
 In these probabilities, + represents a positive test, - represents a negative test, $D = 0$ indicates no disease, and $D = 1$ indicates the disease is present.
 
-Probability of having the disease given a positive test: $Pr(D = 1 \mid +)$
+Probability of having the disease given a positive test: $\mbox{Pr}(D = 1 \mid +)$
 
-99% test accuracy when disease is present: $Pr(+ \mid D = 1) = 0.99$ 
+99% test accuracy when disease is present: $\mbox{Pr}(+ \mid D = 1) = 0.99$ 
 
-99% test accuracy when disease is absent:  $Pr(- \mid D = 0) = 0.99$ 
+99% test accuracy when disease is absent:  $\mbox{Pr}(- \mid D = 0) = 0.99$ 
 
-Rate of cystic fibrosis: $Pr(D = 1) = 0.00025$ 
+Rate of cystic fibrosis: $\mbox{Pr}(D = 1) = 0.00025$ 
 
 Bayes' theorem can be applied like this:
 
-$Pr(D = 1 \mid +) = \frac{Pr(+ \mid D = 1)⋅Pr(D = 1)}{Pr(+)}$
+$\mbox{Pr}(D = 1 \mid +) = \frac{\mbox{Pr}(+ \mid D = 1)⋅\mbox{Pr}(D = 1)}{\mbox{Pr}(+)}$
 
-$Pr(D = 1 \mid +) = \frac{Pr(+ \mid D = 1)⋅Pr(D = 1)}{Pr(+ \mid D=1)⋅Pr(D = 1) + Pr(+ \mid D = 0)⋅Pr(D = 0)}$ 
+$\mbox{Pr}(D = 1 \mid +) = \frac{\mbox{Pr}(+ \mid D = 1)⋅\mbox{Pr}(D = 1)}{\mbox{Pr}(+ \mid D=1)⋅\mbox{Pr}(D = 1) + \mbox{Pr}(+ \mid D = 0)⋅\mbox{Pr}(D = 0)}$ 
 
 Substituting known values, we obtain:
 
@@ -1538,11 +1538,11 @@ Both infants were found dead in the morning, one in 1996 and another in 1998, an
 Based on what we've learned throughout this course, which statement best describes a potential flaw in Sir Meadow's reasoning?
 
 - [X] A. Sir Meadow assumed the second death was independent of the first son being affected, thereby ignoring possible genetic causes.
-- [ ] B. There is no flaw. The multiplicative rule always applies in this way: $Pr(\text{A and B}) = Pr(A)Pr(B)$
-- [ ] C. Sir Meadow should have added the probabilities: $Pr(\text{A and B}) = Pr(A) + Pr(B)$
+- [ ] B. There is no flaw. The multiplicative rule always applies in this way: $\mbox{Pr}(\text{A and B}) = \mbox{Pr}(A)\mbox{Pr}(B)$
+- [ ] C. Sir Meadow should have added the probabilities: $\mbox{Pr}(\text{A and B}) = \mbox{Pr}(A) + \mbox{Pr}(B)$
 - [ ] D. The rate of SIDS is too low to perform these types of statistics.
 
-2. Let's assume that there is in fact a genetic component to SIDS and the the probability of $Pr(\text{second case of SIDS} \mid \text{first case of SIDS}) = 1/100$, is much higher than 1 in 8,500.
+2. Let's assume that there is in fact a genetic component to SIDS and the the probability of $\mbox{Pr}(\text{second case of SIDS} \mid \text{first case of SIDS}) = 1/100$, is much higher than 1 in 8,500.
 
 What is the probability of both of Sally Clark's sons dying of SIDS?
 
@@ -1561,26 +1561,26 @@ Pr_1 * Pr_2
 
 Perhaps the jury and judge also interpreted the testimony this way. This probability can be written like this:
 
-$Pr(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
+$\mbox{Pr}(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
 
 Bayes' rule tells us this probability is equal to:
 
-- [ ] A.  $\frac{Pr(\text{two children found dead with no evidence of harm})Pr(\text{mother is a murderer})}{Pr(\text{two children found dead with no evidence of harm})}$
-- [ ] B.  $Pr(\text{two children found dead with no evidence of harm})Pr(\text{mother is a murderer})$
-- [X] C.  $\frac{Pr(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer})Pr(\text{mother is a murderer})}{Pr(\text{two children found dead with no evidence of harm})}$
+- [ ] A.  $\frac{\mbox{Pr}(\text{two children found dead with no evidence of harm})\mbox{Pr}(\text{mother is a murderer})}{\mbox{Pr}(\text{two children found dead with no evidence of harm})}$
+- [ ] B.  $\mbox{Pr}(\text{two children found dead with no evidence of harm})\mbox{Pr}(\text{mother is a murderer})$
+- [X] C.  $\frac{\mbox{Pr}(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer})\mbox{Pr}(\text{mother is a murderer})}{\mbox{Pr}(\text{two children found dead with no evidence of harm})}$
 - [ ] D. 1/8500
 
 4. Assume that the probability of a murderer finding a way to kill her two children without leaving evidence of physical harm is:
 
-$Pr(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer}) = 0.50$
+$\mbox{Pr}(\text{two children found dead with no evidence of harm} \mid \text{mother is a murderer}) = 0.50$
 
 Assume that the murder rate among mothers is 1 in 1,000,000.
 
-$Pr(\text{mother is a murderer}) = 1/1,000,000$
+$\mbox{Pr}(\text{mother is a murderer}) = 1/1,000,000$
 
 According to Bayes' rule, what is the probability of:
 
-$Pr(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
+$\mbox{Pr}(\text{mother is a murderer} \mid \text{two children found dead with no evidence of harm})$
 
 ```{r}
 # Define `Pr_1` as the probability of the first son dying of SIDS
@@ -2519,30 +2519,32 @@ For numeric entry problems, you have 10 attempts to input the correct answer. Fo
 
 If you have questions, visit the "Brexit poll analysis" discussion forum that follows the assessment.
 
-IMPORTANT: Some of these exercises use dslabs datasets that were added in a July 2019 update. Make sure your package is up to date with the command update.packages("dslabs"). You can also update all packages on your system by running update.packages() with no arguments, and you should consider doing this routinely.
+*IMPORTANT*: Some of these exercises use **dslabs** datasets that were added in a July 2019 update. Make sure your package is up to date with the command ```install.packages("dslabs")```.
 
 **Overview**
 
-In June 2016, the United Kingdom (UK) held a referendum to determine whether the country would "Remain" in the European Union (EU) or "Leave" the EU. This referendum is commonly known as Brexit. Although the media and others interpreted poll results as forecasting "Remain" (p>0.5), the actual proportion that voted "Remain" was only 48.1% (p=0.481) and the UK thus voted to leave the EU. Pollsters in the UK were criticized for overestimating support for "Remain". 
+In June 2016, the United Kingdom (UK) held a referendum to determine whether the country would "Remain" in the European Union (EU) or "Leave" the EU. This referendum is commonly known as Brexit. Although the media and others interpreted poll results as forecasting "Remain" ($p > 0.5$), the actual proportion that voted "Remain" was only 48.1% ($p = 0.481$) and the UK thus voted to leave the EU. Pollsters in the UK were criticized for overestimating support for "Remain". 
 
 In this project, you will analyze real Brexit polling data to develop polling models to forecast Brexit results. You will write your own code in R and enter the answers on the edX platform.
 
 **Important definitions**
 
-Data Import  
-Import the brexit_polls polling data from the dslabs package and set options for the analysis:
+***Data Import***
+
+Import the ```brexit_polls``` polling data from the **dslabs** package and set options for the analysis:
+
 ```{r}
-# suggested libraries and options
-library(tidyverse)
+# suggested options
 options(digits = 3)
+
 # load brexit_polls object
-library(dslabs)
 data(brexit_polls)
 ```
 
-**Final Brexit parameters**
+***Final Brexit parameters***
 
-Define p=0.481 as the actual percent voting "Remain" on the Brexit referendum and  d=2p-1=-0.038 as the actual spread of the Brexit referendum with "Remain" defined as the positive outcome:
+Define $p = 0.481$ as the actual percent voting "Remain" on the Brexit referendum and $d = 2p - 1 = -0.038$ as the actual spread of the Brexit referendum with "Remain" defined as the positive outcome:
+
 ```{r}
 p <- 0.481    # official proportion voting "Remain"
 d <- 2*p-1    # official spread
