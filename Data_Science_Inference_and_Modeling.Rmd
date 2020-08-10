@@ -2405,8 +2405,7 @@ tibble(awarded = c("no", "yes"),
 
 # chi-squared test
 chisq_test <- two_by_two %>%
-    select(-awarded) %>%
-nbsp;   chisq.test()
+    select(-awarded) %>% chisq.test()
 chisq_test$p.value
 ```
 
@@ -2435,7 +2434,7 @@ two_by_two %>%
   chisq.test()
 ```
 
-## Assessment 7.1: Association and Chi-Squared Tests
+## Assessment - Association and Chi-Squared Tests
 
 1. In a previous exercise, we determined whether or not each poll predicted the correct winner for their state in the 2016 U.S. presidential election. 
 
