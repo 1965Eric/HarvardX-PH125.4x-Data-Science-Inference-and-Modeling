@@ -2,9 +2,9 @@
 title: "Data Science Inference and Modeling"
 output:
   word_document: default
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 urlcolor: blue
 ---
 
@@ -16,7 +16,7 @@ The textbook for the Data Science course series is [freely available online](htt
 
 This course corresponds to the textbook chapters [Statistical Inference](https://rafalab.github.io/dsbook/inference.html) and [Statistical Models](https://rafalab.github.io/dsbook/models.html).
 
-## Learning Objectives
+# Learning Objectives
 
 * The concepts necessary to define estimates and margins of errors of populations, parameters, estimates, and standard errors in order to make predictions about data
 * How to use models to aggregate data from different sources
@@ -63,7 +63,7 @@ In this course, we will learn:
 * A common use for opinion polls is determining voter preferences in political elections for the purposes of forecasting election results.
 * The *spread* of a poll is the estimated difference between support two candidates or options.
 
-## Section 1 Overview
+# Section 1 Overview
 
 Section 1 introduces you to parameters and estimates.
 
@@ -270,7 +270,7 @@ Select the statement that explains why this sample size is sufficient or not.
 - [ ] C. This sample size is sufficient because the standard error of about 0.2 is much smaller than the spread of 10%.
 - [ ] D. Without knowing ```p```, we have no way of knowing that increasing our sample size would actually improve our standard error.
 
-## Section 2 Overview
+# Section 2 Overview
 
 In Section 2, you will look at the Central Limit Theorem in practice.
 
@@ -649,7 +649,7 @@ se_hat <- sqrt(X_hat*(1-X_hat)/N)
 1-pnorm(0.01,0,se_hat) + pnorm(-0.01,0,se_hat)
 ```
 
-## Section 3 Overview
+# Section 3 Overview
 
 In Section 3, you will look at confidence intervals and p-values.
 
@@ -972,7 +972,7 @@ polls %>% ggplot(aes(x = pollster, y = error)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-## Section 4 Overview
+# Section 4 Overview
 
 In Section 4, you will look at statistical models in the context of election polling and forecasting.
 
@@ -1426,7 +1426,7 @@ var <- polls %>% group_by(pollster) %>% summarise(avg = mean(spread), s = sd(spr
 var
 ```
 
-## Section 5 Overview
+# Section 5 Overview
 
 In Section 5, you will learn about Bayesian statistics through looking at examples from rare disease diagnosis and baseball.
 
@@ -1744,7 +1744,7 @@ ps <- p_calc(taus)
 plot(taus, ps)
 ```
 
-## Section 6 Overview
+# Section 6 Overview
 
 In Section 6, you will learn about election forecasting, building on what you’ve learned in the previous sections about statistical modeling and Bayesian statistics.
 
@@ -2317,7 +2317,7 @@ p_hit
 - [ ] C. This was just a chance occurrence. If we run it again, the CLT will work better. 
 - [ ] D. The t-distribution is always a better approximation than the normal distribution.
 
-## Section 7 Overview
+# Section 7 Overview
 
 In Section 7, you will learn how to use association and chi-squared tests to perform inference for binary, categorical, and ordinal data through an example looking at research funding rates.
 
