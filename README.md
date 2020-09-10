@@ -11,3 +11,5 @@ This course will show you how inference and modeling can be applied to develop t
 Once you learn this you will be able to understand two concepts that are ubiquitous in data science: confidence intervals and p-values.
 
 Finally, to understand statements about the probability of a candidate winning, you will learn about Bayesian modeling. At the end of the course, we will put it all together to recreate a simplified version of an election forecast model and apply it to the 2016 US presidential election.
+
+The bookdown-version of this course is available on [this Github Page](https://1965eric.github.io/Inference_Modeling)
