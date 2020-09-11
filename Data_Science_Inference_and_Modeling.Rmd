@@ -3,10 +3,10 @@ title: "Data Science Inference and Modeling"
 output:
   bookdown::epub_book:
       number_sections: true
-  pdf_document:
-    latex_engine: xelatex
   html_document: default
   word_document: default
+  pdf_document:
+    latex_engine: xelatex
 urlcolor: blue
 ---
 
@@ -14,9 +14,9 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
+The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/){target="_blank"}.
 
-This course corresponds to the textbook chapters [Statistical Inference](https://rafalab.github.io/dsbook/inference.html) and [Statistical Models](https://rafalab.github.io/dsbook/models.html).
+This course corresponds to the textbook chapters [Statistical Inference](https://rafalab.github.io/dsbook/inference.html){target="_blank"} and [Statistical Models](https://rafalab.github.io/dsbook/models.html){target="_blank"}.
 
 # Learning Objectives
 
@@ -49,7 +49,7 @@ You will learn how to use association and chi-squared tests to perform inference
 
 ## Introduction to Inference
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#polls)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#polls){target="_blank"}.
 
 In this course, we will learn:
 
@@ -78,7 +78,7 @@ After completing Section 1, you will be able to:
 
 ## Sampling Model Parameters and Estimates
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-sampling-model-for-polls) and [here; first part](https://rafalab.github.io/dsbook/inference.html#populations-samples-parameters-and-estimates)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-sampling-model-for-polls){target="_blank"} and [here; first part](https://rafalab.github.io/dsbook/inference.html#populations-samples-parameters-and-estimates){target="_blank"}.
 
 **Key points**
 
@@ -105,7 +105,7 @@ take_poll(25)    # draw 25 beads
 
 ## The Sample Average
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-sample-average) and [here](https://rafalab.github.io/dsbook/inference.html#parameters)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-sample-average){target="_blank"} and [here](https://rafalab.github.io/dsbook/inference.html#parameters){target="_blank"}.
 
 **Key points**
 
@@ -120,7 +120,7 @@ $\bar{X} = \frac{X_1+X_2+...+X_N}{N}$
 
 ## Polling versus Forecasting
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#polling-versus-forecasting)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#polling-versus-forecasting){target="_blank"}.
 
 **Key points**
 
@@ -129,7 +129,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Properties of Our Estimate
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#properties-of-our-estimate-expected-value-and-standard-error)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#properties-of-our-estimate-expected-value-and-standard-error){target="_blank"}.
 
 **Key points**
 
@@ -285,7 +285,7 @@ After completing Section 2, you will be able to:
 
 ## The Central Limit Theorem in Practice
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt){target="_blank"}.
 
 **Key points**
 
@@ -316,7 +316,7 @@ pnorm(0.01/se) - pnorm(-0.01/se)
 
 ## Margin of Error
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#clt){target="_blank"}.
 
 **Key points**
 
@@ -325,7 +325,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## A Monte Carlo Simulation for the CLT
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation){target="_blank"}.
 
 **Key points**
 
@@ -372,7 +372,7 @@ grid.arrange(p1, p2, nrow=1)
 
 ## The Spread
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-spread)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-spread){target="_blank"}.
 
 **Key points**
 
@@ -383,7 +383,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Bias: Why Not Run a Very Large Poll?
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#bias-why-not-run-a-very-large-poll)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#bias-why-not-run-a-very-large-poll){target="_blank"}.
 
 **Key points**
 
@@ -664,7 +664,7 @@ After completing Section 3, you will be able to:
 
 ## Confidence Intervals
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#confidence-intervals)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#confidence-intervals){target="_blank"}.
 
 **Key points**
 
@@ -712,7 +712,7 @@ pnorm(z) - pnorm(-z)    # demonstrating that this z value gives correct probabil
 
 ## A Monte Carlo Simulation for Confidence Intervals
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation-1)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#a-monte-carlo-simulation-1){target="_blank"}.
 
 **Key points**
 
@@ -736,7 +736,7 @@ mean(inside)
 
 ## The Correct Language
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-correct-language)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#the-correct-language){target="_blank"}.
 
 **Key points**
 
@@ -746,7 +746,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Power
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#power)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#power){target="_blank"}.
 
 **Key points**
 
@@ -766,7 +766,7 @@ X_hat <- 0.48
 
 ## p-Values
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#p-values)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#p-values){target="_blank"}.
 
 **Key points**
 
@@ -987,7 +987,7 @@ After completing Section 4, you will be able to:
 
 ## Poll Aggregators
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html) and [here](https://rafalab.github.io/dsbook/models.html#poll-aggregators)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html){target="_blank"} and [here](https://rafalab.github.io/dsbook/models.html#poll-aggregators){target="_blank"}.
 
 **Key points**
 
@@ -1036,7 +1036,7 @@ round(moe*100, 1)
 
 ## Pollsters and Multilevel Models
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-aggregators)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-aggregators){target="_blank"}.
 
 **Key points**
 
@@ -1045,7 +1045,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Poll Data and Pollster Bias
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-data) and [here](https://rafalab.github.io/dsbook/models.html#pollster-bias)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#poll-data){target="_blank"} and [here](https://rafalab.github.io/dsbook/models.html#pollster-bias){target="_blank"}.
 
 **Key points**
 
@@ -1106,7 +1106,7 @@ polls %>% group_by(pollster) %>%
 
 ## Data-Driven Models
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#data-driven-model)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#data-driven-model){target="_blank"}.
 
 **Key points**
 
@@ -1441,7 +1441,7 @@ After completing Section 5, you will be able to:
 
 ## Bayesian Statistics
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-statistics)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-statistics){target="_blank"}.
 
 **Key points**
 
@@ -1451,7 +1451,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Bayes' Theorem
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-theorem)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-theorem){target="_blank"}.
 
 **Key points**
 
@@ -1504,7 +1504,7 @@ table(outcome, test)
 
 ## Bayes in Practice
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-in-practice)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayes-in-practice){target="_blank"}.
 
 **Key points**
 
@@ -1514,7 +1514,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## The Hierarchical Model
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#hierarchical-models)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#hierarchical-models){target="_blank"}.
 
 **Key points**
 
@@ -1533,7 +1533,7 @@ $\mbox{E}(p \mid y) = B\mu + (1 - B)Y$ where $B = \frac{\sigma^2}{\sigma^2 + \ta
 
 ## Assessment - Bayesian Statistics
 
-1. In 1999 in England [Sally Clark](https://en.wikipedia.org/wiki/Sally_Clark) was found guilty of the murder of two of her sons. 
+1. In 1999 in England [Sally Clark](https://en.wikipedia.org/wiki/Sally_Clark){target="_blank"} was found guilty of the murder of two of her sons. 
 
 Both infants were found dead in the morning, one in 1996 and another in 1998, and she claimed the cause of death was sudden infant death syndrome (SIDS). No evidence of physical harm was found on the two infants so the main piece of evidence against her was the testimony of Professor Sir Roy Meadow, who testified that the chances of two infants dying of SIDS was 1 in 73 million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500 and then calculating that the chance of two SIDS cases was $8,500 × 8,500 \approx \text{73 million}$.
 
@@ -1758,7 +1758,7 @@ After completing Section 6, you will be able to:
 
 ## Election Forecasting
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-approach)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#bayesian-approach){target="_blank"}.
 
 **Key points**
 
@@ -1813,7 +1813,7 @@ posterior_mean + c(-1.96, 1.96)*posterior_se
 
 ## Mathematical Representations of Models
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#mathematical-representations-of-models)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#mathematical-representations-of-models){target="_blank"}.
 
 **Key points**
 
@@ -1885,7 +1885,7 @@ posterior_se <- sqrt(1 / (1/sigma^2 + 1/tau^2))
 
 ## Predicting the Electoral College
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#predicting-the-electoral-college)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#predicting-the-electoral-college){target="_blank"}.
 
 **Key points**
 
@@ -1990,7 +1990,7 @@ mean(clinton_EV_2 > 269)    # over 269 votes wins election
 
 ## Forecasting
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#forecasting)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#forecasting){target="_blank"}.
 
 **Key points**
 
@@ -2198,7 +2198,7 @@ errors %>% filter(grade %in% c("A+","A","A-","B+") | is.na(grade)) %>% group_by(
 
 ## The t-Distribution
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#t-dist)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/models.html#t-dist){target="_blank"}.
 
 **Key points**
 
@@ -2330,7 +2330,7 @@ After completing Section 7, you will be able to:
 
 ## Association Tests
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#association-tests) up to and including the [textbook section](https://rafalab.github.io/dsbook/inference.html#two-by-two-tables) on two-by-two tables.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#association-tests){target="_blank"} up to and including the [textbook section](https://rafalab.github.io/dsbook/inference.html#two-by-two-tables){target="_blank"} on two-by-two tables.
 
 **Key points**
 
@@ -2374,7 +2374,7 @@ fisher.test(tab, alternative = "greater")
 
 ## Chi-Squared Tests
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#chi-square-test) and [here](https://rafalab.github.io/dsbook/inference.html#odds-ratio)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/inference.html#chi-square-test){target="_blank"} and [here](https://rafalab.github.io/dsbook/inference.html#odds-ratio){target="_blank"}.
 
 **Key points**
 
